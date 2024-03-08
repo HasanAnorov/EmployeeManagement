@@ -52,10 +52,6 @@ android {
 
 dependencies {
 
-    // Koin for Android
-    implementation ("io.insert-koin:koin-androidx-compose:3.5.0")
-    implementation ("io.insert-koin:koin-android:3.5.0")
-
     //appCompat features
     implementation("androidx.appcompat:appcompat:1.6.1")
 

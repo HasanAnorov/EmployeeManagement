@@ -17,12 +17,6 @@ class PreferenceHelper (context: Context){
         return getToken().isNotEmpty()
     }
 
-    fun saveAuthenticatedUser(username: String){
-        with(sharedPref.edit()) {
-            putString(Constants.USERNAME_KEY, username)
-            apply()
-        }
-    }
     fun getToken(): String {
         return sharedPref.getString(Constants.TOKEN_KEY, "")!!
     }

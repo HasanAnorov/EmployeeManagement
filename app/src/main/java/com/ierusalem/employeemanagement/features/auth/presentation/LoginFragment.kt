@@ -10,12 +10,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.ierusalem.employeemanagement.app.EmployeeManagementApp
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 
 class LoginFragment : Fragment() {
 
-    private val viewModel:LoginViewModel by viewModels<LoginViewModel>()
+    private lateinit var viewModel: LoginViewModel
+    //private var viewModel: LoginViewModel by viewModels { LoginViewModel.Factory }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Gets userRepository from the instance of AppContainer in Application
+        val appContainer = (activity?.application as EmployeeManagementApp).authContainer
+        viewModel = LoginViewModel(appContainer.authRepository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

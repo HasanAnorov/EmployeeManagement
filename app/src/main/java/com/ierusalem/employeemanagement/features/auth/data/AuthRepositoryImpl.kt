@@ -19,10 +19,6 @@ class AuthRepositoryImpl(
         preferences.saveToken(token)
     }
 
-    override fun saveAuthenticatedUser(username: String) {
-        preferences.saveAuthenticatedUser(username)
-    }
-
     override fun isLogged(): Boolean = preferences.isLogged()
 
 }
