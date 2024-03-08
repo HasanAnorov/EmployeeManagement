@@ -37,6 +37,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        viewBinding = true
         compose = true
     }
     composeOptions {
@@ -51,6 +52,31 @@ android {
 
 dependencies {
 
+    // Koin for Android
+    implementation ("io.insert-koin:koin-androidx-compose:3.5.0")
+    implementation ("io.insert-koin:koin-android:3.5.0")
+
+    //appCompat features
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
+    //view model
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    //navigation
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+    //chucker
+    debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+
+    //retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
+    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+
+    //google fonts
     implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.2")
 
     implementation("androidx.core:core-ktx:1.12.0")

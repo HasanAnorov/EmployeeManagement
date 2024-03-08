@@ -45,7 +45,8 @@ fun CommonJetHubLoginTextField(
         placeholder = {
             Text(
                 text = label,
-                color = MaterialTheme.colorScheme.onPrimary
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.primary
             )
         },
         onValueChange = {

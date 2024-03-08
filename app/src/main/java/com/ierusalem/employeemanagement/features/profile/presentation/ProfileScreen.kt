@@ -1,4 +1,4 @@
-package com.ierusalem.employeemanagement.presentation
+package com.ierusalem.employeemanagement.features.profile.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,15 +20,14 @@ import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginTextField
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
-fun LoginScreen() {
-    EmployeeManagementTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.background),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start
-        ) {
+fun ProfileScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
+        content = {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = "Welcome \nBack",
@@ -40,7 +39,8 @@ fun LoginScreen() {
                     .padding(top = 16.dp),
                 text = "Sign in to continue",
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onBackground)
+                color = MaterialTheme.colorScheme.onBackground
+            )
 
             CommonJetHubLoginTextField(
                 value = "Username",
@@ -80,21 +80,21 @@ fun LoginScreen() {
                     .background(color = MaterialTheme.colorScheme.primary),
             )
         }
-    }
+    )
 }
 
 @Preview
 @Composable
-fun LoginScreen_Preview_Light() {
+fun ProfileScreen_Preview_Light() {
     EmployeeManagementTheme(darkTheme = false) {
-        LoginScreen()
+        ProfileScreen()
     }
 }
 
 @Preview
 @Composable
-fun LoginScreen_Preview_Dark() {
+fun ProfileScreen_Preview_Dark() {
     EmployeeManagementTheme(darkTheme = true) {
-        LoginScreen()
+        ProfileScreen()
     }
 }
