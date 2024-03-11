@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">EmployeeManagement</string>
     <string name="login">Login</string>
+    <string name="edit_profile">Edit Profile\n\n</string>
+    <string name="message">Message</string>
+    <string name="position">Unvoni</string>
+    <string name="phone_number">Telefon Raqami</string>
+    <string name="room">Xonasi</string>
 </resources>
