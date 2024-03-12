@@ -55,6 +55,7 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ProfileScreen(
+    onEditProfileClick: () -> Unit,
     state: ProfileScreen,
     nestedScrollInteropConnection: NestedScrollConnection = rememberNestedScrollInteropConnection()
 ) {
@@ -92,7 +93,7 @@ fun ProfileScreen(
                             .align(Alignment.BottomEnd)
                             // Offsets the FAB to compensate for CoordinatorLayout collapsing behaviour
                             .offset(y = ((-100).dp)),
-                        onFabClicked = {  }
+                        onFabClicked = { onEditProfileClick() }
                     )
                 }
             )
@@ -251,6 +252,7 @@ fun ProfileFab(
 fun ConvPreviewLandscapeMeDefault() {
     EmployeeManagementTheme {
         ProfileScreen(
+            onEditProfileClick = {},
             state = ProfileScreen.Success(
                 content = ProfileScreenData(
                     userId = 1,
@@ -272,6 +274,7 @@ fun ConvPreviewLandscapeMeDefault() {
 fun ConvPreviewPortraitMeDefault() {
     EmployeeManagementTheme {
         ProfileScreen(
+            onEditProfileClick = {},
             state = ProfileScreen.Success(
                 content = ProfileScreenData(
                     userId = 1,

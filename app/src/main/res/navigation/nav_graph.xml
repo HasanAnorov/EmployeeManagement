@@ -28,6 +28,14 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ierusalem.employeemanagement.features.profile.presentation.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.ierusalem.employeemanagement.features.edit_profile.presentation.EditProfileFragment"
+        android:label="EditProfileFragment" />
 
 </navigation>

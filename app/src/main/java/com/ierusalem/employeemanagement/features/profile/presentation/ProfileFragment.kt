@@ -9,10 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileFragment: Fragment() {
+class ProfileFragment : Fragment() {
 
     private val viewModel: ProfileViewModel by viewModel()
 
@@ -31,6 +33,9 @@ class ProfileFragment: Fragment() {
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 EmployeeManagementTheme {
                     ProfileScreen(
+                        onEditProfileClick = {
+                            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+                        },
                         state = state.profileScreen
                     )
                 }

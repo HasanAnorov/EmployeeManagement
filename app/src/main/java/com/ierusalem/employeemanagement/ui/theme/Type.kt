@@ -23,6 +23,13 @@ val poppinsFamily = FontFamily(
 // Set of Material typography styles to start with
 val Typography = Typography(
 
+    labelSmall = TextStyle(
+        fontFamily = poppinsFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp,
+        lineHeight = 12.sp,
+        letterSpacing = 0.5.sp
+    ),
     displayLarge = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.ExtraBold,

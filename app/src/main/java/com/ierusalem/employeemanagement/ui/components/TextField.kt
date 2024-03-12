@@ -18,34 +18,36 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import androidx.compose.ui.text.TextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommonJetHubLoginTextField(
     modifier: Modifier = Modifier,
+    onTextChanged: (String) -> Unit,
+    textStyle: TextStyle = MaterialTheme.typography.titleMedium,
     value: String,
     label: String,
+    shape: Shape = RoundedCornerShape(size = 12.dp),
     keyboardOptions: KeyboardOptions = KeyboardOptions(
         imeAction = ImeAction.Next, // ** Done. Close the keyboard **
         keyboardType = KeyboardType.Text
-    ),
-    shape: Shape = RoundedCornerShape(size = 12.dp),
-    onTextChanged: (String) -> Unit
+    )
 ) {
     TextField(
         modifier = modifier,
         value = value,
+        textStyle = textStyle,
         colors = TextFieldDefaults.textFieldColors(
             cursorColor = MaterialTheme.colorScheme.onPrimary,
             disabledLabelColor = Color.Red,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
-        textStyle = MaterialTheme.typography.titleMedium,
         placeholder = {
             Text(
                 text = label,
-                style = MaterialTheme.typography.titleSmall,
+                style = textStyle,
                 color = MaterialTheme.colorScheme.primary
             )
         },

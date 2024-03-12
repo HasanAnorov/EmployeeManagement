@@ -3,6 +3,7 @@ package com.ierusalem.employeemanagement.app
 import android.app.Application
 import com.ierusalem.employeemanagement.MainViewModel
 import com.ierusalem.employeemanagement.features.auth.di.authModel
+import com.ierusalem.employeemanagement.features.edit_profile.di.editProfileViewModule
 import com.ierusalem.employeemanagement.features.home.di.homeModule
 import com.ierusalem.employeemanagement.features.profile.di.profileModule
 import org.koin.android.ext.koin.androidContext
@@ -24,7 +25,8 @@ class EmployeeManagementApp: Application() {
                 mainModule,
                 authModel,
                 homeModule,
-                profileModule
+                profileModule,
+                editProfileViewModule
             )
         }
 
