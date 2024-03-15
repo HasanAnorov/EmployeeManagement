@@ -1,78 +1,42 @@
 package com.ierusalem.employeemanagement
 
 import android.os.Bundle
-import androidx.activity.compose.BackHandler
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.view.ViewCompat
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.ierusalem.employeemanagement.databinding.ActivityMainBinding
-import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
-import kotlinx.coroutines.launch
+import com.ierusalem.employeemanagement.utils.PreferenceHelper
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insets -> insets }
-        setContentView(
-            ComposeView(this).apply {
-                consumeWindowInsets = false
-                setContent {
-                    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-                    val drawerOpen by viewModel.drawerShouldBeOpened
-                        .collectAsStateWithLifecycle()
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-                    if (drawerOpen) {
-                        // Open drawer and reset state in VM.
-                        LaunchedEffect(Unit) {
-                            // wrap in try-finally to handle interruption whiles opening drawer
-                            try {
-                                drawerState.open()
-                            } finally {
-                                viewModel.resetOpenDrawerAction()
-                            }
-                        }
-                    }
+        val preferenceHelper = PreferenceHelper(this)
+        val destination = if(preferenceHelper.isLogged()) R.id.homeFragment else R.id.loginFragment
+        Log.d("ahi3646_des", "onCreate:  ${preferenceHelper.isLogged()} $destination")
+        val controller = findNavController()
+        val inflater = controller.navInflater
+        val graph = inflater.inflate(R.navigation.nav_graph)
+        controller.graph = graph.apply {
+            setStartDestination(destination)
+        }
 
-                    // Intercepts back navigation when the drawer is open
-                    val scope = rememberCoroutineScope()
-                    if (drawerState.isOpen) {
-                        BackHandler {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        }
-                    }
+    }
 
-                    EmployeeManagementDrawer(
-                        drawerState = drawerState,
-                        onProfileClicked = {
-                            findNavController().navigate(R.id.profileFragment)
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        }
-                    ) {
-                        AndroidViewBinding(ActivityMainBinding::inflate)
-                    }
-                }
-            }
-        )
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     override fun onSupportNavigateUp(): Boolean {

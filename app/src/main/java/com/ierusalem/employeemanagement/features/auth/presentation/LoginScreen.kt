@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginButton
-import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginTextField
+import com.ierusalem.employeemanagement.ui.components.CommonTextFieldWithError
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
@@ -50,29 +50,28 @@ fun LoginScreen(
                 color = MaterialTheme.colorScheme.onBackground
             )
 
-            CommonJetHubLoginTextField(
-                value = state.userName,
-                label ="Username",
+            CommonTextFieldWithError(
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .padding(horizontal = 16.dp),
+                label = "Username",
+                errorMessage = state.usernameError,
                 onTextChanged = {
                     onUsernameChanged(it)
                 },
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .padding(top = 24.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                value = state.username
             )
-            CommonJetHubLoginTextField(
-                value = state.password,
+
+            CommonTextFieldWithError(
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .padding(horizontal = 16.dp),
                 label = "Password",
+                errorMessage = state.passwordError,
                 onTextChanged = {
                     onPasswordChanged(it)
                 },
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .padding(top = 12.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                value = state.password
             )
 
             CommonJetHubLoginButton(

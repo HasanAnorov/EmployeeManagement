@@ -2,16 +2,36 @@ package com.ierusalem.employeemanagement.features.edit_profile.presentation
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ierusalem.employeemanagement.features.edit_profile.data.model.RequestModel
+import com.ierusalem.employeemanagement.features.edit_profile.domain.EditProfileRepository
+import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
+import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
+import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class EditProfileViewModel : ViewModel() {
+class EditProfileViewModel(private val editProfileRepository: EditProfileRepository) : ViewModel(),
+    NavigationEventDelegate<EditProfileNavigation> by DefaultNavigationEventDelegate() {
 
     private val _state: MutableStateFlow<EditProfileScreenState> = MutableStateFlow(
         EditProfileScreenState()
     )
     val state = _state.asStateFlow()
+
+    fun updateProfile(requestModel: RequestModel){
+        viewModelScope.launch {
+            editProfileRepository.updateProfile(requestModel).let { response ->
+                if(response.isSuccessful){
+                    emitNavigation(EditProfileNavigation.NavigateToMain)
+                }else{
+                    emitNavigation(EditProfileNavigation.InvalidResponse)
+                }
+            }
+        }
+    }
 
     fun updateImageUri(uri: Uri?) {
         _state.update {
@@ -56,7 +76,6 @@ class EditProfileViewModel : ViewModel() {
     }
 
 }
-
 
 data class EditProfileScreenState(
     val imageUri: Uri? = null,

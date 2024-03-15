@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,7 +23,8 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 fun CommonJetHubLoginButton(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = MaterialTheme.typography.titleSmall,
 ) {
     Box(
         modifier = modifier.clickable { onClick() },
@@ -35,7 +37,7 @@ fun CommonJetHubLoginButton(
                         vertical = 16.dp
                     )
                     .fillMaxWidth(),
-                style = MaterialTheme.typography.titleSmall,
+                style = textStyle,
                 color = MaterialTheme.colorScheme.onPrimary,
                 textAlign = TextAlign.Center
             )

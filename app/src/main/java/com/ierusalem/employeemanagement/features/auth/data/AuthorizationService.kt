@@ -4,12 +4,12 @@ import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import com.ierusalem.employeemanagement.features.auth.data.entity.auth_request.User
+import com.ierusalem.employeemanagement.features.auth.data.entity.auth_request.UserRequest
 
 interface AuthorizationService {
     @POST("login")
     suspend fun loginUser(
-        @Body body: User
+        @Body body: UserRequest
     ): Response<AuthResponse>
 
 }

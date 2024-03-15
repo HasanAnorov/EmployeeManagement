@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -11,7 +12,10 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -22,6 +26,10 @@
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
             app:destination="@id/profileFragment" />
     </fragment>
 
@@ -31,11 +39,22 @@
         android:label="ProfileFragment" >
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
             app:destination="@id/editProfileFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.ierusalem.employeemanagement.features.edit_profile.presentation.EditProfileFragment"
-        android:label="EditProfileFragment" />
+        android:label="EditProfileFragment" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
 </navigation>

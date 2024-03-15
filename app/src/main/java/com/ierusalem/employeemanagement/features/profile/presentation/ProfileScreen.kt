@@ -1,6 +1,7 @@
 package com.ierusalem.employeemanagement.features.profile.presentation
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Chat
@@ -25,11 +27,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,11 +46,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.AnimatingFabContent
+import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginButton
 import com.ierusalem.employeemanagement.ui.components.ErrorScreen
 import com.ierusalem.employeemanagement.ui.components.LoadingScreen
 import com.ierusalem.employeemanagement.ui.components.baselineHeight
@@ -55,11 +63,12 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ProfileScreen(
-    onEditProfileClick: () -> Unit,
+    onEditProfileClick: (ProfileScreenData) -> Unit,
     state: ProfileScreen,
+    onPasswordChange: (String, String) -> Unit,
     nestedScrollInteropConnection: NestedScrollConnection = rememberNestedScrollInteropConnection()
 ) {
-    when(state){
+    when (state) {
         ProfileScreen.Loading -> LoadingScreen()
         is ProfileScreen.Success -> {
             val scrollState = rememberScrollState()
@@ -81,7 +90,13 @@ fun ProfileScreen(
                                 userData,
                                 this@BoxWithConstraints.maxHeight
                             )
-                            UserInfoFields(userData, this@BoxWithConstraints.maxHeight)
+                            UserInfoFields(
+                                onPasswordChange = { old, new ->
+                                    onPasswordChange(old, new)
+                                },
+                                userData = userData,
+                                containerHeight = this@BoxWithConstraints.maxHeight
+                            )
                         }
                     }
 
@@ -93,27 +108,92 @@ fun ProfileScreen(
                             .align(Alignment.BottomEnd)
                             // Offsets the FAB to compensate for CoordinatorLayout collapsing behaviour
                             .offset(y = ((-100).dp)),
-                        onFabClicked = { onEditProfileClick() }
+                        onFabClicked = { onEditProfileClick(userData) }
                     )
                 }
             )
         }
+
         is ProfileScreen.Error -> ErrorScreen()
     }
 }
 
 @Composable
-private fun UserInfoFields(userData: ProfileScreenData, containerHeight: Dp) {
+private fun UserInfoFields(
+    onPasswordChange: (String, String) -> Unit,
+    userData: ProfileScreenData,
+    containerHeight: Dp
+) {
     Column {
         Spacer(modifier = Modifier.height(8.dp))
         NameAndPosition(userData)
-        ProfileProperty(stringResource(R.string.position), userData.position ?: "position not given")
+        ProfileProperty(
+            stringResource(R.string.position),
+            userData.position ?: "position not given"
+        )
         ProfileProperty(stringResource(R.string.phone_number), userData.phoneNumber)
         ProfileProperty(stringResource(R.string.room), userData.room ?: "room not given")
+        Spacer(modifier = Modifier.height(8.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(8.dp))
+        var oldPassword by remember { mutableStateOf(TextFieldValue("")) }
+        var newPassword by remember { mutableStateOf(TextFieldValue("")) }
+        LabelAndPlaceHolder(
+            label = "Old password",
+            text = oldPassword
+        ) {
+            oldPassword = it
+        }
+        LabelAndPlaceHolder(
+            label = "New password",
+            text = newPassword
+        ) {
+            newPassword = it
+        }
+        CommonJetHubLoginButton(
+            onClick = {
+                onPasswordChange(oldPassword.text, newPassword.text)
+            },
+            textStyle = MaterialTheme.typography.labelSmall,
+            text = "Change Password",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(top = 24.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(color = MaterialTheme.colorScheme.primary),
+        )
         // Add a spacer that always shows part (320.dp) of the fields list regardless of the device,
         // in order to always leave some content at the top.
         Spacer(Modifier.height((containerHeight - 320.dp).coerceAtLeast(0.dp)))
     }
+}
+
+@Composable
+fun LabelAndPlaceHolder(
+    label: String,
+    text: TextFieldValue,
+    onTextChanged: (TextFieldValue) -> Unit
+) {
+    TextField(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+        value = text,
+        onValueChange = {
+            onTextChanged(it)
+        },
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+            focusedContainerColor = MaterialTheme.colorScheme.background
+        ),
+        label = {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall
+            )
+        },
+    )
 }
 
 @Composable
@@ -250,13 +330,14 @@ fun ProfileFab(
 @Preview
 @Composable
 fun ConvPreviewLandscapeMeDefault() {
-    EmployeeManagementTheme {
+    EmployeeManagementTheme(darkTheme = false) {
         ProfileScreen(
+            onPasswordChange = {_, _ -> },
             onEditProfileClick = {},
             state = ProfileScreen.Success(
                 content = ProfileScreenData(
                     userId = 1,
-                    email  ="nurbek@gmail.com",
+                    email = "nurbek@gmail.com",
                     lastName = "Karlo",
                     username = "Jonathan",
                     image = "R.drawable.baseline_account_circle_24",
@@ -272,13 +353,14 @@ fun ConvPreviewLandscapeMeDefault() {
 @Preview
 @Composable
 fun ConvPreviewPortraitMeDefault() {
-    EmployeeManagementTheme {
+    EmployeeManagementTheme(darkTheme = true) {
         ProfileScreen(
             onEditProfileClick = {},
+            onPasswordChange = {_, _ -> },
             state = ProfileScreen.Success(
                 content = ProfileScreenData(
                     userId = 1,
-                    email  ="nurbek@gmail.com",
+                    email = "nurbek@gmail.com",
                     lastName = "Karlo",
                     username = "Jonathan",
                     image = "R.drawable.baseline_account_circle_24",

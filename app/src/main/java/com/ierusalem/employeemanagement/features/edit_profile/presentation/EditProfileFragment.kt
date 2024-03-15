@@ -1,21 +1,52 @@
 package com.ierusalem.employeemanagement.features.edit_profile.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
+import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.features.edit_profile.data.model.RequestModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.ierusalem.employeemanagement.utils.Constants
+import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditProfileFragment : Fragment() {
 
     private val viewModel: EditProfileViewModel by viewModel()
+
+    private lateinit var username: String
+    private lateinit var lastname: String
+    private lateinit var room: String
+    private lateinit var position: String
+    private lateinit var phoneNumber: String
+    private lateinit var email: String
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        username = arguments?.getString(Constants.TO_EDIT_PROFILE_USERNAME) ?: ""
+        lastname = arguments?.getString(Constants.TO_EDIT_PROFILE_LASTNAME) ?: ""
+        room = arguments?.getString(Constants.TO_EDIT_PROFILE_ROOM) ?: ""
+        position = arguments?.getString(Constants.TO_EDIT_PROFILE_POSITION) ?: ""
+        email = arguments?.getString(Constants.TO_EDIT_PROFILE_EMAIL) ?: ""
+        phoneNumber = arguments?.getString(Constants.TO_EDIT_PROFILE_PHONE_NUMBER) ?: ""
+
+        viewModel.onEmailChanged(email)
+        viewModel.onPositionChanged(position)
+        viewModel.onPhoneNumberChanged(phoneNumber)
+        viewModel.onLastnameChanged(lastname)
+        viewModel.onUsernameChanged(username)
+        viewModel.onRoomChanged(room)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,9 +88,47 @@ class EditProfileFragment : Fragment() {
                         },
                         onUsernameChanged = {
                             viewModel.onUsernameChanged(it)
+                        },
+                        onSaveClicked = {
+                            val requestMode = RequestModel(
+                                email = if (email != viewModel.state.value.newEmail) viewModel.state.value.newEmail else email,
+                                last_name = if (lastname != viewModel.state.value.newLastname) viewModel.state.value.newLastname else lastname,
+                                username = if (username != viewModel.state.value.newUsername) viewModel.state.value.newUsername else username,
+                                image = "hasan",
+                                phone_no = if (phoneNumber != viewModel.state.value.newPhoneNumber) viewModel.state.value.newPhoneNumber else phoneNumber,
+                                unvoni = if (position != viewModel.state.value.newPosition) viewModel.state.value.newPosition else position,
+                                xonasi = if (room != viewModel.state.value.newRoom) viewModel.state.value.newRoom else room
+                            )
+                            viewModel.updateProfile(requestMode)
                         }
                     )
                 }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.screenNavigation.executeWithLifecycle(
+            lifecycle = viewLifecycleOwner.lifecycle,
+            action = ::executeNavigation
+        )
+    }
+
+    private fun executeNavigation(navigation: EditProfileNavigation) {
+        when (navigation) {
+            EditProfileNavigation.InvalidResponse -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Ma'lumotlarni saqlanmadi!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            EditProfileNavigation.NavigateToMain -> {
+                val bundle = Bundle()
+                bundle.putBoolean(Constants.PROFILE_CHANGE, true)
+                findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment, bundle)
             }
         }
     }

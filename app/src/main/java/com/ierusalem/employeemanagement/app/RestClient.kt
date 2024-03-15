@@ -6,6 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.GsonBuilder
 import com.ierusalem.employeemanagement.features.auth.data.AuthorizationService
+import com.ierusalem.employeemanagement.features.edit_profile.data.EditProfileService
 import com.ierusalem.employeemanagement.features.profile.data.ProfileService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -46,6 +47,10 @@ class RestClient(context: Context) {
 
     val profileService: ProfileService by lazy {
         retrofit.create(ProfileService::class.java)
+    }
+
+    val editProfileService: EditProfileService by lazy {
+        retrofit.create(EditProfileService::class.java)
     }
 
 }

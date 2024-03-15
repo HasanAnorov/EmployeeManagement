@@ -20,12 +20,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginButton
-import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginTextField
+import com.ierusalem.employeemanagement.ui.components.CommonTextField
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun EditProfileScreen(
     state: EditProfileScreenState,
+    onSaveClicked: () -> Unit,
     onPhotoPickerClicked: () -> Unit,
     onUsernameChanged: (String) -> Unit,
     onLastnameChanged: (String) -> Unit,
@@ -120,7 +121,7 @@ fun EditProfileScreen(
             )
 
             CommonJetHubLoginButton(
-                onClick = {},
+                onClick = onSaveClicked,
                 text = "Save Profile",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -149,7 +150,7 @@ fun EditProfileProperty(
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.onBackground
     )
-    CommonJetHubLoginTextField(
+    CommonTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp)
@@ -176,7 +177,8 @@ fun EditProfileScreen_Preview_Light() {
             onPhoneNumberChanged = {},
             onRoomChanged = {},
             onPositionChanged = {},
-            onEmailChanged = {}
+            onEmailChanged = {},
+            onSaveClicked = {}
         )
     }
 }
@@ -193,7 +195,8 @@ fun EditProfileScreen_Preview_Dark() {
             onPhoneNumberChanged = {},
             onRoomChanged = {},
             onPositionChanged = {},
-            onEmailChanged = {}
+            onEmailChanged = {},
+            onSaveClicked = {}
         )
     }
 }

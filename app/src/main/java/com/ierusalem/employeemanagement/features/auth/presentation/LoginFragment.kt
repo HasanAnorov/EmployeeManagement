@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
                             viewModel.onPasswordChanged(it)
                         },
                         onLoginClick = {
-                            viewModel.onLoginClick()
+                            viewModel.loginIfFieldsAreValid()
                         }
                     )
                 }
@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
             LoginNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
-                    "Muammo yuzaga keldi. Iltimos keyinroq urinib ko'ring",
+                    "Foydalanuvchi topilmadi",
                     Toast.LENGTH_SHORT
                 ).show()
             }

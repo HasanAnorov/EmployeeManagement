@@ -6,6 +6,15 @@ object Constants {
     const val TOKEN_KEY = "employee_management_pre_key"
     const val USERNAME_KEY = "employee_management_username_key"
 
+    const val PROFILE_CHANGE = "profile_changed_successfully"
+
     const val BASE_URL = "http://ithelpshchool.uz/"
+
+    const val TO_EDIT_PROFILE_USERNAME = "to_edit_profile_username"
+    const val TO_EDIT_PROFILE_LASTNAME = "to_edit_profile_lastname"
+    const val TO_EDIT_PROFILE_EMAIL = "to_edit_profile_email"
+    const val TO_EDIT_PROFILE_POSITION = "to_edit_profile_position"
+    const val TO_EDIT_PROFILE_ROOM = "to_edit_profile_room"
+    const val TO_EDIT_PROFILE_PHONE_NUMBER = "to_edit_profile_phone_number"
 
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -42,19 +40,19 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun EmployeeManagementDrawerContent(
-    onProfileClicked: (String) -> Unit
+    onProfileClicked: (String) -> Unit,
+    username: String,
+    imageUrl: String
 ) {
-    // Use windowInsetsTopHeight() to add a spacer which pushes the drawer content
-    // below the status bar (y-axis)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-        DrawerHeader()
+        DrawerHeader(username = username, imageUrl = imageUrl)
         DividerItem()
-        DrawerItemHeader("Profile")
+        //DrawerItemHeader("Profile")
         ProfileItem(
             onProfileClicked = { onProfileClicked("user_id") }
         )
@@ -62,7 +60,7 @@ fun EmployeeManagementDrawerContent(
 }
 
 @Composable
-private fun DrawerHeader() {
+private fun DrawerHeader(username: String, imageUrl: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
@@ -79,7 +77,7 @@ private fun DrawerHeader() {
                 )
             },
             imageModel = {
-                //todo add url
+                imageUrl
             },
             modifier = Modifier
                 .size(64.dp)
@@ -100,33 +98,11 @@ private fun DrawerHeader() {
             modifier = Modifier.padding(start = 24.dp)
         ) {
             Text(
-                text = "Username",
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.bodySmall
-            )
-            Text(
-                text = "Email",
+                text = username,
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodySmall
             )
         }
-    }
-}
-
-@Composable
-private fun DrawerItemHeader(text: String) {
-    Box(
-        modifier = Modifier
-            .heightIn(min = 42.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 28.dp),
-        contentAlignment = Alignment.CenterStart
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }
 
@@ -136,6 +112,7 @@ private fun ProfileItem(
 ) {
     Row(
         modifier = Modifier
+            .padding(top = 16.dp)
             .height(56.dp)
             .fillMaxWidth()
             .padding(horizontal = 12.dp)
@@ -146,12 +123,12 @@ private fun ProfileItem(
         Image(
             modifier = Modifier.padding(start = 8.dp),
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
-            painter = painterResource(id = R.drawable.baseline_edit_document_24),
+            painter = painterResource(id = R.drawable.baseline_account_circle_24),
             contentScale = ContentScale.Crop,
             contentDescription = null
         )
         Text(
-            text = "Change Profile",
+            text = "Profile",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(start = 12.dp)
@@ -173,7 +150,10 @@ fun DrawerPreview() {
     EmployeeManagementTheme {
         Surface {
             Column {
-                EmployeeManagementDrawerContent {}
+                EmployeeManagementDrawerContent(
+                    username = "Hasan Anorov",
+                    imageUrl = "",
+                    onProfileClicked = {})
             }
         }
     }
@@ -185,7 +165,10 @@ fun DrawerPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         Surface {
             Column {
-                EmployeeManagementDrawerContent {}
+                EmployeeManagementDrawerContent(
+                    username = "Hasan Anorov",
+                    imageUrl = "",
+                    onProfileClicked = {})
             }
         }
     }

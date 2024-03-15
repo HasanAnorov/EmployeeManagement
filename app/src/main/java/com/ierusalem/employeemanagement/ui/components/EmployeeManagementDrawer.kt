@@ -10,6 +10,8 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun EmployeeManagementDrawer(
+    username: String,
+    imageUrl: String,
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     onProfileClicked: (String) -> Unit,
     content: @Composable () -> Unit
@@ -20,6 +22,8 @@ fun EmployeeManagementDrawer(
             drawerContent = {
                 ModalDrawerSheet {
                     EmployeeManagementDrawerContent(
+                        username = username,
+                        imageUrl = imageUrl,
                         onProfileClicked = onProfileClicked,
                     )
                 }
