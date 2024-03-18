@@ -12,8 +12,11 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 fun EmployeeManagementDrawer(
     username: String,
     imageUrl: String,
+    email: String,
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     onProfileClicked: (String) -> Unit,
+    onSettingsClicked: () -> Unit,
+    onLogoutClicked: () -> Unit,
     content: @Composable () -> Unit
 ) {
     EmployeeManagementTheme {
@@ -24,7 +27,10 @@ fun EmployeeManagementDrawer(
                     EmployeeManagementDrawerContent(
                         username = username,
                         imageUrl = imageUrl,
+                        email = email,
                         onProfileClicked = onProfileClicked,
+                        onSettingsClicked = onSettingsClicked,
+                        onLogoutClicked = onLogoutClicked
                     )
                 }
             },

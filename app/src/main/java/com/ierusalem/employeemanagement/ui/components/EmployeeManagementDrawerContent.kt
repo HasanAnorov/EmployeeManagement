@@ -18,7 +18,9 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,8 +43,11 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun EmployeeManagementDrawerContent(
     onProfileClicked: (String) -> Unit,
+    onSettingsClicked: () -> Unit,
+    onLogoutClicked: () -> Unit,
     username: String,
-    imageUrl: String
+    imageUrl: String,
+    email: String
 ) {
     Column(
         modifier = Modifier
@@ -50,17 +55,22 @@ fun EmployeeManagementDrawerContent(
             .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-        DrawerHeader(username = username, imageUrl = imageUrl)
+        DrawerHeader(username = username, imageUrl = imageUrl, email = email)
         DividerItem()
-        //DrawerItemHeader("Profile")
         ProfileItem(
             onProfileClicked = { onProfileClicked("user_id") }
         )
+        SettingsItem {
+            onSettingsClicked()
+        }
+        LogoutItem {
+            onLogoutClicked()
+        }
     }
 }
 
 @Composable
-private fun DrawerHeader(username: String, imageUrl: String) {
+private fun DrawerHeader(username: String, imageUrl: String, email: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
@@ -95,12 +105,17 @@ private fun DrawerHeader(username: String, imageUrl: String) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.padding(start = 24.dp)
+            modifier = Modifier.padding(start = 16.dp)
         ) {
             Text(
                 text = username,
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.titleSmall
+            )
+            Text(
+                text = email,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.labelSmall
             )
         }
     }
@@ -108,7 +123,7 @@ private fun DrawerHeader(username: String, imageUrl: String) {
 
 @Composable
 private fun ProfileItem(
-    onProfileClicked: () -> Unit
+    onProfileClicked: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -122,14 +137,72 @@ private fun ProfileItem(
     ) {
         Image(
             modifier = Modifier.padding(start = 8.dp),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
             painter = painterResource(id = R.drawable.baseline_account_circle_24),
             contentScale = ContentScale.Crop,
             contentDescription = null
         )
         Text(
             text = "Profile",
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(start = 12.dp)
+        )
+    }
+}
+
+@Composable
+private fun LogoutItem(
+    onLogoutClicked: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .height(56.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .clip(CircleShape)
+            .clickable(onClick = onLogoutClicked),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier.padding(start = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            text = "Logout",
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(start = 12.dp)
+        )
+    }
+}
+
+@Composable
+private fun SettingsItem(
+    onSettingsClicked: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .height(56.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .clip(CircleShape)
+            .clickable(onClick = onSettingsClicked),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier.padding(start = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+            imageVector = Icons.Default.Settings,
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            text = "Settings",
+            style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(start = 12.dp)
         )
@@ -153,7 +226,11 @@ fun DrawerPreview() {
                 EmployeeManagementDrawerContent(
                     username = "Hasan Anorov",
                     imageUrl = "",
-                    onProfileClicked = {})
+                    email = "anorovhasan@gmail.com",
+                    onProfileClicked = {},
+                    onLogoutClicked = {},
+                    onSettingsClicked = {}
+                )
             }
         }
     }
@@ -168,7 +245,11 @@ fun DrawerPreviewDark() {
                 EmployeeManagementDrawerContent(
                     username = "Hasan Anorov",
                     imageUrl = "",
-                    onProfileClicked = {})
+                    email = "anorovhasan@gmail.com",
+                    onProfileClicked = {},
+                    onLogoutClicked = {},
+                    onSettingsClicked = {}
+                )
             }
         }
     }

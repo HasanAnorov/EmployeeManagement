@@ -2,6 +2,7 @@ package com.ierusalem.employeemanagement.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.Gson
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
 
@@ -11,6 +12,27 @@ class PreferenceHelper (context: Context){
     fun saveToken(token:String){
         with(sharedPref.edit()) {
             putString(Constants.TOKEN_KEY, "Bearer $token")
+            apply()
+        }
+    }
+
+    fun saveRefreshToken(token:String){
+        with(sharedPref.edit()) {
+            putString(Constants.REFRESH_TOKEN_KEY, token)
+            apply()
+        }
+    }
+
+    fun deleteToken(){
+        with(sharedPref.edit()) {
+            remove(Constants.TOKEN_KEY)
+            apply()
+        }
+    }
+
+    fun deleteRefreshToken(){
+        with(sharedPref.edit()) {
+            remove(Constants.REFRESH_TOKEN_KEY)
             apply()
         }
     }
@@ -33,6 +55,11 @@ class PreferenceHelper (context: Context){
     }
 
     fun getToken(): String {
+        Log.d("ahi3646", "getToken: ${sharedPref.getString(Constants.TOKEN_KEY, "")!!}")
         return sharedPref.getString(Constants.TOKEN_KEY, "")!!
+    }
+
+    fun getRefreshToken(): String {
+        return sharedPref.getString(Constants.REFRESH_TOKEN_KEY, "")!!
     }
 }

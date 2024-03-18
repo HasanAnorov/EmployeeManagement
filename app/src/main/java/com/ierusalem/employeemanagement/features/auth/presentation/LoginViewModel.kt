@@ -40,6 +40,10 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
         authRepository.saveToken(token)
     }
 
+    private fun saveRefreshToken(refresh: String){
+        authRepository.saveRefreshToken(refresh)
+    }
+
     fun loginIfFieldsAreValid(){
         val username = validateUsername()
         val password = validatePassword()
@@ -79,6 +83,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
                         Log.d("ahi3646_response", "onLoginClick: ${response.body()} ")
                         saveUser(response.body()!!.user)
                         saveToken(response.body()!!.access)
+                        saveRefreshToken(response.body()!!.refresh)
 
                         emitNavigation(LoginNavigation.NavigateToMain)
                     } else {

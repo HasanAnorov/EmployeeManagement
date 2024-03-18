@@ -1,7 +1,6 @@
 package com.ierusalem.employeemanagement
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,10 +20,9 @@ class MainActivity : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insets -> insets }
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         val preferenceHelper = PreferenceHelper(this)
         val destination = if(preferenceHelper.isLogged()) R.id.homeFragment else R.id.loginFragment
-        Log.d("ahi3646_des", "onCreate:  ${preferenceHelper.isLogged()} $destination")
         val controller = findNavController()
         val inflater = controller.navInflater
         val graph = inflater.inflate(R.navigation.nav_graph)

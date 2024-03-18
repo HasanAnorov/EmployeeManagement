@@ -1,7 +1,6 @@
 package com.ierusalem.employeemanagement.features.profile.data
 
 import android.content.Context
-import android.util.Log
 import com.ierusalem.employeemanagement.app.RestClient
 import com.ierusalem.employeemanagement.features.profile.data.password_response.PasswordResponse
 import com.ierusalem.employeemanagement.features.profile.domain.ProfileRepository
@@ -15,7 +14,6 @@ class ProfileRepositoryImpl(
 ) : ProfileRepository {
 
     override suspend fun getUser(): Response<ProfileScreenData> {
-        Log.d("ahi3646_token", preferences.getToken())
         return RestClient(context = context).profileService.getUser(authToken = preferences.getToken())
     }
 

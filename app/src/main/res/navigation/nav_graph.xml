@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
@@ -8,7 +7,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.ierusalem.employeemanagement.features.auth.presentation.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -23,38 +22,53 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.ierusalem.employeemanagement.features.home.presentation.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/profileFragment" />
+            app:popExitAnim="@anim/slide_out" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_composeFragment"
+            app:destination="@id/composeFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ierusalem.employeemanagement.features.profile.presentation.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/editProfileFragment" />
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
 
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.ierusalem.employeemanagement.features.edit_profile.presentation.EditProfileFragment"
-        android:label="EditProfileFragment" >
+        android:label="EditProfileFragment">
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
             app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/profileFragment" />
+            app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/composeFragment"
+        android:name="com.ierusalem.employeemanagement.features.compose.presentation.ComposeFragment"
+        android:label="ComposeFragment" />
 
 </navigation>
