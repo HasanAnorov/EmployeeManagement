@@ -13,6 +13,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
@@ -21,22 +23,26 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 @Composable
 fun CommonTopBar(
     modifier: Modifier = Modifier,
+    titleColor: Color = MaterialTheme.colorScheme.primary,
+    containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onNavIconPressed: () -> Unit = { },
+    navigationIcon: ImageVector = Icons.Filled.Menu,
     title: @Composable () -> Unit,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
+        modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary,
+            containerColor = containerColor,
+            titleContentColor = titleColor,
         ),
         title = title,
         navigationIcon = {
             IconButton(onClick = { onNavIconPressed() }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Localized description"
+                    imageVector = navigationIcon,
+                    contentDescription = null
                 )
             }
         },
@@ -44,17 +50,6 @@ fun CommonTopBar(
         scrollBehavior = scrollBehavior,
     )
 
-//    CenterAlignedTopAppBar(
-//        modifier = modifier,
-//        actions = actions,
-//        title = title,
-//        scrollBehavior = scrollBehavior,
-//        navigationIcon = {
-//            IconButton(onClick = { onNavIconPressed() }) {
-//                Icon(imageVector = Icons.Default.Menu, contentDescription = null)
-//            }
-//        }
-//    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +57,14 @@ fun CommonTopBar(
 @Composable
 fun CommonTopBarPreview() {
     EmployeeManagementTheme {
-        CommonTopBar(title = { Text("Preview!") })
+        CommonTopBar(
+            title = {
+                Text(
+                    text = "Employee Management",
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
+        )
     }
 }
 
@@ -71,6 +73,13 @@ fun CommonTopBarPreview() {
 @Composable
 fun CommonTopBarPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
-        CommonTopBar(title = { Text("Preview!") })
+        CommonTopBar(
+            title = {
+                Text(
+                    text = "Employee Management",
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
+        )
     }
 }

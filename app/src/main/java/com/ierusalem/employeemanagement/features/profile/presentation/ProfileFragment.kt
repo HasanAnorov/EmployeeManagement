@@ -23,11 +23,6 @@ class ProfileFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        //val isFromEditProfile = arguments?.getBoolean(Constants.PROFILE_CHANGE) ?: false
-        //Log.d("ahi3646_profile", "onAttach: $isFromEditProfile ")
-//        if (isFromEditProfile){
-//            viewModel.getUser()
-//        }
         viewModel.getUser()
     }
 
@@ -60,6 +55,9 @@ class ProfileFragment : Fragment() {
                                 bundle
                             )
                         },
+                        onNavigationIconClicked = {
+                            findNavController().popBackStack()
+                        },
                         state = state.profileScreen
                     )
                 }
@@ -80,7 +78,7 @@ class ProfileFragment : Fragment() {
             ProfileNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
-                    "Parolni o'zgartirilmadi",
+                    "Parol o'zgartirilmadi",
                     Toast.LENGTH_SHORT
                 ).show()
             }

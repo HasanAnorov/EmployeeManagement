@@ -3,7 +3,6 @@ package com.ierusalem.employeemanagement.features.edit_profile.presentation
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ierusalem.employeemanagement.features.edit_profile.data.model.RequestModel
 import com.ierusalem.employeemanagement.features.edit_profile.domain.EditProfileRepository
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 
 class EditProfileViewModel(private val editProfileRepository: EditProfileRepository) : ViewModel(),
     NavigationEventDelegate<EditProfileNavigation> by DefaultNavigationEventDelegate() {
@@ -21,7 +21,7 @@ class EditProfileViewModel(private val editProfileRepository: EditProfileReposit
     )
     val state = _state.asStateFlow()
 
-    fun updateProfile(requestModel: RequestModel){
+    fun updateProfile(requestModel: RequestBody){
         viewModelScope.launch {
             editProfileRepository.updateProfile(requestModel).let { response ->
                 if(response.isSuccessful){

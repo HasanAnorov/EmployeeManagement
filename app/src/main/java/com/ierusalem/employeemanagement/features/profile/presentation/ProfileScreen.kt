@@ -1,7 +1,9 @@
 package com.ierusalem.employeemanagement.features.profile.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,23 +14,22 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.outlined.Create
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -42,6 +43,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
@@ -53,68 +55,96 @@ import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.AnimatingFabContent
 import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginButton
+import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.components.ErrorScreen
 import com.ierusalem.employeemanagement.ui.components.LoadingScreen
+import com.ierusalem.employeemanagement.ui.components.SimpleFilledTextField
 import com.ierusalem.employeemanagement.ui.components.baselineHeight
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     onEditProfileClick: (ProfileScreenData) -> Unit,
     state: ProfileScreen,
     onPasswordChange: (String, String) -> Unit,
-    nestedScrollInteropConnection: NestedScrollConnection = rememberNestedScrollInteropConnection()
+    nestedScrollInteropConnection: NestedScrollConnection = rememberNestedScrollInteropConnection(),
+    onNavigationIconClicked: () -> Unit
 ) {
-    when (state) {
-        ProfileScreen.Loading -> LoadingScreen()
-        is ProfileScreen.Success -> {
-            val scrollState = rememberScrollState()
-            val userData = state.content
-            BoxWithConstraints(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .nestedScroll(nestedScrollInteropConnection)
-                    .systemBarsPadding(),
-                content = {
-                    Surface {
-                        Column(
+    Column(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background)
+    ) {
+        CommonTopBar(
+            containerColor = MaterialTheme.colorScheme.background,
+            onNavIconPressed = { onNavigationIconClicked() },
+            navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+            title = {
+                Text(
+                    text = "Profile",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+            }
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1F),
+            content = {
+                when (state) {
+                    ProfileScreen.Loading -> LoadingScreen()
+                    is ProfileScreen.Success -> {
+                        val scrollState = rememberScrollState()
+                        val userData = state.content
+                        BoxWithConstraints(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(scrollState),
-                        ) {
-                            ProfileHeader(
-                                scrollState,
-                                userData,
-                                this@BoxWithConstraints.maxHeight
-                            )
-                            UserInfoFields(
-                                onPasswordChange = { old, new ->
-                                    onPasswordChange(old, new)
-                                },
-                                userData = userData,
-                                containerHeight = this@BoxWithConstraints.maxHeight
-                            )
-                        }
+                                .fillMaxWidth()
+                                .nestedScroll(nestedScrollInteropConnection),
+                            //.systemBarsPadding(),
+                            content = {
+                                Surface {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .verticalScroll(scrollState),
+                                    ) {
+                                        ProfileHeader(
+                                            scrollState,
+                                            userData,
+                                            this@BoxWithConstraints.maxHeight
+                                        )
+                                        UserInfoFields(
+                                            onPasswordChange = { old, new ->
+                                                onPasswordChange(old, new)
+                                            },
+                                            userData = userData,
+                                            containerHeight = this@BoxWithConstraints.maxHeight
+                                        )
+                                    }
+                                }
+
+                                val fabExtended by remember { derivedStateOf { scrollState.value == 0 } }
+                                ProfileFab(
+                                    extended = fabExtended,
+                                    userIsMe = userData.isMe(),
+                                    modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                        // Offsets the FAB to compensate for CoordinatorLayout collapsing behaviour
+                                        .offset(y = ((-100).dp)),
+                                    onFabClicked = { onEditProfileClick(userData) }
+                                )
+                            }
+                        )
                     }
 
-                    val fabExtended by remember { derivedStateOf { scrollState.value == 0 } }
-                    ProfileFab(
-                        extended = fabExtended,
-                        userIsMe = userData.isMe(),
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            // Offsets the FAB to compensate for CoordinatorLayout collapsing behaviour
-                            .offset(y = ((-100).dp)),
-                        onFabClicked = { onEditProfileClick(userData) }
-                    )
+                    is ProfileScreen.Error -> ErrorScreen()
                 }
-            )
-        }
+            }
+        )
 
-        is ProfileScreen.Error -> ErrorScreen()
     }
 }
 
@@ -124,6 +154,7 @@ private fun UserInfoFields(
     userData: ProfileScreenData,
     containerHeight: Dp
 ) {
+    val context = LocalContext.current
     Column {
         Spacer(modifier = Modifier.height(8.dp))
         NameAndPosition(userData)
@@ -133,26 +164,30 @@ private fun UserInfoFields(
         )
         ProfileProperty(stringResource(R.string.phone_number), userData.phoneNumber)
         ProfileProperty(stringResource(R.string.room), userData.room ?: "room not given")
-        Spacer(modifier = Modifier.height(8.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(8.dp))
+        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
         var oldPassword by remember { mutableStateOf(TextFieldValue("")) }
         var newPassword by remember { mutableStateOf(TextFieldValue("")) }
-        LabelAndPlaceHolder(
+        SimpleFilledTextField(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp),
             label = "Old password",
-            text = oldPassword
-        ) {
-            oldPassword = it
-        }
-        LabelAndPlaceHolder(
+            value = oldPassword.text,
+            onValueChanged = { oldPassword = TextFieldValue(it) })
+        SimpleFilledTextField(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp),
             label = "New password",
-            text = newPassword
-        ) {
-            newPassword = it
-        }
+            value = newPassword.text,
+            onValueChanged = { newPassword = TextFieldValue(it) })
         CommonJetHubLoginButton(
             onClick = {
-                onPasswordChange(oldPassword.text, newPassword.text)
+                if(oldPassword.text.length>2 && newPassword.text.length>2){
+                    onPasswordChange(oldPassword.text, newPassword.text)
+                }else{
+                    Toast.makeText(context, "Enter at leas 3 characters", Toast.LENGTH_SHORT).show()
+                }
             },
             textStyle = MaterialTheme.typography.labelSmall,
             text = "Change Password",
@@ -163,37 +198,8 @@ private fun UserInfoFields(
                 .clip(RoundedCornerShape(12.dp))
                 .background(color = MaterialTheme.colorScheme.primary),
         )
-        // Add a spacer that always shows part (320.dp) of the fields list regardless of the device,
-        // in order to always leave some content at the top.
         Spacer(Modifier.height((containerHeight - 320.dp).coerceAtLeast(0.dp)))
     }
-}
-
-@Composable
-fun LabelAndPlaceHolder(
-    label: String,
-    text: TextFieldValue,
-    onTextChanged: (TextFieldValue) -> Unit
-) {
-    TextField(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth(),
-        value = text,
-        onValueChange = {
-            onTextChanged(it)
-        },
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = MaterialTheme.colorScheme.background,
-            focusedContainerColor = MaterialTheme.colorScheme.background
-        ),
-        label = {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelSmall
-            )
-        },
-    )
 }
 
 @Composable
@@ -332,8 +338,9 @@ fun ProfileFab(
 fun ConvPreviewLandscapeMeDefault() {
     EmployeeManagementTheme(darkTheme = false) {
         ProfileScreen(
-            onPasswordChange = {_, _ -> },
+            onPasswordChange = { _, _ -> },
             onEditProfileClick = {},
+            onNavigationIconClicked = {},
             state = ProfileScreen.Success(
                 content = ProfileScreenData(
                     userId = 1,
@@ -356,7 +363,8 @@ fun ConvPreviewPortraitMeDefault() {
     EmployeeManagementTheme(darkTheme = true) {
         ProfileScreen(
             onEditProfileClick = {},
-            onPasswordChange = {_, _ -> },
+            onNavigationIconClicked = {},
+            onPasswordChange = { _, _ -> },
             state = ProfileScreen.Success(
                 content = ProfileScreenData(
                     userId = 1,

@@ -69,9 +69,9 @@ class HomeFragment: Fragment() {
                     imageUrl = user.image,
                     drawerState = drawerState,
                     onProfileClicked = {
-                        findNavController().navigate(R.id.profileFragment)
                         scope.launch {
                             drawerState.close()
+                            findNavController().navigate(R.id.profileFragment)
                         }
                     }
                 ) {

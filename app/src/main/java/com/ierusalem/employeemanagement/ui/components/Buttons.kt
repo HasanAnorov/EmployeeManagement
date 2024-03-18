@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -21,10 +22,11 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun CommonJetHubLoginButton(
-    onClick: () -> Unit,
-    text: String,
     modifier: Modifier = Modifier,
+    text: String,
+    textColor: Color = MaterialTheme.colorScheme.onPrimary,
     textStyle: TextStyle = MaterialTheme.typography.titleSmall,
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = modifier.clickable { onClick() },
@@ -38,7 +40,7 @@ fun CommonJetHubLoginButton(
                     )
                     .fillMaxWidth(),
                 style = textStyle,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = textColor,
                 textAlign = TextAlign.Center
             )
         },

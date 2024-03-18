@@ -2,6 +2,7 @@ package com.ierusalem.employeemanagement.features.edit_profile.presentation
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.edit_profile.data.model.RequestModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.FileOutputStream
 
 class EditProfileFragment : Fragment() {
 
@@ -90,16 +95,38 @@ class EditProfileFragment : Fragment() {
                             viewModel.onUsernameChanged(it)
                         },
                         onSaveClicked = {
-                            val requestMode = RequestModel(
-                                email = if (email != viewModel.state.value.newEmail) viewModel.state.value.newEmail else email,
-                                last_name = if (lastname != viewModel.state.value.newLastname) viewModel.state.value.newLastname else lastname,
-                                username = if (username != viewModel.state.value.newUsername) viewModel.state.value.newUsername else username,
-                                image = "hasan",
-                                phone_no = if (phoneNumber != viewModel.state.value.newPhoneNumber) viewModel.state.value.newPhoneNumber else phoneNumber,
-                                unvoni = if (position != viewModel.state.value.newPosition) viewModel.state.value.newPosition else position,
-                                xonasi = if (room != viewModel.state.value.newRoom) viewModel.state.value.newRoom else room
-                            )
-                            viewModel.updateProfile(requestMode)
+                            val requestBodyBuilder = MultipartBody.Builder()
+                            requestBodyBuilder.setType(MultipartBody.FORM)
+                            requestBodyBuilder.addFormDataPart("email", if (email != viewModel.state.value.newEmail) viewModel.state.value.newEmail else email )
+                            requestBodyBuilder.addFormDataPart("last_name", if (lastname != viewModel.state.value.newLastname) viewModel.state.value.newLastname else lastname )
+                            requestBodyBuilder.addFormDataPart("username", if (username != viewModel.state.value.newUsername) viewModel.state.value.newUsername else username )
+                            requestBodyBuilder.addFormDataPart("phone_no", if (phoneNumber != viewModel.state.value.newPhoneNumber) viewModel.state.value.newPhoneNumber else phoneNumber )
+                            requestBodyBuilder.addFormDataPart("unvoni", if (position != viewModel.state.value.newPosition) viewModel.state.value.newPosition else position )
+                            requestBodyBuilder.addFormDataPart("xonasi", if (room != viewModel.state.value.newRoom) viewModel.state.value.newRoom else room )
+                            if (state.value.imageUri != null) {
+                                val inputStream =
+                                    requireContext().contentResolver.openInputStream(state.value.imageUri!!)
+                                val imageFile = File.createTempFile(
+                                    "image",
+                                    ".jpg",
+                                    requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                                )
+                                val fileOutputStream = FileOutputStream(imageFile)
+                                inputStream?.copyTo(fileOutputStream)
+                                fileOutputStream.close()
+                                requestBodyBuilder.addFormDataPart(
+                                    "image",
+                                    imageFile.name,
+                                    imageFile.asRequestBody(
+                                        "image/*".toMediaType()
+                                    )
+                                )
+                            }
+                            val requestBody = requestBodyBuilder.build()
+                            viewModel.updateProfile(requestBody)
+                        },
+                        onNavigationIconClicked = {
+                            findNavController().popBackStack()
                         }
                     )
                 }
@@ -128,7 +155,10 @@ class EditProfileFragment : Fragment() {
             EditProfileNavigation.NavigateToMain -> {
                 val bundle = Bundle()
                 bundle.putBoolean(Constants.PROFILE_CHANGE, true)
-                findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_editProfileFragment_to_profileFragment,
+                    bundle
+                )
             }
         }
     }

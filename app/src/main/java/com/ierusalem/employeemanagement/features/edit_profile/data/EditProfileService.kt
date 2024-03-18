@@ -1,7 +1,7 @@
 package com.ierusalem.employeemanagement.features.edit_profile.data
 
-import com.ierusalem.employeemanagement.features.edit_profile.data.model.RequestModel
 import com.ierusalem.employeemanagement.features.edit_profile.data.response_model.ResponseModel
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -12,7 +12,7 @@ interface EditProfileService {
     @PUT("put_profil")
     suspend fun updateProfile(
         @Header("Authorization") authToken: String,
-        @Body body: RequestModel
+        @Body body: RequestBody
     ): Response<ResponseModel>
 
 }

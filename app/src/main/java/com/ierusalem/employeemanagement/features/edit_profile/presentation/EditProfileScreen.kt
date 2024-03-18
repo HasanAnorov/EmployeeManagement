@@ -2,15 +2,16 @@ package com.ierusalem.employeemanagement.features.edit_profile.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,9 +21,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginButton
-import com.ierusalem.employeemanagement.ui.components.CommonTextField
+import com.ierusalem.employeemanagement.ui.components.CommonTopBar
+import com.ierusalem.employeemanagement.ui.components.SimpleFilledTextField
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileScreen(
     state: EditProfileScreenState,
@@ -34,6 +37,7 @@ fun EditProfileScreen(
     onPositionChanged: (String) -> Unit,
     onRoomChanged: (String) -> Unit,
     onPhoneNumberChanged: (String) -> Unit,
+    onNavigationIconClicked: () ->  Unit,
 ) {
     val verticalScrollState = rememberScrollState()
     Column(
@@ -44,123 +48,93 @@ fun EditProfileScreen(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
         content = {
-            Box(
-                modifier = Modifier
-                    .height(100.dp)
-                    .background(MaterialTheme.colorScheme.primary)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ){
-                Text(
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .padding(horizontal = 16.dp),
-                    text = "Profile Edit Screen",
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.titleSmall,
-                )
-            }
-            EditProfileProperty(
-                headline = "Enter new user name",
+            CommonTopBar(
+                containerColor = MaterialTheme.colorScheme.background,
+                titleColor = MaterialTheme.colorScheme.onBackground,
+                onNavIconPressed = { onNavigationIconClicked() },
+                navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+                title = {
+                    Text(
+                        text = "Edit Profile",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                }
+            )
+
+            SimpleFilledTextField(
+                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 24.dp),
                 value = state.newUsername,
-                label = "New username here ...",
-                onTextChanged = {
+                label = "Username",
+                onValueChanged = {
                     onUsernameChanged(it)
                 }
             )
-            EditProfileProperty(
-                headline = "Enter new last name",
+            SimpleFilledTextField(
+                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
                 value = state.newLastname,
-                label = "New lastname here ...",
-                onTextChanged = {
+                label = "Lastname",
+                onValueChanged = {
                     onLastnameChanged(it)
                 }
             )
-            EditProfileProperty(
-                headline = "Enter new email",
+            SimpleFilledTextField(
+                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
                 value = state.newEmail,
-                label = "New email here ...",
-                onTextChanged = {
+                label = "Email",
+                onValueChanged = {
                     onEmailChanged(it)
                 }
             )
-            EditProfileProperty(
-                headline = "Enter new position ",
+            SimpleFilledTextField(
+                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
                 value = state.newPosition,
-                label = "New position here ...",
-                onTextChanged = {
+                label = "Position",
+                onValueChanged = {
                     onPositionChanged(it)
                 }
             )
-            EditProfileProperty(
-                headline = "Enter new room ",
+            SimpleFilledTextField(
+                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
                 value = state.newRoom,
-                label = "New room here ...",
-                onTextChanged = {
+                label = "Room",
+                onValueChanged = {
                     onRoomChanged(it)
                 }
             )
-            EditProfileProperty(
-                headline = "Enter new phone number ",
+            SimpleFilledTextField(
+                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
                 value = state.newPhoneNumber,
-                label = "New phone number here ...",
-                onTextChanged = {
+                label = "Phone Number",
+                onValueChanged = {
                     onPhoneNumberChanged(it)
                 }
             )
 
             CommonJetHubLoginButton(
-                onClick = onPhotoPickerClicked,
-                text = if (state.imageUri != null) "${state.imageUri.path}" else "Choose Photo from Gallery",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .padding(top = 24.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(color = MaterialTheme.colorScheme.primary),
+                    .background(color = MaterialTheme.colorScheme.primaryContainer),
+                text = if (state.imageUri != null) "Photo Picked" else "Local Storage",
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                onClick = onPhotoPickerClicked,
             )
 
             CommonJetHubLoginButton(
-                onClick = onSaveClicked,
-                text = "Save Profile",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .padding(top = 24.dp)
                     .padding(bottom = 16.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(color = MaterialTheme.colorScheme.primary),
+                    .background(color = MaterialTheme.colorScheme.primaryContainer),
+                text = "Save Profile",
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                onClick = onSaveClicked,
             )
-        }
-    )
-}
-
-@Composable
-fun EditProfileProperty(
-    headline: String,
-    onTextChanged: (String) -> Unit,
-    value: String,
-    label: String
-){
-    Text(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .padding(top = 16.dp),
-        text = headline,
-        style = MaterialTheme.typography.labelSmall,
-        color = MaterialTheme.colorScheme.onBackground
-    )
-    CommonTextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 6.dp)
-            .padding(horizontal = 16.dp),
-        textStyle = MaterialTheme.typography.labelSmall,
-        value = value,
-        label = label,
-        shape = RoundedCornerShape(12.dp),
-        onTextChanged = {
-                    onTextChanged(it)
         }
     )
 }
@@ -178,7 +152,8 @@ fun EditProfileScreen_Preview_Light() {
             onRoomChanged = {},
             onPositionChanged = {},
             onEmailChanged = {},
-            onSaveClicked = {}
+            onSaveClicked = {},
+            onNavigationIconClicked = {}
         )
     }
 }
@@ -196,7 +171,8 @@ fun EditProfileScreen_Preview_Dark() {
             onRoomChanged = {},
             onPositionChanged = {},
             onEmailChanged = {},
-            onSaveClicked = {}
+            onSaveClicked = {},
+            onNavigationIconClicked = {}
         )
     }
 }

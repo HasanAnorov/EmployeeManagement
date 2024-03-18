@@ -13,13 +13,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(state: HomeScreenState, onDrawerClick: () -> Unit) {
+fun HomeScreen(
+    state: HomeScreenState,
+    onDrawerClick: () -> Unit
+) {
 
     val topBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
@@ -27,7 +32,7 @@ fun HomeScreen(state: HomeScreenState, onDrawerClick: () -> Unit) {
     Scaffold(
         topBar = {
             CommonTopBar(
-                modifier = Modifier,
+                modifier = Modifier.shadow(elevation = 6.dp),
                 onNavIconPressed = { onDrawerClick() },
                 scrollBehavior = scrollBehavior,
                 title = {
