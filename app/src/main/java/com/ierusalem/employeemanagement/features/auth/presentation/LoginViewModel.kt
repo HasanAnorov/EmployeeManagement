@@ -85,7 +85,11 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
                         saveToken(response.body()!!.access)
                         saveRefreshToken(response.body()!!.refresh)
 
-                        emitNavigation(LoginNavigation.NavigateToMain)
+                        if(response.body()!!.user.isStaff){
+                            emitNavigation(LoginNavigation.NavigateToMain)
+                        }else{
+                            emitNavigation(LoginNavigation.NavigateToStaffMain)
+                        }
                     } else {
                         emitNavigation(LoginNavigation.InvalidResponse)
                     }

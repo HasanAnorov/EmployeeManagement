@@ -17,29 +17,22 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
-    private val viewModel:LoginViewModel by viewModel()
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
                 val state by viewModel.state.collectAsState()
                 EmployeeManagementTheme {
-                    LoginScreen(
-                        state = state,
-                        onUsernameChanged = {
-                            viewModel.onUsernameChanged(it)
-                        },
-                        onPasswordChanged = {
-                            viewModel.onPasswordChanged(it)
-                        },
-                        onLoginClick = {
-                            viewModel.loginIfFieldsAreValid()
-                        }
-                    )
+                    LoginScreen(state = state, onUsernameChanged = {
+                        viewModel.onUsernameChanged(it)
+                    }, onPasswordChanged = {
+                        viewModel.onPasswordChanged(it)
+                    }, onLoginClick = {
+                        viewModel.loginIfFieldsAreValid()
+                    })
                 }
             }
         }
@@ -48,8 +41,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.screenNavigation.executeWithLifecycle(
-            lifecycle = viewLifecycleOwner.lifecycle,
-            action = ::executeNavigation
+            lifecycle = viewLifecycleOwner.lifecycle, action = ::executeNavigation
         )
     }
 
@@ -57,15 +49,14 @@ class LoginFragment : Fragment() {
         when (navigation) {
             LoginNavigation.InvalidResponse -> {
                 Toast.makeText(
-                    requireContext(),
-                    getString(R.string.user_not_found),
-                    Toast.LENGTH_SHORT
+                    requireContext(), getString(R.string.user_not_found), Toast.LENGTH_SHORT
                 ).show()
             }
 
-            LoginNavigation.NavigateToMain -> {
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-            }
+            LoginNavigation.NavigateToStaffMain -> findNavController().navigate(R.id.action_loginFragment_to_staffHomeFragment)
+
+            LoginNavigation.NavigateToMain -> findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+
         }
     }
 

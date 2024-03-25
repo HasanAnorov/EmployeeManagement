@@ -22,7 +22,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         
         val preferenceHelper = PreferenceHelper(this)
-        val destination = if(preferenceHelper.isLogged()) R.id.homeFragment else R.id.loginFragment
+        val userData = preferenceHelper.getUser()
+        val destination = if(preferenceHelper.isLogged()){
+            if(userData.isStaff){
+                R.id.homeFragment
+            }else{
+                R.id.staffHomeFragment
+            }
+        } else R.id.loginFragment
         val controller = findNavController()
         val inflater = controller.navInflater
         val graph = inflater.inflate(R.navigation.nav_graph)
