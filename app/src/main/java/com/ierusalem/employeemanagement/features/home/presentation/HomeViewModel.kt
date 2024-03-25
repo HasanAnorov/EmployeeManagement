@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.R
@@ -25,7 +24,10 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     val drawerShouldBeOpened = _drawerShouldBeOpened.asStateFlow()
 
     init {
-        getCommands()
+        getCommands("yuborildi")
+        getCommands("qabulqildi")
+        getCommands("bajarildi")
+        getCommands("bajarilmadi")
         getEmployees()
     }
 
@@ -59,17 +61,42 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         }
     }
 
-    private fun getCommands() {
+    private fun getCommands(status: String) {
         try {
             updateLoading(true)
             viewModelScope.launch {
-                repo.getMessage().let { response ->
+                repo.getMessage(status).let { response ->
                     if (response.isSuccessful) {
                         updateLoading(false)
-                        _state.update {
-                            it.copy(
-                                commands = response.body()?.results ?: listOf()
-                            )
+                        when(status){
+                            "yuborildi" -> {
+                                _state.update {
+                                    it.copy(
+                                        commandsSent = response.body()?.results ?: listOf()
+                                    )
+                                }
+                            }
+                            "qabulqildi" ->{
+                                _state.update {
+                                    it.copy(
+                                        commandsReceived = response.body()?.results ?: listOf()
+                                    )
+                                }
+                            }
+                            "bajarildi" ->{
+                                _state.update {
+                                    it.copy(
+                                        commandsDone = response.body()?.results ?: listOf()
+                                    )
+                                }
+                            }
+                            "bajarilmadi" ->{
+                                _state.update {
+                                    it.copy(
+                                        commandsNotDone = response.body()?.results ?: listOf()
+                                    )
+                                }
+                            }
                         }
                     } else {
                         updateLoading(false)
@@ -78,7 +105,6 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
             }
         } catch (e: Exception) {
             updateLoading(false)
-            Log.d("ahi3646", "getCommands: catch fail - ${e.localizedMessage}")
         }
     }
 
@@ -110,8 +136,8 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                 emitNavigation(HomeScreenNavigation.NavigateToCompose(intent.userId))
             }
 
-            HomeScreenClickIntents.OnPullToRefreshCommands -> {
-                getCommands()
+            is HomeScreenClickIntents.OnPullToRefreshCommands -> {
+                getCommands(intent.status)
             }
 
             is HomeScreenClickIntents.TabItemClick -> {
@@ -128,12 +154,18 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
 
 data class HomeScreenState(
     val tabItems: List<UiText> = listOf(
-        UiText.StringResource(resId = R.string.commands),
+        UiText.StringResource(resId = R.string.commands_sent),
+        UiText.StringResource(resId = R.string.commands_received),
+        UiText.StringResource(resId = R.string.commands_done),
+        UiText.StringResource(resId = R.string.commands_not_done),
         UiText.StringResource(resId = R.string.employees)
     ),
     val selectedTabIndex: Int = 0,
     val username: String = "",
     val isLoading: Boolean = false,
-    val commands: List<Result> = listOf(),
+    val commandsSent: List<Result> = listOf(),
+    val commandsReceived: List<Result> = listOf(),
+    val commandsDone: List<Result> = listOf(),
+    val commandsNotDone: List<Result> = listOf(),
     val employees: List<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result> = listOf(),
 )

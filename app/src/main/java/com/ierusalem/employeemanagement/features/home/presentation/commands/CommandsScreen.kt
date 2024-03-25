@@ -22,17 +22,28 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 @Composable
 fun ComposeScreen(
     modifier: Modifier = Modifier,
+    status: String,
     intentReducer: (HomeScreenClickIntents) -> Unit,
     state: HomeScreenState
 ) {
+
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+        @Suppress("DEPRECATION")
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
-            onRefresh = { intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands) }
+            onRefresh = {
+                when(status){
+                    "yuborildi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
+                    "qabulqildi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("qabulqildi"))
+                    "bajarildi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("bajarildi"))
+                    "bajarilmadi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("bajarilmadi"))
+                    else -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
+                }
+            }
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -41,7 +52,14 @@ fun ComposeScreen(
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Top,
                 content = {
-                    items(state.commands) { command ->
+                    val data = when(status){
+                        "yuborildi" -> state.commandsSent
+                        "qabulqildi" -> state.commandsReceived
+                        "bajarildi" -> state.commandsDone
+                        "bajarilmadi" -> state.commandsNotDone
+                        else -> state.commandsSent
+                    }
+                    items(data) { command ->
                         ExpandableCard(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
@@ -61,7 +79,8 @@ fun ComposeScreenPreview() {
     EmployeeManagementTheme {
         ComposeScreen(
             intentReducer = {},
-            state = HomeScreenState()
+            state = HomeScreenState(),
+            status = ""
         )
     }
 }
@@ -72,7 +91,8 @@ fun ComposeScreenPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         ComposeScreen(
             intentReducer = {},
-            state = HomeScreenState()
+            state = HomeScreenState(),
+            status = ""
         )
     }
 }

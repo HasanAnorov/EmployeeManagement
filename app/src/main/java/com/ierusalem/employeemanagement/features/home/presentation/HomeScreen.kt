@@ -15,8 +15,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.home.presentation.commands.ComposeScreen
@@ -83,8 +84,9 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(paddingValues),
             content = {
-                TabRow(
+                ScrollableTabRow(
                     modifier = Modifier.fillMaxWidth(),
+                    edgePadding = 0.dp,
                     selectedTabIndex = state.selectedTabIndex,
                     indicator = { tabPositions ->
                         if (state.selectedTabIndex < tabPositions.size) {
@@ -128,11 +130,26 @@ fun HomeScreen(
                 ) { pageCount ->
                     when (pageCount) {
                         0 -> ComposeScreen(
+                            state = state,
                             intentReducer = intentReducer,
-                            state = state
+                            status = "yuborildi"
                         )
-
-                        1 -> {
+                        1-> ComposeScreen(
+                            state = state,
+                            intentReducer = intentReducer,
+                            status = "qabulqildi"
+                        )
+                        2-> ComposeScreen(
+                            state = state,
+                            intentReducer = intentReducer,
+                            status = "bajarildi"
+                        )
+                        3-> ComposeScreen(
+                            state = state,
+                            intentReducer = intentReducer,
+                            status = "bajarilmadi"
+                        )
+                        4 -> {
                             EmployeesScreen(
                                 intentReducer = intentReducer,
                                 state = state

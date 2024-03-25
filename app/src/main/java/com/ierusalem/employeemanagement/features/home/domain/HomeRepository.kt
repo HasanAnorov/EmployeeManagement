@@ -6,7 +6,7 @@ import retrofit2.Response
 
 interface HomeRepository {
     suspend fun logoutUser():Response<Unit>
-    suspend fun getMessage(): Response<CommandsResponse>
+    suspend fun getMessage(status: String): Response<CommandsResponse>
     suspend fun getEmployees(): Response<EmployeesResponse>
     fun deleteToken()
     fun deleteRefreshToken()

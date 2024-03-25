@@ -21,9 +21,10 @@ class HomeRepositoryImpl(
         )
     }
 
-    override suspend fun getMessage(): Response<CommandsResponse> {
+    override suspend fun getMessage(status: String): Response<CommandsResponse> {
         return RestClient(context).homeService.getCommand(
-            authToken = preferenceHelper.getToken()
+            authToken = preferenceHelper.getToken(),
+            status = status
         )
     }
 
