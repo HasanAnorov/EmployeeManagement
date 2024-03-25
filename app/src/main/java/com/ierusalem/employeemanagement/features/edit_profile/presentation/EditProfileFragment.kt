@@ -147,7 +147,7 @@ class EditProfileFragment : Fragment() {
             EditProfileNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
-                    "Ma'lumotlarni saqlanmadi!",
+                    getString(R.string.data_not_saved),
                     Toast.LENGTH_SHORT
                 ).show()
             }

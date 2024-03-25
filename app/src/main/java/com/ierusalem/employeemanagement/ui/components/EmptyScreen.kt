@@ -9,13 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun EmptyScreen(
     modifier: Modifier = Modifier,
-    message: String = "Ma'lumot mavjud emas hoircha"
+    message: String = stringResource(R.string.no_data_available)
 ) {
     Column(
         modifier = modifier,

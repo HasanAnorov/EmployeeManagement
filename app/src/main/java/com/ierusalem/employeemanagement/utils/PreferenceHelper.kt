@@ -9,6 +9,8 @@ import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.
 class PreferenceHelper (context: Context){
     private val sharedPref: SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE)
 
+
+
     fun saveToken(token:String){
         with(sharedPref.edit()) {
             putString(Constants.TOKEN_KEY, "Bearer $token")
@@ -21,6 +23,17 @@ class PreferenceHelper (context: Context){
             putString(Constants.REFRESH_TOKEN_KEY, token)
             apply()
         }
+    }
+
+    fun saveLanguage(language:String){
+        with(sharedPref.edit()) {
+            putString(Constants.LANGUAGE_KEY, language)
+            apply()
+        }
+    }
+
+    fun getLanguage(): String{
+        return sharedPref.getString(Constants.LANGUAGE_KEY, "")!!
     }
 
     fun deleteToken(){

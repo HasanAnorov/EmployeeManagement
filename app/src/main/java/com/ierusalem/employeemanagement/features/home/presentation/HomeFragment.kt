@@ -20,12 +20,13 @@ import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModel()
 
@@ -46,9 +47,7 @@ class HomeFragment: Fragment() {
                     .collectAsStateWithLifecycle()
 
                 if (drawerOpen) {
-                    // Open drawer and reset state in VM.
                     LaunchedEffect(Unit) {
-                        // wrap in try-finally to handle interruption whiles opening drawer
                         try {
                             drawerState.open()
                         } finally {
@@ -57,7 +56,6 @@ class HomeFragment: Fragment() {
                     }
                 }
 
-                // Intercepts back navigation when the drawer is open
                 val scope = rememberCoroutineScope()
                 if (drawerState.isOpen) {
                     BackHandler {
@@ -79,7 +77,10 @@ class HomeFragment: Fragment() {
                         }
                     },
                     onSettingsClicked = {
-
+                        scope.launch {
+                            drawerState.close()
+                            findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
+                        }
                     },
                     onLogoutClicked = {
                         scope.launch {
@@ -114,17 +115,27 @@ class HomeFragment: Fragment() {
 
     private fun executeNavigation(navigation: HomeScreenNavigation) {
         when (navigation) {
-            HomeScreenNavigation.NavigateToCompose -> {
-                findNavController().navigate(R.id.action_homeFragment_to_composeFragment)
+            HomeScreenNavigation.FailedToLoadEmployees -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.problem_on_loading_employees_list),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            HomeScreenNavigation.NavigateToPrivate -> {
 
+            is HomeScreenNavigation.NavigateToCompose -> {
+                val bundle = Bundle()
+                bundle.putString(Constants.COMPOSE_PROFILE_ID, navigation.userId.toString())
+                findNavController().navigate(R.id.action_homeFragment_to_composeFragment, bundle)
             }
+
             HomeScreenNavigation.NavigateToLogin -> {
                 findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
             }
+
             HomeScreenNavigation.FailedToLogout -> {
-                Toast.makeText(requireContext(), "Can't logout", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.can_t_logout), Toast.LENGTH_SHORT).show()
             }
         }
     }

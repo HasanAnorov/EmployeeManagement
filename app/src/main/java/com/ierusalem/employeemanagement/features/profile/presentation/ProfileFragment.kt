@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
             ProfileNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
-                    "Parol o'zgartirilmadi",
+                    getString(R.string.password_didn_t_change),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -86,7 +86,7 @@ class ProfileFragment : Fragment() {
             ProfileNavigation.PasswordChanged -> {
                 Toast.makeText(
                     requireContext(),
-                    "Parol o'zgartirildi",
+                    getString(R.string.password_has_changed),
                     Toast.LENGTH_SHORT
                 ).show()
             }

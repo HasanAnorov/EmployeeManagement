@@ -18,8 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginButton
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.components.SimpleFilledTextField
@@ -55,7 +57,7 @@ fun EditProfileScreen(
                 navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
                 title = {
                     Text(
-                        text = "Edit Profile",
+                        text = stringResource(id = R.string.edit_profile),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
@@ -63,49 +65,61 @@ fun EditProfileScreen(
             )
 
             SimpleFilledTextField(
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 24.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 24.dp),
                 value = state.newUsername,
-                label = "Username",
+                label = stringResource(id = R.string.username),
                 onValueChanged = {
                     onUsernameChanged(it)
                 }
             )
             SimpleFilledTextField(
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
                 value = state.newLastname,
-                label = "Lastname",
+                label = stringResource(R.string.lastname),
                 onValueChanged = {
                     onLastnameChanged(it)
                 }
             )
             SimpleFilledTextField(
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
                 value = state.newEmail,
-                label = "Email",
+                label = stringResource(R.string.email),
                 onValueChanged = {
                     onEmailChanged(it)
                 }
             )
             SimpleFilledTextField(
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
                 value = state.newPosition,
-                label = "Position",
+                label = stringResource(id = R.string.position),
                 onValueChanged = {
                     onPositionChanged(it)
                 }
             )
             SimpleFilledTextField(
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
                 value = state.newRoom,
-                label = "Room",
+                label = stringResource(id = R.string.room),
                 onValueChanged = {
                     onRoomChanged(it)
                 }
             )
             SimpleFilledTextField(
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
                 value = state.newPhoneNumber,
-                label = "Phone Number",
+                label = stringResource(id = R.string.phone_number),
                 onValueChanged = {
                     onPhoneNumberChanged(it)
                 }
@@ -118,7 +132,9 @@ fun EditProfileScreen(
                     .padding(top = 24.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(color = MaterialTheme.colorScheme.primaryContainer),
-                text = if (state.imageUri != null) "Photo Picked" else "Local Storage",
+                text = if (state.imageUri != null) stringResource(R.string.photo_picked) else stringResource(
+                    R.string.local_storage
+                ),
                 textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 onClick = onPhotoPickerClicked,
             )
@@ -131,7 +147,7 @@ fun EditProfileScreen(
                     .padding(bottom = 16.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(color = MaterialTheme.colorScheme.primaryContainer),
-                text = "Save Profile",
+                text = stringResource(id = R.string.save_profile),
                 textColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 onClick = onSaveClicked,
             )

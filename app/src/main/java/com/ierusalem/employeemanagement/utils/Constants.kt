@@ -5,11 +5,16 @@ object Constants {
     const val SHARED_PREF = "employee_management_pref"
     const val TOKEN_KEY = "employee_management_pre_key"
     const val REFRESH_TOKEN_KEY = "employee_management_pre_refresh_key"
+    const val LANGUAGE_KEY = "employee_management_language_key"
     const val USERNAME_KEY = "employee_management_username_key"
 
     const val PROFILE_CHANGE = "profile_changed_successfully"
 
+    const val COMPOSE_PROFILE_ID = "compose_profile_id"
+
     const val BASE_URL = "http://ithelpshchool.uz/"
+
+    const val MAX_FILE_SIZE:Long = 18874368
 
     const val TO_EDIT_PROFILE_USERNAME = "to_edit_profile_username"
     const val TO_EDIT_PROFILE_LASTNAME = "to_edit_profile_lastname"

@@ -1,14 +1,15 @@
 package com.ierusalem.employeemanagement.features.auth.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
 import com.ierusalem.employeemanagement.features.auth.domain.AuthRepository
 import com.ierusalem.employeemanagement.core.ValidationResult
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
+import com.ierusalem.employeemanagement.utils.UiText
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -80,7 +81,6 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
                     password = state.value.password
                 ).let { response ->
                     if (response.isSuccessful) {
-                        Log.d("ahi3646_response", "onLoginClick: ${response.body()} ")
                         saveUser(response.body()!!.user)
                         saveToken(response.body()!!.access)
                         saveRefreshToken(response.body()!!.refresh)
@@ -98,11 +98,15 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
         return when {
             state.value.username.isBlank() -> ValidationResult(
                 successful = false,
-                errorMessage = "Username can't be blank"
+                errorMessage = UiText.StringResource(
+                    resId = R.string.username_can_t_be_blank
+                )
             )
             state.value.username.length < 3 -> ValidationResult(
                 successful = false,
-                errorMessage = "Username should be than 3 words!"
+                errorMessage = UiText.StringResource(
+                    resId = R.string.username_should_be_than_3_words
+                )
             )
 
             else -> ValidationResult(
@@ -115,11 +119,15 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
         return when {
             state.value.password.isBlank() -> ValidationResult(
                 successful = false,
-                errorMessage = "Password can't be blank"
+                errorMessage = UiText.StringResource(
+                    resId = R.string.password_cannot_be_blank
+                )
             )
             state.value.username.length < 3 -> ValidationResult(
                 successful = false,
-                errorMessage = "Password should be than 3 words!"
+                errorMessage = UiText.StringResource(
+                    resId = R.string.password_cannot_be_less
+                )
             )
 
             else -> ValidationResult(
@@ -132,7 +140,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
 
 data class LoginScreenState(
     val username: String = "",
-    val usernameError: String? = null,
+    val usernameError: UiText? = null,
     val password: String = "",
-    val passwordError: String? = null,
+    val passwordError: UiText? = null,
 )

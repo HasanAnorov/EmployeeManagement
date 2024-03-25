@@ -33,6 +33,10 @@
 
         <action
             android:id="@+id/action_homeFragment_to_composeFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
             app:destination="@id/composeFragment" />
 
         <action
@@ -40,6 +44,13 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:destination="@id/settingsFragment" />
 
     </fragment>
 
@@ -70,5 +81,9 @@
         android:id="@+id/composeFragment"
         android:name="com.ierusalem.employeemanagement.features.compose.presentation.ComposeFragment"
         android:label="ComposeFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ierusalem.employeemanagement.features.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

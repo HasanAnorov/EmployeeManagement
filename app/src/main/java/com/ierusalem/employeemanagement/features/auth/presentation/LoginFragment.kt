@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
             LoginNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
-                    "Foydalanuvchi topilmadi",
+                    getString(R.string.user_not_found),
                     Toast.LENGTH_SHORT
                 ).show()
             }

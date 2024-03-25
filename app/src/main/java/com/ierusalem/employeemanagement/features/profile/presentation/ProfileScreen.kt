@@ -83,7 +83,7 @@ fun ProfileScreen(
             navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
             title = {
                 Text(
-                    text = "Profile",
+                    text = stringResource(id = R.string.profile),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
@@ -103,7 +103,6 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .nestedScroll(nestedScrollInteropConnection),
-                            //.systemBarsPadding(),
                             content = {
                                 Surface {
                                     Column(
@@ -132,7 +131,6 @@ fun ProfileScreen(
                                     userIsMe = userData.isMe(),
                                     modifier = Modifier
                                         .align(Alignment.BottomEnd)
-                                        // Offsets the FAB to compensate for CoordinatorLayout collapsing behaviour
                                         .offset(y = ((-100).dp)),
                                     onFabClicked = { onEditProfileClick(userData) }
                                 )
@@ -160,10 +158,10 @@ private fun UserInfoFields(
         NameAndPosition(userData)
         ProfileProperty(
             stringResource(R.string.position),
-            userData.position ?: "position not given"
+            userData.position ?: stringResource(R.string.position_not_given)
         )
         ProfileProperty(stringResource(R.string.phone_number), userData.phoneNumber)
-        ProfileProperty(stringResource(R.string.room), userData.room ?: "room not given")
+        ProfileProperty(stringResource(R.string.room), userData.room ?: stringResource(R.string.room_is_not_available))
         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
         var oldPassword by remember { mutableStateOf(TextFieldValue("")) }
         var newPassword by remember { mutableStateOf(TextFieldValue("")) }
@@ -171,14 +169,14 @@ private fun UserInfoFields(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp),
-            label = "Old password",
+            label = stringResource(R.string.old_password),
             value = oldPassword.text,
             onValueChanged = { oldPassword = TextFieldValue(it) })
         SimpleFilledTextField(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp),
-            label = "New password",
+            label = stringResource(R.string.new_password),
             value = newPassword.text,
             onValueChanged = { newPassword = TextFieldValue(it) })
         CommonJetHubLoginButton(
@@ -186,11 +184,12 @@ private fun UserInfoFields(
                 if(oldPassword.text.length>2 && newPassword.text.length>2){
                     onPasswordChange(oldPassword.text, newPassword.text)
                 }else{
-                    Toast.makeText(context, "Enter at leas 3 characters", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        context.getString(R.string.enter_at_leas_3_characters), Toast.LENGTH_SHORT).show()
                 }
             },
             textStyle = MaterialTheme.typography.labelSmall,
-            text = "Change Password",
+            text = stringResource(R.string.change_password),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
@@ -320,8 +319,6 @@ fun ProfileFab(
                 },
                 text = {
                     Text(
-                        //todo - temporary solution
-                        modifier = Modifier.padding(top = 14.dp),
                         text = stringResource(
                             id = if (userIsMe) R.string.edit_profile else R.string.message
                         ),

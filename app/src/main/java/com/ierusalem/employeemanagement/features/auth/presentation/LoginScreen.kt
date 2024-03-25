@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ fun LoginScreen(
     onPasswordChanged: (String) -> Unit,
     onLoginClick: () -> Unit
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,7 +39,7 @@ fun LoginScreen(
         content = {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "Welcome \nBack",
+                text = stringResource(R.string.welcome_back),
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.displayMedium,
             )
@@ -45,7 +47,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(top = 16.dp),
-                text = "Sign in to continue",
+                text = stringResource(id = R.string.sign_in_to_continue),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -54,8 +56,8 @@ fun LoginScreen(
                 modifier = Modifier
                     .padding(top = 24.dp)
                     .padding(horizontal = 16.dp),
-                label = "Username",
-                errorMessage = state.usernameError,
+                label = stringResource(id = R.string.username),
+                errorMessage = state.usernameError?.asString(context),
                 onTextChanged = {
                     onUsernameChanged(it)
                 },
@@ -66,8 +68,8 @@ fun LoginScreen(
                 modifier = Modifier
                     .padding(top = 12.dp)
                     .padding(horizontal = 16.dp),
-                label = "Password",
-                errorMessage = state.passwordError,
+                label = stringResource(id = R.string.password),
+                errorMessage = state.passwordError?.asString(context),
                 onTextChanged = {
                     onPasswordChanged(it)
                 },

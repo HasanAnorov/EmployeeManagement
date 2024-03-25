@@ -9,13 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun ErrorScreen(
     modifier: Modifier = Modifier,
-    errorMessage: String = "Something went wrong!"
+    errorMessage: String = stringResource(R.string.something_went_wrong),
 ){
     Column(
         modifier = modifier

@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -21,22 +23,28 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
-import com.ierusalem.employeemanagement.ui.components.CommonTopBar
-import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.ui.components.CommonTopBar
+import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComposeScreen(
     onAttachFileClick: () -> Unit,
-    onNavIconClicked: () -> Unit
+    onNavIconClicked: () -> Unit,
+    onSubmitClicked: () -> Unit,
+    onTextChanged: (String) -> Unit,
+    state: ComposeScreenState
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,11 +52,11 @@ fun ComposeScreen(
     ) {
         CommonTopBar(
             containerColor = MaterialTheme.colorScheme.background,
-            onNavIconPressed = { onNavIconClicked()},
+            onNavIconPressed = { onNavIconClicked() },
             navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
             title = {
                 Text(
-                    text = "Buyruq berish",
+                    text = stringResource(R.string.create_a_command),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
@@ -56,7 +64,7 @@ fun ComposeScreen(
         )
         Text(
             modifier = Modifier.padding(start = 32.dp),
-            text = "Buyruq mazmuni ",
+            text = stringResource(R.string.command_description),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.outline
         )
@@ -75,15 +83,18 @@ fun ComposeScreen(
             maxLines = 8,
             shape = RoundedCornerShape(12.dp),
             textStyle = MaterialTheme.typography.titleSmall,
-            value = "",
-            onValueChange = { },
+            value = state.textForm,
+            onValueChange = {
+                onTextChanged(it)
+            },
             label = {
                 Text(
-                    text = "Shu yerga yozing ...",
+                    text = stringResource(R.string.type_here),
                     style = MaterialTheme.typography.labelSmall
                 )
             },
         )
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,7 +110,7 @@ fun ComposeScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Attach file",
+                        text = stringResource(R.string.attach_a_file),
                         modifier = Modifier
                             .padding(vertical = 16.dp),
                         style = MaterialTheme.typography.labelSmall,
@@ -117,6 +128,48 @@ fun ComposeScreen(
                 }
             },
         )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(color = MaterialTheme.colorScheme.primary)
+                .clickable { onSubmitClicked() },
+            content = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.submit),
+                        modifier = Modifier
+                            .padding(vertical = 16.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            },
+        )
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1F)
+                .padding(top = 16.dp, bottom = 8.dp)
+                .padding(horizontal = 16.dp)
+        ) {
+            items(state.files){
+                FileItem(
+                    modifier = Modifier.padding(top = 8.dp),
+                    file = it
+                )
+            }
+        }
+
     }
 }
 
@@ -126,7 +179,10 @@ fun ComposeScreenPreview() {
     EmployeeManagementTheme {
         ComposeScreen(
             onAttachFileClick = {},
-            onNavIconClicked = {}
+            onNavIconClicked = {},
+            onSubmitClicked = {},
+            onTextChanged = {},
+            state = ComposeScreenState()
         )
     }
 }
@@ -137,7 +193,10 @@ fun ComposeScreenPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         ComposeScreen(
             onAttachFileClick = {},
-            onNavIconClicked = {}
+            onNavIconClicked = {},
+            onSubmitClicked = {},
+            onTextChanged = {},
+            state = ComposeScreenState()
         )
     }
 }
