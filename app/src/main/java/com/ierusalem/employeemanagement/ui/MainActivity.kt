@@ -1,11 +1,14 @@
-package com.ierusalem.employeemanagement
+package com.ierusalem.employeemanagement.ui
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.databinding.ActivityMainBinding
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
 
@@ -14,19 +17,20 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insets -> insets }
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         val preferenceHelper = PreferenceHelper(this)
-        val userData = preferenceHelper.getUser()
-        val destination = if(preferenceHelper.isLogged()){
-            if(userData.isStaff){
+        val destination = if (preferenceHelper.isLogged()) {
+            val userData = preferenceHelper.getUser()
+            if (userData.isStaff) {
                 R.id.homeFragment
-            }else{
+            } else {
                 R.id.staffHomeFragment
             }
         } else R.id.loginFragment

@@ -4,8 +4,8 @@ import com.ierusalem.employeemanagement.features.edit_profile.data.EditProfileRe
 import com.ierusalem.employeemanagement.features.edit_profile.domain.EditProfileRepository
 import com.ierusalem.employeemanagement.features.edit_profile.presentation.EditProfileViewModel
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
-import org.koin.dsl.module
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 val editProfileViewModule = module {
     single { PreferenceHelper(context = get()) }

@@ -16,7 +16,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenClickIntents
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenState
-import com.ierusalem.employeemanagement.features.home.presentation.components.ExpandableCard
+import com.ierusalem.employeemanagement.ui.components.WorkItem
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
@@ -60,11 +60,12 @@ fun ComposeScreen(
                         else -> state.commandsSent
                     }
                     items(data) { command ->
-                        ExpandableCard(
+                        WorkItem(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .padding(top = 8.dp),
-                            title = command.text, description = command.user
+                            title = command.text,
+                            from = command.user,
                         )
                     }
                 }

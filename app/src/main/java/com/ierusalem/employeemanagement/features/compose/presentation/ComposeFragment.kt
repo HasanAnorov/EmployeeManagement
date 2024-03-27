@@ -160,14 +160,14 @@ class ComposeFragment : Fragment() {
             ComposeScreenNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.the_command_has_been_created), Toast.LENGTH_SHORT
+                    getString(R.string.can_not_create_a_command), Toast.LENGTH_SHORT
                 ).show()
             }
 
             ComposeScreenNavigation.Success -> {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.can_not_create_a_command), Toast.LENGTH_SHORT
+                    getString(R.string.the_command_has_been_created), Toast.LENGTH_SHORT
                 ).show()
             }
         }

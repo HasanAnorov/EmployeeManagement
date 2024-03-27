@@ -35,7 +35,7 @@
     <string name="lastname">Фамилия</string>
     <string name="email">Электронная почта</string>
     <string name="photo_picked">Фото выбрано</string>
-    <string name="local_storage">Локальное хранилище</string>
+    <string name="local_storage">Выбрать фото</string>
     <string name="problem_on_loading_employees_list">Не удалось загрузить список сотрудников.</string>
     <string name="can_t_logout">Не могу выйти</string>
     <string name="employees">Сотрудники</string>
@@ -53,4 +53,6 @@
     <string name="new_password">Новый пароль</string>
     <string name="app_theme">Тема приложения</string>
     <string name="language">Язык</string>
+    <string name="work_description">Описание Работы: </string>
+    <string name="from">От: </string>
 </resources>

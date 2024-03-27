@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.compose.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.compose.domain.ComposeRepository
@@ -14,6 +15,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.util.Calendar
+import java.util.TimeZone
 
 class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
     NavigationEventDelegate<ComposeScreenNavigation> by DefaultNavigationEventDelegate() {
@@ -31,12 +34,20 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
-    fun onSubmitClicked(userId: String){
+    fun onSubmitClicked(userId: String) {
+        val calendar = Calendar.getInstance(TimeZone.getDefault())
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val monthFormatted = if (month < 10) "0$month" else month.toString()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        Log.d("ahi3646", "onSubmitClicked: ${year}-${monthFormatted}-${day}")
+
         val requestBodyBuilder = MultipartBody.Builder()
         requestBodyBuilder.setType(MultipartBody.FORM)
         requestBodyBuilder.addFormDataPart("user", userId)
         requestBodyBuilder.addFormDataPart("text", state.value.textForm)
-        for (file in state.value.files){
+        requestBodyBuilder.addFormDataPart("end_time", "$year-$monthFormatted-$day")
+        for (file in state.value.files) {
             requestBodyBuilder.addFormDataPart(
                 "file",
                 file.name,
@@ -49,14 +60,14 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         try {
             viewModelScope.launch {
                 repo.postMessage(requestBody).let {
-                    if(it.isSuccessful){
+                    if (it.isSuccessful) {
                         emitNavigation(ComposeScreenNavigation.Success)
-                    }else{
+                    } else {
                         emitNavigation(ComposeScreenNavigation.InvalidResponse)
                     }
                 }
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             emitNavigation(ComposeScreenNavigation.InvalidResponse)
         }
     }

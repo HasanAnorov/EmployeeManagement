@@ -3,9 +3,9 @@ package com.ierusalem.employeemanagement.features.auth.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.core.ValidationResult
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
 import com.ierusalem.employeemanagement.features.auth.domain.AuthRepository
-import com.ierusalem.employeemanagement.core.ValidationResult
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation

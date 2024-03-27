@@ -8,7 +8,7 @@
     <string name="room">Xonasi</string>
     <string name="save_profile">O\'zgarishlarni saqlash</string>
     <string name="sign_in_to_continue">Davom etish uchun tizimga kiring</string>
-    <string name="username">Foydalanuvchi nomi</string>
+    <string name="username">Foydalanuvchi ismi</string>
     <string name="password">Parol</string>
     <string name="profile">Profil</string>
     <string name="logout">Chiqish</string>
@@ -35,13 +35,13 @@
     <string name="lastname">Faimiliya</string>
     <string name="email">Email</string>
     <string name="photo_picked">Rasm tanlandi</string>
-    <string name="local_storage">Ichki xotira</string>
+    <string name="local_storage">Rasm tanlash</string>
     <string name="problem_on_loading_employees_list">Xodimlar ro\'yxatini yuklashda muammo yuzaga keldi</string>
     <string name="can_t_logout">Tizimdan chiqa olmadi!</string>
     <string name="employees">Xodimlar</string>
     <string name="commands_sent">Buyruqlar (Yuborilgan)</string>
     <string name="commands_received">Buyruqlar (Qabul qilingan)</string>
-    <string name="commands_done">Buyruqlar (Bajrilgan)</string>
+    <string name="commands_done">Buyruqlar (Bajarilgan)</string>
     <string name="commands_not_done">Buyruqlar (Bajarilmagan)</string>
     <string name="password_has_changed">Parol o\'zgardi!</string>
     <string name="password_didn_t_change">Parol o\'zgarmadi!</string>
@@ -53,4 +53,6 @@
     <string name="new_password">Yangi parol</string>
     <string name="app_theme">Ilova mavzusi</string>
     <string name="language">Til</string>
+    <string name="work_description">Buyruq mazmuni: </string>
+    <string name="from">Kimdan: </string>
 </resources>
