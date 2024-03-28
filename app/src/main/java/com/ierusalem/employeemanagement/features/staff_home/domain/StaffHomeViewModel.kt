@@ -4,11 +4,13 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenNavigation
 import com.ierusalem.employeemanagement.features.staff_home.data.model.response_messages.Result
 import com.ierusalem.employeemanagement.features.staff_home.presentation.StaffHomeScreenEvents
 import com.ierusalem.employeemanagement.features.staff_home.presentation.StaffHomeScreenNavigation
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
+import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import com.ierusalem.employeemanagement.utils.Resource
 import com.ierusalem.employeemanagement.utils.UiText
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -126,13 +128,27 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
         }
     }
 
+    private fun logoutUser() {
+        viewModelScope.launch {
+            repo.logoutUser().let { response ->
+                if (response.isSuccessful) {
+                    repo.deleteToken()
+                    repo.deleteRefreshToken()
+                    emitNavigation(StaffHomeScreenNavigation.NavigateToLogin)
+                } else {
+                    emitNavigation(StaffHomeScreenNavigation.FailedToLogout)
+                }
+            }
+        }
+    }
+
     fun handleEvents(event: StaffHomeScreenEvents) {
         when (event) {
-            StaffHomeScreenEvents.OnMessageClick -> {
-
-            }
             StaffHomeScreenEvents.LogoutClick ->{
-
+                logoutUser()
+            }
+            is StaffHomeScreenEvents.OnItemClick ->{
+                emitNavigation(StaffHomeScreenNavigation.OnItemClick(event.workId))
             }
             is StaffHomeScreenEvents.OnPullToRefreshCommands -> getUserMessages(event.status)
             is StaffHomeScreenEvents.TabItemClick -> {

@@ -55,4 +55,13 @@
     <string name="language">Language</string>
     <string name="work_description">Work description: </string>
     <string name="from">From: </string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="day">Day</string>
+    <string name="can_t_get_work_description">Can\'t get work description!</string>
+    <string name="deadline">Deadline</string>
+    <string name="attached_files">Attached Files</string>
+    <string name="work_marked_as_done">Work marked as done!</string>
+    <string name="can_t_mark_this_work_as_done">Can\'t mark this work as done!</string>
+    <string name="mark_work_as_done">Mark work as done!</string>
 </resources>

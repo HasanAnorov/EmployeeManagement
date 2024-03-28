@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.compose.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.compose.domain.ComposeRepository
@@ -34,19 +33,38 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
-    fun onSubmitClicked(userId: String) {
-        val calendar = Calendar.getInstance(TimeZone.getDefault())
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val monthFormatted = if (month < 10) "0$month" else month.toString()
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        Log.d("ahi3646", "onSubmitClicked: ${year}-${monthFormatted}-${day}")
+    fun onYearChanged(year: String){
+        _state.update {
+            it.copy(
+                yearForm = year
+            )
+        }
+    }
 
+    fun onMonthChanged(month: String){
+        _state.update {
+            it.copy(
+                monthForm = month
+            )
+        }
+    }
+
+    fun onDayChanged(day: String){
+        _state.update {
+            it.copy(
+                dayForm = day
+            )
+        }
+    }
+
+    //fixme
+    fun onSubmitClicked(userId: String) {
+        val time = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
         val requestBodyBuilder = MultipartBody.Builder()
         requestBodyBuilder.setType(MultipartBody.FORM)
         requestBodyBuilder.addFormDataPart("user", userId)
         requestBodyBuilder.addFormDataPart("text", state.value.textForm)
-        requestBodyBuilder.addFormDataPart("end_time", "$year-$monthFormatted-$day")
+        requestBodyBuilder.addFormDataPart("end_time", time)
         for (file in state.value.files) {
             requestBodyBuilder.addFormDataPart(
                 "file",
@@ -87,5 +105,8 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
 
 data class ComposeScreenState(
     val textForm: String = "",
+    val yearForm: String = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR).toString(),
+    val monthForm: String = "",
+    val dayForm: String = "",
     val files: List<File> = arrayListOf()
 )

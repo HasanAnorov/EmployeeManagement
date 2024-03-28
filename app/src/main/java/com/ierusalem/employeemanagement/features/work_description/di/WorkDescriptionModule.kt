@@ -1,5 +1,7 @@
 package com.ierusalem.employeemanagement.features.work_description.di
 
+import com.ierusalem.employeemanagement.features.downloader.AndroidDownloader
+import com.ierusalem.employeemanagement.features.downloader.Downloader
 import com.ierusalem.employeemanagement.features.work_description.data.WorkDescriptionRepositoryImpl
 import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionRepository
 import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionViewModel

@@ -55,4 +55,13 @@
     <string name="language">Til</string>
     <string name="work_description">Buyruq mazmuni: </string>
     <string name="from">Kimdan: </string>
+    <string name="year">Yil</string>
+    <string name="month">Oy</string>
+    <string name="day">Kun</string>
+    <string name="can_t_get_work_description">Ish haqida ma\'lumotni yuklashda xatolik yuzberdi!</string>
+    <string name="deadline">Oxirgi vaqti</string>
+    <string name="attached_files">Taqdim qilingan fayllar</string>
+    <string name="work_marked_as_done">Ish bajarildi holatiga o\'tdi</string>
+    <string name="can_t_mark_this_work_as_done">Ishni bajarildi holatiga o\'tkazib bo\'lmadi</string>
+    <string name="mark_work_as_done">Mark work as done!</string>
 </resources>

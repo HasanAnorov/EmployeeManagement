@@ -5,4 +5,7 @@ import retrofit2.Response
 
 interface StaffHomeRepository {
     suspend fun getUserMessages(status: String):Response<ResponseMessages>
+    suspend fun logoutUser():Response<Unit>
+    fun deleteToken()
+    fun deleteRefreshToken()
 }

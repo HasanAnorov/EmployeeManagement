@@ -24,6 +24,7 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 @Composable
 fun WorkItem(
     modifier: Modifier = Modifier,
+    onItemClick:() -> Unit,
     title: String,
     from: String
 ) {
@@ -31,9 +32,7 @@ fun WorkItem(
         modifier = modifier
             .fillMaxWidth(),
         shape = ShapeDefaults.Medium,
-        onClick = {
-
-        }
+        onClick = onItemClick
     ) {
         Column(
             modifier = Modifier
@@ -108,6 +107,7 @@ fun ExpandableCardPreview() {
     WorkItem(
         title = "My Title",
         from = "Hasan",
+        onItemClick = {}
     )
 }
 
@@ -118,6 +118,7 @@ fun ExpandableCardPreviewDark() {
         WorkItem(
             title = "My Title",
             from = "Hasan",
+            onItemClick = {}
         )
     }
 }

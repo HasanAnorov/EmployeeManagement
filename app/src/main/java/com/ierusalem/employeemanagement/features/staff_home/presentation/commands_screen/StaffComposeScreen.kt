@@ -16,6 +16,8 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ierusalem.employeemanagement.features.staff_home.domain.StaffHomeScreenState
 import com.ierusalem.employeemanagement.features.staff_home.presentation.StaffHomeScreenEvents
+import com.ierusalem.employeemanagement.ui.components.ErrorScreen
+import com.ierusalem.employeemanagement.ui.components.LoadingScreen
 import com.ierusalem.employeemanagement.ui.components.WorkItem
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Resource
@@ -54,7 +56,7 @@ fun StaffComposeScreen(
                 else -> state.commandsReceived
             }
             when(data){
-                is Resource.Loading -> {}
+                is Resource.Loading -> LoadingScreen()
                 is Resource.Success -> {
                     LazyColumn(
                         modifier = Modifier
@@ -73,12 +75,15 @@ fun StaffComposeScreen(
                                         .padding(top = 8.dp),
                                     title = command.text,
                                     from = command.user,
+                                    onItemClick = {
+                                        intentReducer(StaffHomeScreenEvents.OnItemClick(command.workId.toString()))
+                                    }
                                 )
                             }
                         }
                     )
                 }
-                is Resource.Failure -> {}
+                is Resource.Failure -> ErrorScreen()
             }
         }
     }

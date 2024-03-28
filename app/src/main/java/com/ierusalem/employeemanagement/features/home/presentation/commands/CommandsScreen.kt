@@ -60,12 +60,14 @@ fun ComposeScreen(
                         else -> state.commandsSent
                     }
                     items(data) { command ->
+                        //fixme
                         WorkItem(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .padding(top = 8.dp),
                             title = command.text,
                             from = command.user,
+                            onItemClick = {}
                         )
                     }
                 }

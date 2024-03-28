@@ -1,15 +1,17 @@
-package com.ierusalem.employeemanagement.features.staff_home.data.model.response_messages
+package com.ierusalem.employeemanagement.features.work_description.data.model.response
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Result(
-    @SerializedName("id")
-    val workId: Int,
+data class MarkAsDoneResponseItem(
     @SerializedName("created_user")
     val createdUser: Int,
+    @SerializedName("end_time")
+    val endTime: String,
     @SerializedName("file")
-    val `file`: List<Any>,
+    val `file`: List<File>,
+    @SerializedName("id")
+    val id: Int,
     @SerializedName("text")
     val text: String,
     @SerializedName("user")

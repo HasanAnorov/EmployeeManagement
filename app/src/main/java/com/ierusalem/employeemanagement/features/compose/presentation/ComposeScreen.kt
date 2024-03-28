@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachFile
@@ -28,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,9 +44,14 @@ fun ComposeScreen(
     onNavIconClicked: () -> Unit,
     onSubmitClicked: () -> Unit,
     onTextChanged: (String) -> Unit,
+    onYearChanged: (String) -> Unit,
+    onMonthChanged: (String) -> Unit,
+    onDayChanged: (String) -> Unit,
     state: ComposeScreenState
 ) {
-
+    val yearMaxChar = 4
+    val monthMaxChar = 2
+    val dayMaxChar = 2
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +75,6 @@ fun ComposeScreen(
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.outline
         )
-
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -94,6 +100,110 @@ fun ComposeScreen(
                 )
             },
         )
+        Row(
+            modifier = Modifier.padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(modifier = Modifier.weight(1.5F)) {
+                Text(
+                    modifier = Modifier.padding(start = 32.dp),
+                    text = stringResource(R.string.year),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
+                TextField(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .padding(top = 8.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    minLines = 1,
+                    maxLines = 1,
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.titleSmall,
+                    value = state.yearForm,
+                    onValueChange = {
+                        if (it.length <= yearMaxChar) onYearChanged(it)
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(id = R.string.year),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    },
+                )
+            }
+            Column(modifier = Modifier.weight(1F)) {
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = stringResource(R.string.month),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
+                TextField(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .padding(top = 8.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    minLines = 1,
+                    maxLines = 1,
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.titleSmall,
+                    value = state.monthForm,
+                    onValueChange = {
+                        if (it.length <= monthMaxChar) onMonthChanged(it)
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(id = R.string.month),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    },
+                )
+            }
+            Column(modifier = Modifier.weight(1F)) {
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = stringResource(R.string.day),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
+                TextField(
+                    modifier = Modifier
+                        .padding(end = 16.dp, start = 8.dp)
+                        .padding(top = 8.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    minLines = 1,
+                    maxLines = 1,
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.titleSmall,
+                    value = state.dayForm,
+                    onValueChange = {
+                        if (it.length <= dayMaxChar) onDayChanged(it)
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(id = R.string.day),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    },
+                )
+            }
+        }
 
         Box(
             modifier = Modifier
@@ -162,7 +272,7 @@ fun ComposeScreen(
                 .padding(top = 16.dp, bottom = 8.dp)
                 .padding(horizontal = 16.dp)
         ) {
-            items(state.files){
+            items(state.files) {
                 FileItem(
                     modifier = Modifier.padding(top = 8.dp),
                     file = it
@@ -182,6 +292,9 @@ fun ComposeScreenPreview() {
             onNavIconClicked = {},
             onSubmitClicked = {},
             onTextChanged = {},
+            onYearChanged = {},
+            onMonthChanged = {},
+            onDayChanged = {},
             state = ComposeScreenState()
         )
     }
@@ -196,6 +309,9 @@ fun ComposeScreenPreviewDark() {
             onNavIconClicked = {},
             onSubmitClicked = {},
             onTextChanged = {},
+            onYearChanged = {},
+            onMonthChanged = {},
+            onDayChanged = {},
             state = ComposeScreenState()
         )
     }

@@ -61,9 +61,9 @@ fun EmployeeManagementDrawerContent(
         ProfileItem(
             onProfileClicked = { onProfileClicked("user_id") }
         )
-        SettingsItem {
-            onSettingsClicked()
-        }
+//        SettingsItem {
+//            onSettingsClicked()
+//        }
         LogoutItem {
             onLogoutClicked()
         }

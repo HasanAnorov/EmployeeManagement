@@ -8,6 +8,8 @@ object Constants {
     const val LANGUAGE_KEY = "employee_management_language_key"
     const val USERNAME_KEY = "employee_management_username_key"
 
+    const val WORK_DESCRIPTION_KEY = "work_description_key_id"
+
     const val PROFILE_CHANGE = "profile_changed_successfully"
 
     const val COMPOSE_PROFILE_ID = "compose_profile_id"

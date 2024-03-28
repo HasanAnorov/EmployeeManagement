@@ -55,4 +55,13 @@
     <string name="language">Язык</string>
     <string name="work_description">Описание Работы: </string>
     <string name="from">От: </string>
+    <string name="year">Год</string>
+    <string name="month">Месяц</string>
+    <string name="day">День</string>
+    <string name="can_t_get_work_description">Не могу получить описание работы!</string>
+    <string name="deadline">Крайний срок</string>
+    <string name="attached_files">Прикрепленные файлы</string>
+    <string name="work_marked_as_done">Работа отмечена как выполненная!</string>
+    <string name="can_t_mark_this_work_as_done">Невозможно отметить эту работу как выполненную!</string>
+    <string name="mark_work_as_done">Ishni bajarilgan deb belgilang!</string>
 </resources>

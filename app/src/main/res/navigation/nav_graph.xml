@@ -8,6 +8,7 @@
         android:id="@+id/loginFragment"
         android:name="com.ierusalem.employeemanagement.features.auth.presentation.LoginFragment"
         android:label="LoginFragment">
+
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -25,6 +26,7 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/staffHomeFragment" />
 
     </fragment>
@@ -52,6 +54,10 @@
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"/>
         <action
@@ -118,6 +124,29 @@
             app:popExitAnim="@anim/slide_out"
             app:destination="@id/settingsFragment" />
 
+        <action
+            android:id="@+id/action_staffHomeFragment_to_workDescriptionFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:destination="@id/workDescriptionFragment" />
+
+        <action
+            android:id="@+id/action_staffHomeFragment_to_loginFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:popUpTo="@id/staffHomeFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/loginFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/workDescriptionFragment"
+        android:name="com.ierusalem.employeemanagement.features.work_description.presentation.WorkDescriptionFragment"
+        android:label="WorkDescriptionFragment" />
 
 </navigation>

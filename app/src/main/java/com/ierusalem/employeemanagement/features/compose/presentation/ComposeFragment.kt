@@ -122,6 +122,15 @@ class ComposeFragment : Fragment() {
                         onSubmitClicked = {
                             viewModel.onSubmitClicked(userId)
                         },
+                        onYearChanged = {
+                            viewModel.onYearChanged(it)
+                        },
+                        onMonthChanged = {
+                            viewModel.onMonthChanged(it)
+                        },
+                        onDayChanged = {
+                            viewModel.onDayChanged(it)
+                        },
                         state = state
                     )
                 }

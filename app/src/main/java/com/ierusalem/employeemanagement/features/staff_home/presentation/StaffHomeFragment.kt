@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
@@ -14,16 +15,18 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.staff_home.domain.StaffHomeViewModel
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class StaffHomeFragment: Fragment() {
+class StaffHomeFragment : Fragment() {
 
     private val viewModel: StaffHomeViewModel by viewModel()
 
@@ -37,68 +40,68 @@ class StaffHomeFragment: Fragment() {
         val user = preferenceHelper.getUser()
 
         return ComposeView(requireContext()).apply {
-           setContent {
-               val state by viewModel.state.collectAsStateWithLifecycle()
-               val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-               val drawerOpen by viewModel.drawerShouldBeOpened
-                   .collectAsStateWithLifecycle()
+            setContent {
+                val state by viewModel.state.collectAsStateWithLifecycle()
+                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                val drawerOpen by viewModel.drawerShouldBeOpened
+                    .collectAsStateWithLifecycle()
 
-               if (drawerOpen) {
-                   LaunchedEffect(Unit) {
-                       try {
-                           drawerState.open()
-                       } finally {
-                           viewModel.resetOpenDrawerAction()
-                       }
-                   }
-               }
+                if (drawerOpen) {
+                    LaunchedEffect(Unit) {
+                        try {
+                            drawerState.open()
+                        } finally {
+                            viewModel.resetOpenDrawerAction()
+                        }
+                    }
+                }
 
-               val scope = rememberCoroutineScope()
-               if (drawerState.isOpen) {
-                   BackHandler {
-                       scope.launch {
-                           drawerState.close()
-                       }
-                   }
-               }
+                val scope = rememberCoroutineScope()
+                if (drawerState.isOpen) {
+                    BackHandler {
+                        scope.launch {
+                            drawerState.close()
+                        }
+                    }
+                }
 
-               EmployeeManagementDrawer(
-                   username = "${user.username} ${user.lastName}",
-                   imageUrl = user.image,
-                   email = user.email,
-                   drawerState = drawerState,
-                   onProfileClicked = {
-                       scope.launch {
-                           drawerState.close()
-                           findNavController().navigate(R.id.action_staffHomeFragment_to_profileFragment)
-                       }
-                   },
-                   onSettingsClicked = {
-                       scope.launch {
-                           drawerState.close()
-                           findNavController().navigate(R.id.action_staffHomeFragment_to_settingsFragment)
-                       }
-                   },
-                   onLogoutClicked = {
-                       scope.launch {
-                           drawerState.close()
-                           viewModel.handleEvents(StaffHomeScreenEvents.LogoutClick)
-                       }
-                   }
-               ) {
-                   EmployeeManagementTheme {
-                       StaffHomeScreen(
-                           state = state,
-                           onDrawerClick = {
-                               viewModel.openDrawer()
-                           },
-                           intentReducer = {
-                               viewModel.handleEvents(it)
-                           }
-                       )
-                   }
-               }
-           }
+                EmployeeManagementDrawer(
+                    username = "${user.username} ${user.lastName}",
+                    imageUrl = user.image,
+                    email = user.email,
+                    drawerState = drawerState,
+                    onProfileClicked = {
+                        scope.launch {
+                            drawerState.close()
+                            findNavController().navigate(R.id.action_staffHomeFragment_to_profileFragment)
+                        }
+                    },
+                    onSettingsClicked = {
+                        scope.launch {
+                            drawerState.close()
+                            findNavController().navigate(R.id.action_staffHomeFragment_to_settingsFragment)
+                        }
+                    },
+                    onLogoutClicked = {
+                        scope.launch {
+                            drawerState.close()
+                            viewModel.handleEvents(StaffHomeScreenEvents.LogoutClick)
+                        }
+                    }
+                ) {
+                    EmployeeManagementTheme {
+                        StaffHomeScreen(
+                            state = state,
+                            onDrawerClick = {
+                                viewModel.openDrawer()
+                            },
+                            intentReducer = {
+                                viewModel.handleEvents(it)
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -113,7 +116,31 @@ class StaffHomeFragment: Fragment() {
     private fun executeNavigation(navigation: StaffHomeScreenNavigation) {
         when (navigation) {
             StaffHomeScreenNavigation.InvalidResponse -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.something_went_wrong),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
+            StaffHomeScreenNavigation.NavigateToLogin -> {
+                findNavController().navigate(R.id.action_staffHomeFragment_to_loginFragment)
+            }
+
+            StaffHomeScreenNavigation.FailedToLogout -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.can_t_logout), Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            is StaffHomeScreenNavigation.OnItemClick -> {
+                val bundle = Bundle()
+                bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
+                findNavController().navigate(
+                    R.id.action_staffHomeFragment_to_workDescriptionFragment,
+                    bundle
+                )
             }
         }
     }
