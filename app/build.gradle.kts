@@ -55,6 +55,11 @@ dependencies {
     //landscapist
     implementation ("com.github.skydoves:landscapist-glide:2.2.9")
 
+    //paging
+    implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
+    //noinspection GradleDependency
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha18")
+
     //android view binding
     implementation ("androidx.compose.ui:ui-viewbinding:1.6.4")
 

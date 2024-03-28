@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.home.presentation.commands.model.commands_response
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Result(

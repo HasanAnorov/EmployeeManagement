@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.home.presentation.employees.model
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Result(
@@ -17,9 +16,9 @@ data class Result(
     @SerializedName("phone_no")
     val phoneNo: String,
     @SerializedName("unvoni")
-    val unvoni: String,
+    val unvoni: Any,
     @SerializedName("username")
     val username: String,
     @SerializedName("xonasi")
-    val xonasi: String
+    val xonasi: Any
 )

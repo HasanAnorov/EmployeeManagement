@@ -2,15 +2,22 @@ package com.ierusalem.employeemanagement.features.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.features.home.data.EmployeesDataSource
 import com.ierusalem.employeemanagement.features.home.domain.HomeRepository
 import com.ierusalem.employeemanagement.features.home.presentation.commands.model.commands_response.Result
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import com.ierusalem.employeemanagement.utils.UiText
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -28,7 +35,15 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         getCommands("qabulqildi")
         getCommands("bajarildi")
         getCommands("bajarilmadi")
-        getEmployees()
+        _state.update {
+            it.copy(
+                employees = Pager(
+                    PagingConfig(pageSize = 15)
+                ) {
+                    EmployeesDataSource(repo)
+                }.flow.cachedIn(viewModelScope)
+            )
+        }
     }
 
     private fun updateLoading(isLoading: Boolean) {
@@ -68,7 +83,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                 repo.getMessage(status).let { response ->
                     if (response.isSuccessful) {
                         updateLoading(false)
-                        when(status){
+                        when (status) {
                             "yuborildi" -> {
                                 _state.update {
                                     it.copy(
@@ -76,21 +91,24 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                                     )
                                 }
                             }
-                            "qabulqildi" ->{
+
+                            "qabulqildi" -> {
                                 _state.update {
                                     it.copy(
                                         commandsReceived = response.body()?.results ?: listOf()
                                     )
                                 }
                             }
-                            "bajarildi" ->{
+
+                            "bajarildi" -> {
                                 _state.update {
                                     it.copy(
                                         commandsDone = response.body()?.results ?: listOf()
                                     )
                                 }
                             }
-                            "bajarilmadi" ->{
+
+                            "bajarilmadi" -> {
                                 _state.update {
                                     it.copy(
                                         commandsNotDone = response.body()?.results ?: listOf()
@@ -108,23 +126,23 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         }
     }
 
-    private fun getEmployees() {
-        try {
-            viewModelScope.launch {
-                repo.getEmployees().let { response ->
-                    if (response.isSuccessful) {
-                        _state.update {
-                            it.copy(
-                                employees = response.body()?.results ?: listOf()
-                            )
-                        }
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            emitNavigation(HomeScreenNavigation.FailedToLoadEmployees)
-        }
-    }
+//    private fun getEmployees() {
+//        try {
+//            viewModelScope.launch {
+//                repo.getEmployees().let { response ->
+//                    if (response.isSuccessful) {
+//                        _state.update {
+//                            it.copy(
+//                                employees = response.body()?.results ?: listOf()
+//                            )
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (e: Exception) {
+//            emitNavigation(HomeScreenNavigation.FailedToLoadEmployees)
+//        }
+//    }
 
     fun handleClickIntents(intent: HomeScreenClickIntents) {
         when (intent) {
@@ -167,5 +185,5 @@ data class HomeScreenState(
     val commandsReceived: List<Result> = listOf(),
     val commandsDone: List<Result> = listOf(),
     val commandsNotDone: List<Result> = listOf(),
-    val employees: List<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result> = listOf(),
+    val employees: Flow<PagingData<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result>> = flowOf()
 )

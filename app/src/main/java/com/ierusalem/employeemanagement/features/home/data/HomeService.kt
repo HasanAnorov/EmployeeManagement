@@ -27,6 +27,8 @@ interface HomeService {
     @GET("get_users")
     suspend fun getEmployees(
         @Header("Authorization") authToken: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
     ): Response<EmployeesResponse>
 
 }

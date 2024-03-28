@@ -28,9 +28,11 @@ class HomeRepositoryImpl(
         )
     }
 
-    override suspend fun getEmployees(): Response<EmployeesResponse> {
+    override suspend fun getEmployees(page: Int, perPage: Int): Response<EmployeesResponse> {
         return RestClient(context).homeService.getEmployees(
-            authToken = preferenceHelper.getToken()
+            authToken = preferenceHelper.getToken(),
+            page = page,
+            perPage = perPage
         )
     }
 

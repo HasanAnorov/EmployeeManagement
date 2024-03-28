@@ -152,7 +152,7 @@ fun HomeScreen(
                         4 -> {
                             EmployeesScreen(
                                 intentReducer = intentReducer,
-                                state = state
+                                state = state.employees
                             )
                         }
                     }
