@@ -67,6 +67,7 @@ class ComposeFragment : Fragment() {
                         "application/json" -> ".json"
                         "text/plain" -> ".text"
                         "image/jpeg", "image/pjpeg" -> ".jpeg"
+                        "video/mp4" -> ".mp4"
                         "application/vnd.android.package-archive" -> ".apk"
                         "image/svg+xml" -> ".svg"
                         "image/png" -> ".png"

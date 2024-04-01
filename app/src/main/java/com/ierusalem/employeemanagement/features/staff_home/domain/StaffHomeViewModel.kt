@@ -35,7 +35,84 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
         _drawerShouldBeOpened.value = false
     }
 
+    private fun getUserForHome(){
+        try {
+            viewModelScope.launch {
+                repo.getUserForHome().let {response ->
+                    if(response.isSuccessful){
+                        _state.update {
+                            it.copy(
+                                username = response.body()!!.user.username
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                lastName = response.body()!!.user.lastName
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                email = response.body()!!.user.email
+
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                imageUrl = response.body()!!.user.image
+                            )
+                        }
+                    }else{
+                        val user =repo.getUserFromLocal()
+                        _state.update {
+                            it.copy(
+                                username = user.username
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                email = user.email
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                lastName = user.lastName
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                imageUrl = user.image
+                            )
+                        }
+                    }
+                }
+            }
+        }catch (e: Exception){
+            val user =repo.getUserFromLocal()
+            _state.update {
+                it.copy(
+                    username = user.username
+                )
+            }
+            _state.update {
+                it.copy(
+                    lastName = user.lastName
+                )
+            }
+            _state.update {
+                it.copy(
+                    email = user.email
+                )
+            }
+            _state.update {
+                it.copy(
+                    imageUrl = user.image
+                )
+            }
+        }
+    }
+
     init {
+        getUserForHome()
         getUserMessages("yuborildi")
         getUserMessages("qabulqildi")
         getUserMessages("bajarildi")
@@ -171,6 +248,10 @@ data class StaffHomeScreenState(
         UiText.StringResource(resId = R.string.commands_not_done),
     ),
     val isLoading: Boolean = false,
+    val username: String = "",
+    val lastName: String = "",
+    val email: String = "",
+    val imageUrl: String = "",
     val commandsReceived:Resource<List<Result>> = Resource.Loading(),
     val commandsDone: Resource<List<Result>> = Resource.Loading(),
     val commandsNotDone: Resource<List<Result>> = Resource.Loading(),

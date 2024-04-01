@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,55 +36,63 @@ fun EmployeeItem(
     employee: Result,
     intentReducer: (HomeScreenClickIntents) -> Unit
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
+    Card(
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .fillMaxWidth(),
+        shape = ShapeDefaults.Medium,
+        onClick = {  }
     ) {
-        GlideImage(
-            failure = {  },
-            imageModel = { employee.image },
-            modifier = Modifier
-                .padding(start = 16.dp)
-                .padding(vertical = 4.dp)
-                .size(width = 48.dp, height = 48.dp)
-                .clip(CircleShape),
-            imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.CenterStart,
-                contentDescription = null
-            )
-        )
-        Column(
-            modifier =Modifier.weight(1F)
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
         ) {
-            Text(
+            GlideImage(
+                failure = {  },
+                imageModel = { employee.image },
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .padding(vertical = 4.dp)
+                    .size(width = 48.dp, height = 48.dp)
+                    .clip(CircleShape),
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.CenterStart,
+                    contentDescription = null
+                )
+            )
+            Column(
+                modifier =Modifier.weight(1F)
+            ) {
+                Text(
                     modifier = Modifier
                         .padding(start = 8.dp)
                         .padding(top = 8.dp),
-            text = employee.username + " " + employee.lastName,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.titleSmall
-            )
-            Text(
-                modifier = Modifier
-                    .padding(start = 8.dp)
-                    .padding(bottom = 8.dp),
-                text = employee.email,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.labelSmall
-            )
-        }
-        IconButton(
-            modifier = Modifier.padding(end = 8.dp),
-            onClick = { intentReducer(HomeScreenClickIntents.CreateCommand(employee.id)) }) {
-            Icon(imageVector = Icons.Default.AddCircleOutline, contentDescription = null)
+                    text = employee.username + " " + employee.lastName,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .padding(bottom = 8.dp),
+                    text = employee.email,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
+            IconButton(
+                modifier = Modifier.padding(end = 8.dp),
+                onClick = { intentReducer(HomeScreenClickIntents.CreateCommand(employee.id)) }) {
+                Icon(imageVector = Icons.Default.AddCircleOutline, contentDescription = null)
+            }
         }
     }
 }

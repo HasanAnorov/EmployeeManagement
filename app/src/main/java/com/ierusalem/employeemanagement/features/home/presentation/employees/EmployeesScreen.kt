@@ -40,7 +40,7 @@ fun EmployeesScreen(
                 ) {
                     LazyColumn(
                         modifier = Modifier
-                            .padding(bottom = 8.dp)
+                            .padding(bottom = 16.dp, top = 8.dp)
                             .background(MaterialTheme.colorScheme.background)
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.Top,

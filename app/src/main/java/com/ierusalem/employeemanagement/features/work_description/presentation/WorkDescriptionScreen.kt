@@ -113,7 +113,7 @@ fun WorkDescriptionScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
-                            .padding(vertical = 16.dp)
+                            .padding(top = 16.dp, bottom = 24.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(color = MaterialTheme.colorScheme.primary)
                             .clickable { intentReducer(WorkDescriptionScreenEvents.MarkAsDone(work.id.toString())) },

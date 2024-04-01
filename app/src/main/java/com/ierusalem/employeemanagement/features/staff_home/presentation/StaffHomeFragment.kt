@@ -1,7 +1,7 @@
 package com.ierusalem.employeemanagement.features.staff_home.presentation
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +22,6 @@ import com.ierusalem.employeemanagement.features.staff_home.domain.StaffHomeView
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,22 +30,17 @@ class StaffHomeFragment : Fragment() {
 
     private val viewModel: StaffHomeViewModel by viewModel()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val isFromWorkDesc = arguments?.getBoolean(Constants.FROM_WORK_DESCRIPTION) ?: false
-        if(isFromWorkDesc){
-            viewModel.getUserMessages("yuborildi")
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        val preferenceHelper = PreferenceHelper(requireContext())
-        val user = preferenceHelper.getUser()
+        val isFromWorkDesc = arguments?.getBoolean(Constants.FROM_WORK_DESCRIPTION) ?: false
+        Log.d("ahi3646", "onAttach: $isFromWorkDesc ")
+        if(isFromWorkDesc){
+            viewModel.getUserMessages("yuborildi")
+        }
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -75,9 +69,9 @@ class StaffHomeFragment : Fragment() {
                 }
 
                 EmployeeManagementDrawer(
-                    username = "${user.username} ${user.lastName}",
-                    imageUrl = user.image,
-                    email = user.email,
+                    username = "${state.username} ${state.lastName}",
+                    imageUrl = state.imageUrl,
+                    email = state.email,
                     drawerState = drawerState,
                     onProfileClicked = {
                         scope.launch {

@@ -3,7 +3,9 @@ package com.ierusalem.employeemanagement.features.staff_home.data
 import android.content.Context
 import android.util.Log
 import com.ierusalem.employeemanagement.app.RestClient
+import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
 import com.ierusalem.employeemanagement.features.home.data.entity.UserLogoutRequest
+import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
 import com.ierusalem.employeemanagement.features.staff_home.data.model.response_messages.ResponseMessages
 import com.ierusalem.employeemanagement.features.staff_home.domain.StaffHomeRepository
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
@@ -18,6 +20,14 @@ class StaffHomeRepositoryImpl (
             authToken = preferenceHelper.getToken(),
             status = status
         )
+    }
+
+    override suspend fun getUserForHome(): Response<ProfileResponse> {
+        return RestClient(context).staffHomeService.getUser(authToken = preferenceHelper.getToken())
+    }
+
+    override fun getUserFromLocal(): User {
+        return preferenceHelper.getUser()
     }
 
     override suspend fun logoutUser(): Response<Unit> {

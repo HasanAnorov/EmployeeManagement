@@ -71,7 +71,8 @@ fun StaffComposeScreen(
                                         .padding(horizontal = 16.dp)
                                         .padding(top = 8.dp),
                                     title = command.text,
-                                    from = command.user,
+                                    from = "${command.adminUsername} ${command.adminLastname}",
+                                    to = command.user,
                                     deadline = command.endTime,
                                     onItemClick = {
                                         intentReducer(StaffHomeScreenEvents.OnItemClick(command.workId.toString()))

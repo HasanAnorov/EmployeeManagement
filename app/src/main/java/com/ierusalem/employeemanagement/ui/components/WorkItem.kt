@@ -27,6 +27,7 @@ fun WorkItem(
     onItemClick: () -> Unit,
     title: String,
     from: String,
+    to: String,
     deadline: String
 ) {
     Card(
@@ -44,10 +45,10 @@ fun WorkItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(6F)) {
-                    Row(
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.Start
                     ) {
                         Text(
                             modifier = Modifier,
@@ -60,14 +61,12 @@ fun WorkItem(
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            modifier = Modifier
-                                .weight(6f)
-                                .padding(start = 4.dp),
                             text = title,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Normal,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 6,
+                            lineHeight = 20.sp,
+                            style = MaterialTheme.typography.labelSmall,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
@@ -94,9 +93,38 @@ fun WorkItem(
                                 .padding(start = 4.dp),
                             text = from,
                             fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.labelSmall,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 2.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Text(
+                            modifier = Modifier,
+                            text = stringResource(R.string.to),
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                             maxLines = 1,
+                            color = MaterialTheme.colorScheme.outline,
                             style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            modifier = Modifier
+                                .weight(6f)
+                                .padding(start = 4.dp),
+                            text = to,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.labelSmall,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
@@ -123,9 +151,9 @@ fun WorkItem(
                                 .padding(start = 4.dp),
                             text = deadline,
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
+                            fontWeight = FontWeight.SemiBold,
                             maxLines = 1,
-                            style = MaterialTheme.typography.titleSmall,
+                            style = MaterialTheme.typography.labelSmall,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
@@ -139,8 +167,9 @@ fun WorkItem(
 @Preview
 fun ExpandableCardPreview() {
     WorkItem(
-        title = "My Title",
+        title = "I snova sedaya noch i tolka yey daveryayu ya, ti znaesh sedaya noch ti vse moi tayni",
         from = "Hasan",
+        to = "Husan",
         deadline = "2024-2-12",
         onItemClick = {}
     )
@@ -153,6 +182,7 @@ fun ExpandableCardPreviewDark() {
         WorkItem(
             title = "My Title",
             from = "Hasan",
+            to = "Husan",
             deadline = "2024-2-12",
             onItemClick = {}
         )

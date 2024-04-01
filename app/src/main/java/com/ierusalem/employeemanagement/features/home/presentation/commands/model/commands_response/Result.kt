@@ -21,6 +21,10 @@ data class Result(
     val userUnvoni: String,
     @SerializedName("user_xonasi")
     val userXonasi: String,
+    @SerializedName("adminusername")
+    val adminUsername: String,
+    @SerializedName("adminlast_name")
+    val adminLastname: String,
     @SerializedName("end_time")
     val endTime: String
 )
