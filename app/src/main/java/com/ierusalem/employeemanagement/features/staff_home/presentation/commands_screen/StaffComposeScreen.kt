@@ -65,9 +65,6 @@ fun StaffComposeScreen(
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.Top,
                         content = {
-                            item(){
-
-                            }
                             items(data.data!!) { command ->
                                 WorkItem(
                                     modifier = Modifier
@@ -75,6 +72,7 @@ fun StaffComposeScreen(
                                         .padding(top = 8.dp),
                                     title = command.text,
                                     from = command.user,
+                                    deadline = command.endTime,
                                     onItemClick = {
                                         intentReducer(StaffHomeScreenEvents.OnItemClick(command.workId.toString()))
                                     }

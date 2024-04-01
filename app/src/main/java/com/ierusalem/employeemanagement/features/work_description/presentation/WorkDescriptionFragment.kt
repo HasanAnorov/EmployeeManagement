@@ -26,6 +26,10 @@ class WorkDescriptionFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val workId = arguments?.getString(Constants.WORK_DESCRIPTION_KEY)
+        val isFromHome = arguments?.getBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME) ?: false
+        if (isFromHome){
+            viewModel.isFromHome(true)
+        }
         if (workId == null) {
             Toast.makeText(
                 requireContext(),
@@ -93,9 +97,14 @@ class WorkDescriptionFragment : Fragment() {
                     requireContext(),
                     getString(R.string.work_marked_as_done), Toast.LENGTH_SHORT
                 ).show()
+                findNavController().popBackStack()
             }
 
-            WorkDescriptionNavigation.NavIconClick -> findNavController().popBackStack()
+            WorkDescriptionNavigation.NavIconClick -> {
+                val bundle = Bundle()
+                bundle.putBoolean(Constants.FROM_WORK_DESCRIPTION, true)
+                findNavController().navigate(R.id.action_workDescriptionFragment_to_staffHomeFragment, bundle)
+            }
         }
     }
 

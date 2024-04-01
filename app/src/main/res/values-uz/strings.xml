@@ -63,5 +63,5 @@
     <string name="attached_files">Taqdim qilingan fayllar</string>
     <string name="work_marked_as_done">Ish bajarildi holatiga o\'tdi</string>
     <string name="can_t_mark_this_work_as_done">Ishni bajarildi holatiga o\'tkazib bo\'lmadi</string>
-    <string name="mark_work_as_done">Mark work as done!</string>
+    <string name="mark_work_as_done">Ishni bajarilgan deb belgilang!</string>
 </resources>

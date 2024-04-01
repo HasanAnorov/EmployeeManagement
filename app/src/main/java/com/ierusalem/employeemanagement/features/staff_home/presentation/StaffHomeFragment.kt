@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.staff_home.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class StaffHomeFragment : Fragment() {
 
     private val viewModel: StaffHomeViewModel by viewModel()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val isFromWorkDesc = arguments?.getBoolean(Constants.FROM_WORK_DESCRIPTION) ?: false
+        if(isFromWorkDesc){
+            viewModel.getUserMessages("yuborildi")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

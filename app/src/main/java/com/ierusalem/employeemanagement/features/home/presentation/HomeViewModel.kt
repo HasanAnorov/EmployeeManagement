@@ -31,6 +31,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     val drawerShouldBeOpened = _drawerShouldBeOpened.asStateFlow()
 
     init {
+        getUserForHome()
         getCommands("yuborildi")
         getCommands("qabulqildi")
         getCommands("bajarildi")
@@ -43,6 +44,82 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                     EmployeesDataSource(repo)
                 }.flow.cachedIn(viewModelScope)
             )
+        }
+    }
+
+    private fun getUserForHome(){
+        try {
+            viewModelScope.launch {
+                repo.getUserForHome().let {response ->
+                    if(response.isSuccessful){
+                        _state.update {
+                            it.copy(
+                                username = response.body()!!.user.username
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                lastName = response.body()!!.user.lastName
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                email = response.body()!!.user.email
+
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                imageUrl = response.body()!!.user.image
+                            )
+                        }
+                    }else{
+                        val user =repo.getUserFromLocal()
+                        _state.update {
+                            it.copy(
+                                username = user.username
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                email = user.email
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                lastName = user.lastName
+                            )
+                        }
+                        _state.update {
+                            it.copy(
+                                imageUrl = user.image
+                            )
+                        }
+                    }
+                }
+            }
+        }catch (e: Exception){
+            val user =repo.getUserFromLocal()
+            _state.update {
+                it.copy(
+                    username = user.username
+                )
+            }
+            _state.update {
+                it.copy(
+                    lastName = user.lastName
+                )
+            }
+            _state.update {
+                it.copy(
+                    email = user.email
+                )
+            }
+            _state.update {
+                it.copy(
+                    imageUrl = user.image
+                )
+            }
         }
     }
 
@@ -150,6 +227,10 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                 logoutUser()
             }
 
+            is HomeScreenClickIntents.OnItemClick -> {
+               emitNavigation(HomeScreenNavigation.OnItemClick(intent.workId))
+            }
+
             is HomeScreenClickIntents.CreateCommand -> {
                 emitNavigation(HomeScreenNavigation.NavigateToCompose(intent.userId))
             }
@@ -180,6 +261,9 @@ data class HomeScreenState(
     ),
     val selectedTabIndex: Int = 0,
     val username: String = "",
+    val lastName: String = "",
+    val email: String = "",
+    val imageUrl: String = "",
     val isLoading: Boolean = false,
     val commandsSent: List<Result> = listOf(),
     val commandsReceived: List<Result> = listOf(),

@@ -3,6 +3,8 @@ package com.ierusalem.employeemanagement.features.home.presentation.commands.mod
 import com.google.gson.annotations.SerializedName
 
 data class Result(
+    @SerializedName("id")
+    val workId: Int,
     @SerializedName("created_user")
     val createdUser: Int,
     @SerializedName("file")
@@ -18,5 +20,7 @@ data class Result(
     @SerializedName("user_unvoni")
     val userUnvoni: String,
     @SerializedName("user_xonasi")
-    val userXonasi: String
+    val userXonasi: String,
+    @SerializedName("end_time")
+    val endTime: String
 )

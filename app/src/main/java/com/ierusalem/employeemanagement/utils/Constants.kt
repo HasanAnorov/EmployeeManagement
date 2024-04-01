@@ -9,12 +9,15 @@ object Constants {
     const val USERNAME_KEY = "employee_management_username_key"
 
     const val WORK_DESCRIPTION_KEY = "work_description_key_id"
+    const val WORK_DESCRIPTION_KEY_FROM_HOME = "work_description_key_id_from_home"
 
     const val PROFILE_CHANGE = "profile_changed_successfully"
 
+    const val FROM_WORK_DESCRIPTION = "from_work_description"
+
     const val COMPOSE_PROFILE_ID = "compose_profile_id"
 
-    const val BASE_URL = "http://ithelpshchool.uz/"
+    const val BASE_URL = "https://ithelpshchool.uz/"
 
     const val MAX_FILE_SIZE:Long = 18874368
 

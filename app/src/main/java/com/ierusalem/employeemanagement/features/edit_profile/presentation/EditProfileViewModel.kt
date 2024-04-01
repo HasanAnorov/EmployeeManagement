@@ -1,6 +1,7 @@
 package com.ierusalem.employeemanagement.features.edit_profile.presentation
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.edit_profile.domain.EditProfileRepository
@@ -22,6 +23,7 @@ class EditProfileViewModel(private val editProfileRepository: EditProfileReposit
     val state = _state.asStateFlow()
 
     fun updateProfile(requestModel: RequestBody){
+        Log.d("ahi3646", "updateProfile: $requestModel ")
         viewModelScope.launch {
             editProfileRepository.updateProfile(requestModel).let { response ->
                 if(response.isSuccessful){

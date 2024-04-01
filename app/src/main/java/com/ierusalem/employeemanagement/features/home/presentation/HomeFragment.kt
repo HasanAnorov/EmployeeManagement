@@ -21,7 +21,6 @@ import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,9 +34,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        val preferenceHelper = PreferenceHelper(requireContext())
-        val user = preferenceHelper.getUser()
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -66,9 +62,9 @@ class HomeFragment : Fragment() {
                 }
 
                 EmployeeManagementDrawer(
-                    username = "${user.username} ${user.lastName}",
-                    imageUrl = user.image,
-                    email = user.email,
+                    username = "${state.username} ${state.lastName}",
+                    imageUrl = state.imageUrl,
+                    email = state.email,
                     drawerState = drawerState,
                     onProfileClicked = {
                         scope.launch {
@@ -115,6 +111,13 @@ class HomeFragment : Fragment() {
 
     private fun executeNavigation(navigation: HomeScreenNavigation) {
         when (navigation) {
+            is HomeScreenNavigation.OnItemClick -> {
+//                val bundle = Bundle()
+//                bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
+//                bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME,true )
+//                findNavController().navigate(R.id.action_homeFragment_to_workDescriptionFragment, bundle)
+            }
+
             HomeScreenNavigation.FailedToLoadEmployees -> {
                 Toast.makeText(
                     requireContext(),
@@ -134,8 +137,10 @@ class HomeFragment : Fragment() {
             }
 
             HomeScreenNavigation.FailedToLogout -> {
-                Toast.makeText(requireContext(),
-                    getString(R.string.can_t_logout), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.can_t_logout), Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

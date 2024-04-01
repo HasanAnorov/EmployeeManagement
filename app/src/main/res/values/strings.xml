@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">EmployeeManagement</string>
+    <string name="app_name" translatable="false">Hujjat Almashinuvi Tizimi</string>
     <string name="login">Login</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="message">Message</string>

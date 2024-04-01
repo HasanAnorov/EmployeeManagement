@@ -24,9 +24,10 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 @Composable
 fun WorkItem(
     modifier: Modifier = Modifier,
-    onItemClick:() -> Unit,
+    onItemClick: () -> Unit,
     title: String,
-    from: String
+    from: String,
+    deadline: String
 ) {
     Card(
         modifier = modifier
@@ -59,7 +60,9 @@ fun WorkItem(
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            modifier = Modifier.weight(6f),
+                            modifier = Modifier
+                                .weight(6f)
+                                .padding(start = 4.dp),
                             text = title,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
@@ -86,8 +89,39 @@ fun WorkItem(
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            modifier = Modifier.weight(6f),
+                            modifier = Modifier
+                                .weight(6f)
+                                .padding(start = 4.dp),
                             text = from,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Normal,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 2.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Text(
+                            modifier = Modifier,
+                            text = stringResource(R.string.deadline),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Normal,
+                            maxLines = 1,
+                            color = MaterialTheme.colorScheme.outline,
+                            style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            modifier = Modifier
+                                .weight(6f)
+                                .padding(start = 4.dp),
+                            text = deadline,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                             maxLines = 1,
@@ -107,6 +141,7 @@ fun ExpandableCardPreview() {
     WorkItem(
         title = "My Title",
         from = "Hasan",
+        deadline = "2024-2-12",
         onItemClick = {}
     )
 }
@@ -118,6 +153,7 @@ fun ExpandableCardPreviewDark() {
         WorkItem(
             title = "My Title",
             from = "Hasan",
+            deadline = "2024-2-12",
             onItemClick = {}
         )
     }

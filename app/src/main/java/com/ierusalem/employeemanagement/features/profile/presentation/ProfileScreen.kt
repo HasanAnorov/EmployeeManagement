@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.profile.presentation
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Chat
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -53,6 +55,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
+import com.ierusalem.employeemanagement.features.profile.data.model.User
 import com.ierusalem.employeemanagement.ui.components.AnimatingFabContent
 import com.ierusalem.employeemanagement.ui.components.CommonJetHubLoginButton
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
@@ -68,7 +72,7 @@ import com.skydoves.landscapist.glide.GlideImage
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    onEditProfileClick: (ProfileScreenData) -> Unit,
+    onEditProfileClick: (ProfileResponse) -> Unit,
     state: ProfileScreen,
     onPasswordChange: (String, String) -> Unit,
     nestedScrollInteropConnection: NestedScrollConnection = rememberNestedScrollInteropConnection(),
@@ -128,7 +132,7 @@ fun ProfileScreen(
                                 val fabExtended by remember { derivedStateOf { scrollState.value == 0 } }
                                 ProfileFab(
                                     extended = fabExtended,
-                                    userIsMe = userData.isMe(),
+                                    userIsMe = true,
                                     modifier = Modifier
                                         .align(Alignment.BottomEnd)
                                         .offset(y = ((-100).dp)),
@@ -149,7 +153,7 @@ fun ProfileScreen(
 @Composable
 private fun UserInfoFields(
     onPasswordChange: (String, String) -> Unit,
-    userData: ProfileScreenData,
+    userData: ProfileResponse,
     containerHeight: Dp
 ) {
     val context = LocalContext.current
@@ -158,10 +162,10 @@ private fun UserInfoFields(
         NameAndPosition(userData)
         ProfileProperty(
             stringResource(R.string.position),
-            userData.position ?: stringResource(R.string.position_not_given)
+            userData.user.unvoni
         )
-        ProfileProperty(stringResource(R.string.phone_number), userData.phoneNumber)
-        ProfileProperty(stringResource(R.string.room), userData.room ?: stringResource(R.string.room_is_not_available))
+        ProfileProperty(stringResource(R.string.phone_number), userData.user.phoneNo)
+        ProfileProperty(stringResource(R.string.room), userData.user.xonasi)
         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
         var oldPassword by remember { mutableStateOf(TextFieldValue("")) }
         var newPassword by remember { mutableStateOf(TextFieldValue("")) }
@@ -169,6 +173,7 @@ private fun UserInfoFields(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp),
+            leadingIcon = Icons.Default.Lock,
             label = stringResource(R.string.old_password),
             value = oldPassword.text,
             onValueChanged = { oldPassword = TextFieldValue(it) })
@@ -176,6 +181,7 @@ private fun UserInfoFields(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp),
+            leadingIcon = Icons.Default.Lock,
             label = stringResource(R.string.new_password),
             value = newPassword.text,
             onValueChanged = { newPassword = TextFieldValue(it) })
@@ -203,7 +209,7 @@ private fun UserInfoFields(
 
 @Composable
 private fun NameAndPosition(
-    userData: ProfileScreenData
+    userData: ProfileResponse
 ) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Name(
@@ -220,18 +226,18 @@ private fun NameAndPosition(
 }
 
 @Composable
-private fun Name(userData: ProfileScreenData, modifier: Modifier = Modifier) {
+private fun Name(userData: ProfileResponse, modifier: Modifier = Modifier) {
     Text(
-        text = "${userData.username} ${userData.lastName}",
+        text = "${userData.user.username} ${userData.user.lastName}",
         modifier = modifier,
         style = MaterialTheme.typography.headlineSmall
     )
 }
 
 @Composable
-private fun Position(userData: ProfileScreenData, modifier: Modifier = Modifier) {
+private fun Position(userData: ProfileResponse, modifier: Modifier = Modifier) {
     Text(
-        text = userData.email,
+        text = userData.user.email,
         modifier = modifier,
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -241,15 +247,15 @@ private fun Position(userData: ProfileScreenData, modifier: Modifier = Modifier)
 @Composable
 private fun ProfileHeader(
     scrollState: ScrollState,
-    data: ProfileScreenData,
+    data: ProfileResponse,
     containerHeight: Dp
 ) {
     val offset = (scrollState.value / 2)
     val offsetDp = with(LocalDensity.current) { offset.toDp() }
-
+    Log.d("ahi3646", "ProfileHeader: ${Constants.BASE_URL}${data.user.image} ")
     GlideImage(
         failure = { painterResource(id = R.drawable.baseline_account_circle_24) },
-        imageModel = { "${Constants.BASE_URL}${data.image}" },
+        imageModel = { "${Constants.BASE_URL}${data.user.image}" },
         modifier = Modifier
             .heightIn(max = containerHeight / 2)
             .fillMaxWidth()
@@ -339,15 +345,19 @@ fun ConvPreviewLandscapeMeDefault() {
             onEditProfileClick = {},
             onNavigationIconClicked = {},
             state = ProfileScreen.Success(
-                content = ProfileScreenData(
-                    userId = 1,
-                    email = "nurbek@gmail.com",
-                    lastName = "Karlo",
-                    username = "Jonathan",
-                    image = "R.drawable.baseline_account_circle_24",
-                    phoneNumber = "931234567",
-                    position = "Senior Dev",
-                    room = "240"
+                content = ProfileResponse(
+                    status = 200,
+                    user = User(
+                        email = "nurbek@gmail.com",
+                        lastName = "Karlo",
+                        username = "Jonathan",
+                        image = "R.drawable.baseline_account_circle_24",
+                        phoneNo = "931234567",
+                        unvoni = "Senior Dev",
+                        xonasi = "240",
+                        id = 1,
+                        isStaff = true
+                    )
                 )
             )
         )
@@ -363,15 +373,19 @@ fun ConvPreviewPortraitMeDefault() {
             onNavigationIconClicked = {},
             onPasswordChange = { _, _ -> },
             state = ProfileScreen.Success(
-                content = ProfileScreenData(
-                    userId = 1,
-                    email = "nurbek@gmail.com",
-                    lastName = "Karlo",
-                    username = "Jonathan",
-                    image = "R.drawable.baseline_account_circle_24",
-                    phoneNumber = "931234567",
-                    position = "Senior Dev",
-                    room = "240"
+                content = ProfileResponse(
+                    status = 200,
+                    user = User(
+                        email = "nurbek@gmail.com",
+                        lastName = "Karlo",
+                        username = "Jonathan",
+                        image = "R.drawable.baseline_account_circle_24",
+                        phoneNo = "931234567",
+                        unvoni = "Senior Dev",
+                        xonasi = "240",
+                        id = 1,
+                        isStaff = true
+                    )
                 )
             )
         )

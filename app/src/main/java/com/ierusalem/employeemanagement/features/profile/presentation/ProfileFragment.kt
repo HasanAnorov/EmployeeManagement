@@ -41,14 +41,26 @@ class ProfileFragment : Fragment() {
                         },
                         onEditProfileClick = { userData ->
                             val bundle = Bundle()
-                            bundle.putString(Constants.TO_EDIT_PROFILE_USERNAME, userData.username)
-                            bundle.putString(Constants.TO_EDIT_PROFILE_LASTNAME, userData.lastName)
-                            bundle.putString(Constants.TO_EDIT_PROFILE_ROOM, userData.room)
-                            bundle.putString(Constants.TO_EDIT_PROFILE_POSITION, userData.position)
-                            bundle.putString(Constants.TO_EDIT_PROFILE_EMAIL, userData.email)
+                            bundle.putString(
+                                Constants.TO_EDIT_PROFILE_USERNAME,
+                                userData.user.username
+                            )
+                            bundle.putString(
+                                Constants.TO_EDIT_PROFILE_LASTNAME,
+                                userData.user.lastName
+                            )
+                            bundle.putString(Constants.TO_EDIT_PROFILE_ROOM, userData.user.xonasi)
+                            bundle.putString(
+                                Constants.TO_EDIT_PROFILE_POSITION,
+                                userData.user.unvoni
+                            )
+                            bundle.putString(
+                                Constants.TO_EDIT_PROFILE_EMAIL, userData.user
+                                    .email
+                            )
                             bundle.putString(
                                 Constants.TO_EDIT_PROFILE_PHONE_NUMBER,
-                                userData.phoneNumber
+                                userData.user.phoneNo
                             )
                             findNavController().navigate(
                                 R.id.action_profileFragment_to_editProfileFragment,

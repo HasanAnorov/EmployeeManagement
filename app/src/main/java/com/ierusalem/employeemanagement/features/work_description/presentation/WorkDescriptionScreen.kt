@@ -71,6 +71,7 @@ fun WorkDescriptionScreen(
                     modifier = Modifier.padding(start = 16.dp, top = 8.dp),
                     text = work.text,
                     style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp),
@@ -82,6 +83,7 @@ fun WorkDescriptionScreen(
                     modifier = Modifier.padding(start = 16.dp, top = 8.dp),
                     text = work.endTime,
                     style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp),
@@ -106,32 +108,33 @@ fun WorkDescriptionScreen(
                         )
                     }
                 }
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(vertical = 16.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(color = MaterialTheme.colorScheme.primary)
-                        .clickable { intentReducer(WorkDescriptionScreenEvents.MarkAsDone(work.id.toString())) },
-                    content = {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = stringResource(R.string.mark_work_as_done),
-                                modifier = Modifier
-                                    .padding(vertical = 16.dp),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    },
-                )
-
+                if (!state.isFromHome){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(vertical = 16.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(color = MaterialTheme.colorScheme.primary)
+                            .clickable { intentReducer(WorkDescriptionScreenEvents.MarkAsDone(work.id.toString())) },
+                        content = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.mark_work_as_done),
+                                    modifier = Modifier
+                                        .padding(vertical = 16.dp),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        },
+                    )
+                }
             }
         }
         is Resource.Failure -> ErrorScreen()

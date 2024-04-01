@@ -174,6 +174,7 @@ class ComposeFragment : Fragment() {
             }
 
             ComposeScreenNavigation.Success -> {
+                findNavController().popBackStack()
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.the_command_has_been_created), Toast.LENGTH_SHORT

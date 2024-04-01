@@ -93,7 +93,7 @@ fun ComposeScreen(
             onValueChange = {
                 onTextChanged(it)
             },
-            label = {
+            placeholder = {
                 Text(
                     text = stringResource(R.string.type_here),
                     style = MaterialTheme.typography.labelSmall
@@ -129,7 +129,7 @@ fun ComposeScreen(
                     onValueChange = {
                         if (it.length <= yearMaxChar) onYearChanged(it)
                     },
-                    label = {
+                    placeholder = {
                         Text(
                             text = stringResource(id = R.string.year),
                             style = MaterialTheme.typography.labelSmall
@@ -162,7 +162,7 @@ fun ComposeScreen(
                     onValueChange = {
                         if (it.length <= monthMaxChar) onMonthChanged(it)
                     },
-                    label = {
+                    placeholder = {
                         Text(
                             text = stringResource(id = R.string.month),
                             style = MaterialTheme.typography.labelSmall
@@ -195,7 +195,7 @@ fun ComposeScreen(
                     onValueChange = {
                         if (it.length <= dayMaxChar) onDayChanged(it)
                     },
-                    label = {
+                    placeholder = {
                         Text(
                             text = stringResource(id = R.string.day),
                             style = MaterialTheme.typography.labelSmall

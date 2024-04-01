@@ -42,7 +42,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
         getUserMessages("bajarilmadi")
     }
 
-    private fun getUserMessages(status: String) {
+    fun getUserMessages(status: String) {
         try {
             updateLoading(true)
             viewModelScope.launch {

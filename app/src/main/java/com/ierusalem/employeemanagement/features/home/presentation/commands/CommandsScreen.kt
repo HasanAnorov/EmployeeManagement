@@ -16,6 +16,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenClickIntents
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenState
+import com.ierusalem.employeemanagement.ui.components.EmptyScreen
 import com.ierusalem.employeemanagement.ui.components.WorkItem
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
@@ -26,52 +27,82 @@ fun ComposeScreen(
     intentReducer: (HomeScreenClickIntents) -> Unit,
     state: HomeScreenState
 ) {
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
-        @Suppress("DEPRECATION")
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
-            onRefresh = {
-                when(status){
-                    "yuborildi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
-                    "qabulqildi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("qabulqildi"))
-                    "bajarildi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("bajarildi"))
-                    "bajarilmadi" -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("bajarilmadi"))
-                    else -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
-                }
-            }
+    val data = when (status) {
+        "yuborildi" -> state.commandsSent
+        "qabulqildi" -> state.commandsReceived
+        "bajarildi" -> state.commandsDone
+        "bajarilmadi" -> state.commandsNotDone
+        else -> state.commandsSent
+    }
+    if (data.isEmpty()) {
+        EmptyScreen(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.background)
+        )
+    } else {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .padding(bottom = 8.dp)
-                    .background(MaterialTheme.colorScheme.background)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Top,
-                content = {
-                    val data = when(status){
-                        "yuborildi" -> state.commandsSent
-                        "qabulqildi" -> state.commandsReceived
-                        "bajarildi" -> state.commandsDone
-                        "bajarilmadi" -> state.commandsNotDone
-                        else -> state.commandsSent
-                    }
-                    items(data) { command ->
-                        //fixme
-                        WorkItem(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 8.dp),
-                            title = command.text,
-                            from = command.user,
-                            onItemClick = {}
+            @Suppress("DEPRECATION")
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
+                onRefresh = {
+                    when (status) {
+                        "yuborildi" -> intentReducer(
+                            HomeScreenClickIntents.OnPullToRefreshCommands(
+                                "yuborildi"
+                            )
                         )
+
+                        "qabulqildi" -> intentReducer(
+                            HomeScreenClickIntents.OnPullToRefreshCommands(
+                                "qabulqildi"
+                            )
+                        )
+
+                        "bajarildi" -> intentReducer(
+                            HomeScreenClickIntents.OnPullToRefreshCommands(
+                                "bajarildi"
+                            )
+                        )
+
+                        "bajarilmadi" -> intentReducer(
+                            HomeScreenClickIntents.OnPullToRefreshCommands(
+                                "bajarilmadi"
+                            )
+                        )
+
+                        else -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
                     }
                 }
-            )
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .background(MaterialTheme.colorScheme.background)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
+                    content = {
+                        items(data) { command ->
+                            //fixme
+                            WorkItem(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 8.dp),
+                                title = command.text,
+                                from = command.user,
+                                deadline = command.endTime,
+                                onItemClick = {
+                                    intentReducer(HomeScreenClickIntents.OnItemClick(command.workId.toString()))
+                                }
+                            )
+                        }
+                    }
+                )
+            }
         }
     }
 }

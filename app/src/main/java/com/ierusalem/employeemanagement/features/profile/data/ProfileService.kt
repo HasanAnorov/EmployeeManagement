@@ -1,7 +1,7 @@
 package com.ierusalem.employeemanagement.features.profile.data
 
+import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
 import com.ierusalem.employeemanagement.features.profile.data.password_response.PasswordResponse
-import com.ierusalem.employeemanagement.features.profile.presentation.ProfileScreenData
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -12,7 +12,7 @@ interface ProfileService {
     @GET("profile")
     suspend fun getUser(
         @Header("Authorization") authToken: String,
-    ): Response<ProfileScreenData>
+    ): Response<ProfileResponse>
 
     @POST("set-password")
     suspend fun setPassword(

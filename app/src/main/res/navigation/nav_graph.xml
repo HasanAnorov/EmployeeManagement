@@ -68,6 +68,14 @@
             app:popExitAnim="@anim/slide_out"
             app:destination="@id/settingsFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_workDescriptionFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:destination="@id/workDescriptionFragment" />
+
     </fragment>
 
     <fragment
@@ -147,6 +155,18 @@
     <fragment
         android:id="@+id/workDescriptionFragment"
         android:name="com.ierusalem.employeemanagement.features.work_description.presentation.WorkDescriptionFragment"
-        android:label="WorkDescriptionFragment" />
+        android:label="WorkDescriptionFragment" >
+
+        <action
+            android:id="@+id/action_workDescriptionFragment_to_staffHomeFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:popUpTo="@id/workDescriptionFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/staffHomeFragment" />
+
+    </fragment>
 
 </navigation>

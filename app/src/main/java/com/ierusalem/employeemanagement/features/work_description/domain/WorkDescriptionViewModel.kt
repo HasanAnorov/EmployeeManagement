@@ -36,6 +36,14 @@ class WorkDescriptionViewModel(
         }
     }
 
+    fun isFromHome(isHome: Boolean){
+        _state.update {
+            it.copy(
+                isFromHome = isHome
+            )
+        }
+    }
+
     private fun markAsDone(workId: String){
         try {
             viewModelScope.launch {
@@ -89,5 +97,6 @@ class WorkDescriptionViewModel(
 
 @Immutable
 data class WorkDescriptionScreenState(
-    val workItem: Resource<WorkItem> = Resource.Loading()
+    val workItem: Resource<WorkItem> = Resource.Loading(),
+    val isFromHome: Boolean = false
 )
