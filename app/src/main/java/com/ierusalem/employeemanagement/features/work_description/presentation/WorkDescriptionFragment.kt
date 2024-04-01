@@ -2,6 +2,7 @@ package com.ierusalem.employeemanagement.features.work_description.presentation
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class WorkDescriptionFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val workId = arguments?.getString(Constants.WORK_DESCRIPTION_KEY)
+        Log.d("ahi3646", "onAttach: workId - $workId ")
         val isFromHome = arguments?.getBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME) ?: false
         if (isFromHome){
             viewModel.isFromHome(true)
