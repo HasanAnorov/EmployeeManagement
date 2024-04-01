@@ -8,7 +8,7 @@ import com.ierusalem.employeemanagement.features.profile.domain.ProfileRepositor
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import retrofit2.Response
 
-//builded by Khasan Anorov 1.04.2024
+//Built by Khasan Anorov 1.04.2024
 
 class ProfileRepositoryImpl(
     private val preferences: PreferenceHelper,
