@@ -1,5 +1,7 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -116,6 +118,12 @@ class HomeFragment : Fragment() {
 //                bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
 //                bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME,true )
 //                findNavController().navigate(R.id.action_homeFragment_to_workDescriptionFragment, bundle)
+            }
+
+            is HomeScreenNavigation.CallEmployee -> {
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.setData(Uri.parse("tel:${navigation.phoneNumber}"))
+                startActivity(intent)
             }
 
             HomeScreenNavigation.FailedToLoadEmployees -> {

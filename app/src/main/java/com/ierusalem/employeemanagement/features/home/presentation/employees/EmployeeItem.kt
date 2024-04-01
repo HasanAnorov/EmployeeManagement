@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -87,6 +88,10 @@ fun EmployeeItem(
                     color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.labelSmall
                 )
+            }
+            IconButton(
+                onClick = { intentReducer(HomeScreenClickIntents.CallEmployee(employee.phoneNo)) }) {
+                Icon(imageVector = Icons.Default.Phone, contentDescription = null)
             }
             IconButton(
                 modifier = Modifier.padding(end = 8.dp),

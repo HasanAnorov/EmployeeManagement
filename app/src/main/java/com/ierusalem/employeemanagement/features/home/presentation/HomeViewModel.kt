@@ -227,6 +227,10 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                 logoutUser()
             }
 
+            is HomeScreenClickIntents.CallEmployee -> {
+                emitNavigation(HomeScreenNavigation.CallEmployee(intent.phoneNumber))
+            }
+
             is HomeScreenClickIntents.OnItemClick -> {
                emitNavigation(HomeScreenNavigation.OnItemClick(intent.workId))
             }
