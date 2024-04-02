@@ -32,16 +32,18 @@ import com.ierusalem.employeemanagement.features.settings.SettingsScreenEvents
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
-fun ChipGroupCompose(intentReducer: (SettingsScreenEvents) -> Unit) {
+fun ChipGroupCompose(
+    intentReducer: (SettingsScreenEvents) -> Unit,
+    locale: String
+) {
 
     val chipList: List<String> = listOf(
-        "System",
         "English",
         "Russian",
         "Uzbek"
     )
 
-    var selected by remember { mutableStateOf("") }
+    var selected by remember { mutableStateOf(locale) }
 
     Column(
         modifier = Modifier
@@ -123,7 +125,8 @@ fun Chip(
 fun ChipGroupComposePreview(){
     EmployeeManagementTheme {
         ChipGroupCompose(
-            intentReducer = {}
+            intentReducer = {},
+            locale = "English"
         )
     }
 }
@@ -133,7 +136,8 @@ fun ChipGroupComposePreview(){
 fun ChipGroupComposePreviewDark(){
     EmployeeManagementTheme(darkTheme = true) {
         ChipGroupCompose(
-            intentReducer = {}
+            intentReducer = {},
+            locale = ""
         )
     }
 }

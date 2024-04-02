@@ -16,14 +16,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.settings.components.ChipGroupCompose
-import com.ierusalem.employeemanagement.features.settings.components.ThemeChipGroupCompose
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    intentReducer: (SettingsScreenEvents) -> Unit
+    intentReducer: (SettingsScreenEvents) -> Unit,
+    currentLocale: String
 ) {
     Column(
         modifier = Modifier
@@ -47,15 +47,16 @@ fun SettingsScreen(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         ChipGroupCompose(
-            intentReducer = {event ->intentReducer(event)}
+            intentReducer = { event -> intentReducer(event) },
+            locale = currentLocale
         )
-        Text(
-            text = stringResource(R.string.app_theme),
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-        ThemeChipGroupCompose(
-            intentReducer = {event ->intentReducer(event)}
-        )
+//        Text(
+//            text = stringResource(R.string.app_theme),
+//            modifier = Modifier.padding(horizontal = 16.dp)
+//        )
+//        ThemeChipGroupCompose(
+//            intentReducer = {event ->intentReducer(event)}
+//        )
     }
 }
 
@@ -64,7 +65,8 @@ fun SettingsScreen(
 fun SettingPreview() {
     EmployeeManagementTheme {
         SettingsScreen(
-            intentReducer = {}
+            intentReducer = {},
+            currentLocale = ""
         )
     }
 }
@@ -74,7 +76,8 @@ fun SettingPreview() {
 fun SettingPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         SettingsScreen(
-            intentReducer = {}
+            intentReducer = {},
+            currentLocale = ""
         )
     }
 }

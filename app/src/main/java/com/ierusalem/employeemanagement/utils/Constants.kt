@@ -5,7 +5,6 @@ object Constants {
     const val SHARED_PREF = "employee_management_pref"
     const val TOKEN_KEY = "employee_management_pre_key"
     const val REFRESH_TOKEN_KEY = "employee_management_pre_refresh_key"
-    const val LANGUAGE_KEY = "employee_management_language_key"
     const val USERNAME_KEY = "employee_management_username_key"
 
     const val WORK_DESCRIPTION_KEY = "work_description_key_id"
@@ -14,6 +13,8 @@ object Constants {
     const val PROFILE_CHANGE = "profile_changed_successfully"
 
     const val FROM_WORK_DESCRIPTION = "from_work_description"
+
+    const val LOCALE_LANGUAGE = "local_language"
 
     const val COMPOSE_PROFILE_ID = "compose_profile_id"
 

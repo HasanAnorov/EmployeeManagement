@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.databinding.ActivityMainBinding
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,11 +22,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        val preferenceHelper = PreferenceHelper(this)
+        val config = resources.configuration
+        val lang = preferenceHelper.getLocal() // your language code
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+        createConfigurationContext(config)
+        resources.updateConfiguration(config, resources.displayMetrics)
+
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insets -> insets }
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val preferenceHelper = PreferenceHelper(this)
         val destination = if (preferenceHelper.isLogged()) {
             val userData = preferenceHelper.getUser()
             if (userData.isStaff) {

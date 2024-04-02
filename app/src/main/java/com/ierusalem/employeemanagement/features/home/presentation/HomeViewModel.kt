@@ -203,24 +203,6 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         }
     }
 
-//    private fun getEmployees() {
-//        try {
-//            viewModelScope.launch {
-//                repo.getEmployees().let { response ->
-//                    if (response.isSuccessful) {
-//                        _state.update {
-//                            it.copy(
-//                                employees = response.body()?.results ?: listOf()
-//                            )
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (e: Exception) {
-//            emitNavigation(HomeScreenNavigation.FailedToLoadEmployees)
-//        }
-//    }
-
     fun handleClickIntents(intent: HomeScreenClickIntents) {
         when (intent) {
             HomeScreenClickIntents.LogoutClick -> {

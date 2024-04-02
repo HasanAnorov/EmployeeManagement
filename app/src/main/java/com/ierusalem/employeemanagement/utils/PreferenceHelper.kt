@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
+import java.util.Locale
 
 class PreferenceHelper (context: Context){
     private val sharedPref: SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE)
@@ -18,22 +19,23 @@ class PreferenceHelper (context: Context){
         }
     }
 
+    fun saveLocal(locale:String){
+        with(sharedPref.edit()) {
+            putString(Constants.LOCALE_LANGUAGE, locale)
+            apply()
+        }
+    }
+
+    fun getLocal(): String{
+        val default = Locale.getDefault().language
+        return sharedPref.getString(Constants.LOCALE_LANGUAGE, default )  ?: default
+    }
+
     fun saveRefreshToken(token:String){
         with(sharedPref.edit()) {
             putString(Constants.REFRESH_TOKEN_KEY, token)
             apply()
         }
-    }
-
-    fun saveLanguage(language:String){
-        with(sharedPref.edit()) {
-            putString(Constants.LANGUAGE_KEY, language)
-            apply()
-        }
-    }
-
-    fun getLanguage(): String{
-        return sharedPref.getString(Constants.LANGUAGE_KEY, "")!!
     }
 
     fun deleteToken(){

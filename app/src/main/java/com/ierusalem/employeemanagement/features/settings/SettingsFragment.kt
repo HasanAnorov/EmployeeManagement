@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.settings
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,48 +9,64 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import java.util.Locale
-
 
 class SettingsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+        val preferenceHelper = PreferenceHelper(requireContext())
+        val currentLocale = preferenceHelper.getLocal()
+        val locale = when(currentLocale){
+            "en" -> "English"
+            "ru" -> "Russian"
+            "uz" -> "Uzbek"
+            else -> "English"
+        }
+
         return ComposeView(requireContext()).apply {
             setContent {
                 EmployeeManagementTheme {
-                    SettingsScreen(intentReducer = { handleEvents(it) })
+                    SettingsScreen(
+                        intentReducer = { handleEvents(it) },
+                        currentLocale = locale
+                    )
                 }
             }
         }
     }
 
-
-
-    fun Context.setAppLocale(language: String): Context {
+    private fun setAppLocale(language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)
-        val config = resources.configuration
+        val resources = requireActivity().resources
+        val config: Configuration = resources.configuration
         config.setLocale(locale)
-        config.setLayoutDirection(locale)
-        return createConfigurationContext(config)
+        resources.updateConfiguration(config, resources.displayMetrics)
+        activity?.recreate()
     }
 
     private fun handleEvents(event: SettingsScreenEvents) {
+        val preferenceHelper = PreferenceHelper(requireContext())
         when (event) {
             SettingsScreenEvents.SystemLanClick -> {
                 val locale = Locale.getDefault().language
-                requireContext().setAppLocale(locale)
+                preferenceHelper.saveLocal(locale)
+                setAppLocale(locale)
             }
             SettingsScreenEvents.EnglishLanClick -> {
-                requireContext().setAppLocale("en")
+                preferenceHelper.saveLocal("en")
+                setAppLocale("en")
             }
             SettingsScreenEvents.RussianLanClick -> {
-                requireContext().setAppLocale("ru")
+                preferenceHelper.saveLocal("ru")
+                setAppLocale("ru")
             }
             SettingsScreenEvents.UzbLanClick -> {
-                requireContext().setAppLocale("uz")
+                preferenceHelper.saveLocal("uz")
+                setAppLocale("uz")
             }
             SettingsScreenEvents.SystemThemeClick -> {}
             SettingsScreenEvents.DarkThemeClick -> {}
