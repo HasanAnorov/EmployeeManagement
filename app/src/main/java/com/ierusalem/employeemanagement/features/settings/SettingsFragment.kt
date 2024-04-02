@@ -23,7 +23,7 @@ class SettingsFragment : Fragment() {
             "en" -> "English"
             "ru" -> "Russian"
             "uz" -> "Uzbek"
-            else -> "English"
+            else -> "Unknow"
         }
 
         return ComposeView(requireContext()).apply {
