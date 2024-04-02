@@ -6,5 +6,6 @@ import retrofit2.Response
 
 interface WorkDescriptionRepository {
     suspend fun getMessageById(workId: String): Response<WorkItem>
+    suspend fun getMessageByIdAdmin(workId: String): Response<WorkItem>
     suspend fun markAsDone(workId: String): Response<MarkAsDoneResponse>
 }

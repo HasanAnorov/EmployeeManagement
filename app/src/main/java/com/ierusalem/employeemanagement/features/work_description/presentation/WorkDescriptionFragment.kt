@@ -32,14 +32,18 @@ class WorkDescriptionFragment : Fragment() {
         if (isFromHome){
             viewModel.isFromHome(true)
         }
+        if (workId!= null && !isFromHome){
+            viewModel.getMessageById(workId)
+        }
+        if(isFromHome && workId != null){
+            viewModel.getMessageByIdAdmin(workId)
+        }
         if (workId == null) {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.something_went_wrong),
                 Toast.LENGTH_SHORT
             ).show()
-        } else {
-            viewModel.getMessageById(workId)
         }
     }
 

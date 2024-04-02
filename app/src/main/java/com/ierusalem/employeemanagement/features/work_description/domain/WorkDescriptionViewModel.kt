@@ -61,6 +61,37 @@ class WorkDescriptionViewModel(
         }
     }
 
+    fun getMessageByIdAdmin(workId: String){
+        try {
+            viewModelScope.launch {
+                repo.getMessageByIdAdmin(workId).let { response ->
+                    if (response.isSuccessful){
+                        Log.d("ahi3646", "getMessageById: ${response.body()!!} ")
+                        _state.update {
+                            it.copy(
+                                workItem = Resource.Success(response.body()!!)
+                            )
+                        }
+                    }else{
+                        Log.d("ahi3646", "getMessageById: error ")
+                        _state.update {
+                            it.copy(
+                                workItem = Resource.Failure("Something went wrong!")
+                            )
+                        }
+                    }
+                }
+            }
+        }catch (e: Exception){
+            Log.d("ahi3646", "getMessageById: error catch")
+            _state.update {
+                it.copy(
+                    workItem = Resource.Failure("Something went wrong!")
+                )
+            }
+        }
+    }
+
     fun getMessageById(workId: String){
         try {
             viewModelScope.launch {

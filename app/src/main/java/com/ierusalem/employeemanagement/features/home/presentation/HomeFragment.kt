@@ -114,10 +114,10 @@ class HomeFragment : Fragment() {
     private fun executeNavigation(navigation: HomeScreenNavigation) {
         when (navigation) {
             is HomeScreenNavigation.OnItemClick -> {
-//                val bundle = Bundle()
-//                bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
-//                bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME,true )
-//                findNavController().navigate(R.id.action_homeFragment_to_workDescriptionFragment, bundle)
+                val bundle = Bundle()
+                bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
+                bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME,true )
+                findNavController().navigate(R.id.action_homeFragment_to_workDescriptionFragment, bundle)
             }
 
             is HomeScreenNavigation.CallEmployee -> {

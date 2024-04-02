@@ -19,6 +19,13 @@ class WorkDescriptionRepositoryImpl(
         )
     }
 
+    override suspend fun getMessageByIdAdmin(workId: String): Response<WorkItem> {
+        return RestClient(context).workDescriptionService.getMessageByIdAdmin(
+            authToken = preferenceHelper.getToken(),
+            workId = workId
+        )
+    }
+
     override suspend fun markAsDone(workId: String): Response<MarkAsDoneResponse> {
         return RestClient(context).workDescriptionService.markAsDone(
             authToken = preferenceHelper.getToken(),

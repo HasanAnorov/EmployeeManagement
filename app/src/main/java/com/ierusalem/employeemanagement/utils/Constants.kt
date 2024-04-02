@@ -17,7 +17,8 @@ object Constants {
 
     const val COMPOSE_PROFILE_ID = "compose_profile_id"
 
-    const val BASE_URL = "https://ithelpshchool.uz/"
+//    const val BASE_URL = "https://ithelpshchool.uz/"
+    const val BASE_URL = "https://hat.samduuf.uz/"
 
     const val MAX_FILE_SIZE:Long = 18874368
 

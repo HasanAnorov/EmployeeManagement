@@ -91,7 +91,7 @@ private fun DrawerHeader(username: String, imageUrl: String, email: String) {
                 imageUrl
             },
             modifier = Modifier
-                .size(64.dp)
+                .size(72.dp)
                 .clip(CircleShape)
                 .border(
                     width = 2.dp,

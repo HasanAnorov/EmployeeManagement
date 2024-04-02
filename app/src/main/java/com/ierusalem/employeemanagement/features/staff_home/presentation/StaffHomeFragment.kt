@@ -40,6 +40,9 @@ class StaffHomeFragment : Fragment() {
         Log.d("ahi3646", "onAttach: $isFromWorkDesc ")
         if(isFromWorkDesc){
             viewModel.getUserMessages("yuborildi")
+            viewModel.getUserMessages("qabulqildi")
+            viewModel.getUserMessages("bajarildi")
+            viewModel.getUserMessages("bajarilmadi")
         }
 
         return ComposeView(requireContext()).apply {
