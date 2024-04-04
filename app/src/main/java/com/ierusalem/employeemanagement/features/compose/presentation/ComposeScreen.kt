@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.compose.presentation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,10 +33,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.ierusalem.employeemanagement.utils.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +55,11 @@ fun ComposeScreen(
     val yearMaxChar = 4
     val monthMaxChar = 2
     val dayMaxChar = 2
+
+    BackHandler {
+        onNavIconClicked()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

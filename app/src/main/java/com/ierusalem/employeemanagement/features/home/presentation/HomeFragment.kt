@@ -3,6 +3,7 @@ package com.ierusalem.employeemanagement.features.home.presentation
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.ComposeView
@@ -36,14 +36,20 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val isFromCommand = arguments?.getBoolean(Constants.COMPOSE_COMMAND) ?: false
+        if(isFromCommand){
+            viewModel.getCommands("yuborildi")
+            viewModel.getCommands("qabulqildi")
+            viewModel.getCommands("bajarildi")
+            viewModel.getCommands("bajarilmadi")
+        }
 
         return ComposeView(requireContext()).apply {
             setContent {
-                val state by viewModel.state.collectAsState()
+                val state by viewModel.state.collectAsStateWithLifecycle()
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-                val drawerOpen by viewModel.drawerShouldBeOpened
-                    .collectAsStateWithLifecycle()
-
+                val drawerOpen by viewModel.drawerShouldBeOpened.collectAsStateWithLifecycle()
+                val scope = rememberCoroutineScope()
                 if (drawerOpen) {
                     LaunchedEffect(Unit) {
                         try {
@@ -54,7 +60,6 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                val scope = rememberCoroutineScope()
                 if (drawerState.isOpen) {
                     BackHandler {
                         scope.launch {
@@ -63,42 +68,47 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                EmployeeManagementDrawer(
-                    username = "${state.username} ${state.lastName}",
-                    imageUrl = state.imageUrl,
-                    email = state.email,
-                    drawerState = drawerState,
-                    onProfileClicked = {
-                        scope.launch {
-                            drawerState.close()
-                            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
-                        }
-                    },
-                    onSettingsClicked = {
-                        scope.launch {
-                            drawerState.close()
-                            findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
-                        }
-                    },
-                    onLogoutClicked = {
-                        scope.launch {
-                            drawerState.close()
-                            viewModel.handleClickIntents(HomeScreenClickIntents.LogoutClick)
-                        }
-                    }
-                ) {
-                    EmployeeManagementTheme {
-                        HomeScreen(
-                            state = state,
-                            onDrawerClick = {
-                                viewModel.openDrawer()
+                Log.d("ahi3646", "onCreateView: ${state.isDarkTheme} ")
+                EmployeeManagementTheme(
+                    darkTheme = state.isDarkTheme,
+                    content = {
+                        EmployeeManagementDrawer(
+                            username = "${state.username} ${state.lastName}",
+                            imageUrl = state.imageUrl,
+                            email = state.email,
+                            drawerState = drawerState,
+                            onProfileClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+                                }
                             },
-                            intentReducer = {
-                                viewModel.handleClickIntents(it)
+                            onSettingsClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
+                                }
+                            },
+                            onLogoutClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    viewModel.handleClickIntents(HomeScreenClickIntents.LogoutClick)
+                                }
+                            },
+                            content = {
+                                HomeScreen(
+                                    state = state,
+                                    onDrawerClick = {
+                                        viewModel.openDrawer()
+                                    },
+                                    intentReducer = {
+                                        viewModel.handleClickIntents(it)
+                                    }
+                                )
                             }
                         )
                     }
-                }
+                )
             }
         }
     }
@@ -116,8 +126,11 @@ class HomeFragment : Fragment() {
             is HomeScreenNavigation.OnItemClick -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
-                bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME,true )
-                findNavController().navigate(R.id.action_homeFragment_to_workDescriptionFragment, bundle)
+                bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME, true)
+                findNavController().navigate(
+                    R.id.action_homeFragment_to_workDescriptionFragment,
+                    bundle
+                )
             }
 
             is HomeScreenNavigation.CallEmployee -> {

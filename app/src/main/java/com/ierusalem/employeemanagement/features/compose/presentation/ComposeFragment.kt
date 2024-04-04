@@ -111,32 +111,24 @@ class ComposeFragment : Fragment() {
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 EmployeeManagementTheme {
                     ComposeScreen(
-                        onAttachFileClick = {
-                            showFileChooser()
-                        },
-                        onNavIconClicked = {
-                            findNavController().popBackStack()
-                        },
-                        onTextChanged = {
-                            viewModel.onTextFormChanged(it)
-                        },
-                        onSubmitClicked = {
-                            viewModel.onSubmitClicked(userId)
-                        },
-                        onYearChanged = {
-                            viewModel.onYearChanged(it)
-                        },
-                        onMonthChanged = {
-                            viewModel.onMonthChanged(it)
-                        },
-                        onDayChanged = {
-                            viewModel.onDayChanged(it)
-                        },
+                        onAttachFileClick = { showFileChooser() },
+                        onNavIconClicked = { navigateToHomeWithRefresh() },
+                        onTextChanged = { viewModel.onTextFormChanged(it) },
+                        onSubmitClicked = { viewModel.onSubmitClicked(userId) },
+                        onYearChanged = { viewModel.onYearChanged(it) },
+                        onMonthChanged = { viewModel.onMonthChanged(it) },
+                        onDayChanged = { viewModel.onDayChanged(it) },
                         state = state
                     )
                 }
             }
         }
+    }
+
+    private fun navigateToHomeWithRefresh() {
+        val bundle = Bundle()
+        bundle.putBoolean(Constants.COMPOSE_COMMAND, true)
+        findNavController().navigate(R.id.action_composeFragment_to_homeFragment, bundle)
     }
 
     private fun showFileChooser() {
@@ -175,7 +167,7 @@ class ComposeFragment : Fragment() {
             }
 
             ComposeScreenNavigation.Success -> {
-                findNavController().popBackStack()
+                navigateToHomeWithRefresh()
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.the_command_has_been_created), Toast.LENGTH_SHORT

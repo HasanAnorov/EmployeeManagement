@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.home.presentation.employees
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -22,9 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenClickIntents
 import com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
@@ -96,7 +98,11 @@ fun EmployeeItem(
             IconButton(
                 modifier = Modifier.padding(end = 8.dp),
                 onClick = { intentReducer(HomeScreenClickIntents.CreateCommand(employee.id)) }) {
-                Icon(imageVector = Icons.Default.AddCircleOutline, contentDescription = null)
+                Image(
+                    modifier = Modifier.size(26.dp),
+                    painter = painterResource(id = R.drawable.plus),
+                    contentDescription = null
+                )
             }
         }
     }

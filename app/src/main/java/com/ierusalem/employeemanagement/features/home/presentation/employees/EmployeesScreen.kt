@@ -60,25 +60,3 @@ fun EmployeesScreen(
         }
     }
 }
-
-//@Preview
-//@Composable
-//fun EmployeesScreenPreview() {
-//    EmployeeManagementTheme {
-//        EmployeesScreen(
-//            intentReducer = {},
-//            events = LazyPagingItems()
-//        )
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun EmployeesScreenPreviewDark() {
-//    EmployeeManagementTheme(darkTheme = true) {
-//        EmployeesScreen(
-//            intentReducer = {},
-//            events = LazyPagingItems()
-//        )
-//    }
-//}

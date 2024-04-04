@@ -94,12 +94,6 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
 
-    //google fonts
-    implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.4")
-
-    //koil
-    implementation ("io.coil-kt:coil-compose:2.5.0")
-
     //pull to refresh
     implementation ("com.google.accompanist:accompanist-swiperefresh:0.35.0-alpha")
 

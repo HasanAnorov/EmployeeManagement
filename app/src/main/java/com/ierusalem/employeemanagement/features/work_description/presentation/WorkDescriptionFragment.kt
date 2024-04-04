@@ -33,9 +33,11 @@ class WorkDescriptionFragment : Fragment() {
             viewModel.isFromHome(true)
         }
         if (workId!= null && !isFromHome){
+            Log.d("ahi3646", "onAttach: user ")
             viewModel.getMessageById(workId)
         }
         if(isFromHome && workId != null){
+            Log.d("ahi3646", "onAttach: admin ")
             viewModel.getMessageByIdAdmin(workId)
         }
         if (workId == null) {
@@ -107,9 +109,10 @@ class WorkDescriptionFragment : Fragment() {
             }
 
             WorkDescriptionNavigation.NavIconClick -> {
-                val bundle = Bundle()
-                bundle.putBoolean(Constants.FROM_WORK_DESCRIPTION, true)
-                findNavController().navigate(R.id.action_workDescriptionFragment_to_staffHomeFragment, bundle)
+                findNavController().popBackStack()
+//                val bundle = Bundle()
+//                bundle.putBoolean(Constants.FROM_WORK_DESCRIPTION, true)
+//                findNavController().navigate(R.id.action_workDescriptionFragment_to_staffHomeFragment, bundle)
             }
         }
     }

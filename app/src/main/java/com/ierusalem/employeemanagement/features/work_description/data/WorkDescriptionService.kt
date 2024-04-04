@@ -10,7 +10,6 @@ import retrofit2.http.Query
 
 interface WorkDescriptionService {
 
-    //fixme ask Nurbek for right api path
     @GET("message")
     suspend fun getMessageById(
         @Header("Authorization") authToken: String,

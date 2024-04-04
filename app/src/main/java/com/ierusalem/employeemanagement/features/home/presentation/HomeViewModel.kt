@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -24,13 +25,27 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     NavigationEventDelegate<HomeScreenNavigation> by DefaultNavigationEventDelegate() {
 
-    private val _state: MutableStateFlow<HomeScreenState> = MutableStateFlow(HomeScreenState())
+    private val _state: MutableStateFlow<HomeScreenState> = MutableStateFlow(
+        HomeScreenState(
+            isDarkTheme = repo.getTheme()
+        )
+    )
     val state = _state.asStateFlow()
 
     private val _drawerShouldBeOpened = MutableStateFlow(false)
     val drawerShouldBeOpened = _drawerShouldBeOpened.asStateFlow()
 
+    private fun updateTheme(isDarkTheme: Boolean){
+        repo.saveTheme(isDarkTheme)
+        _state.update {
+            it.copy(
+                isDarkTheme = isDarkTheme
+            )
+        }
+    }
+
     init {
+        Log.d("ahi3646", "theme : ${repo.getTheme()} ")
         getUserForHome()
         getCommands("yuborildi")
         getCommands("qabulqildi")
@@ -153,7 +168,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         }
     }
 
-    private fun getCommands(status: String) {
+    fun getCommands(status: String) {
         try {
             updateLoading(true)
             viewModelScope.launch {
@@ -205,6 +220,10 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
 
     fun handleClickIntents(intent: HomeScreenClickIntents) {
         when (intent) {
+            is HomeScreenClickIntents.OnThemeChange -> {
+                updateTheme(intent.isDarkTheme)
+            }
+
             HomeScreenClickIntents.LogoutClick -> {
                 logoutUser()
             }
@@ -238,6 +257,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
 }
 
 data class HomeScreenState(
+    val isDarkTheme: Boolean,
     val tabItems: List<UiText> = listOf(
         UiText.StringResource(resId = R.string.commands_sent),
         UiText.StringResource(resId = R.string.commands_received),

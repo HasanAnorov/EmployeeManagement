@@ -20,7 +20,12 @@ class HomeRepositoryImpl(
     override fun getUserFromLocal(): User {
         return preferenceHelper.getUser()
     }
-
+    override fun getTheme(): Boolean {
+        return preferenceHelper.getTheme()
+    }
+    override fun saveTheme(isDarkTheme: Boolean) {
+        preferenceHelper.saveTheme(isDarkTheme)
+    }
     override suspend fun logoutUser(): Response<Unit> {
         return RestClient(context).homeService.logoutUser(
             authToken = preferenceHelper.getToken(),

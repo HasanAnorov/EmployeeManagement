@@ -11,7 +11,12 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
@@ -70,6 +75,16 @@ fun HomeScreen(
                     Text(
                         text = stringResource(id = R.string.app_name),
                         style = MaterialTheme.typography.titleSmall
+                    )
+                },
+                actions = {
+                    IconButton(
+                        onClick = {intentReducer(HomeScreenClickIntents.OnThemeChange(!state.isDarkTheme))},
+                        content = {
+                            val icon =
+                                if (state.isDarkTheme) Icons.Default.DarkMode else Icons.Default.LightMode
+                            Icon(imageVector = icon, contentDescription = null)
+                        }
                     )
                 }
             )
@@ -134,21 +149,25 @@ fun HomeScreen(
                             intentReducer = intentReducer,
                             status = "yuborildi"
                         )
-                        1-> ComposeScreen(
+
+                        1 -> ComposeScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "qabulqildi"
                         )
-                        2-> ComposeScreen(
+
+                        2 -> ComposeScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "bajarildi"
                         )
-                        3-> ComposeScreen(
+
+                        3 -> ComposeScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "bajarilmadi"
                         )
+
                         4 -> {
                             EmployeesScreen(
                                 intentReducer = intentReducer,
@@ -167,7 +186,9 @@ fun HomeScreen(
 fun Preview_HomeScreen_Light() {
     EmployeeManagementTheme(darkTheme = false) {
         HomeScreen(
-            state = HomeScreenState(),
+            state = HomeScreenState(
+                isDarkTheme = false
+            ),
             onDrawerClick = {},
             intentReducer = {}
         )
@@ -179,7 +200,9 @@ fun Preview_HomeScreen_Light() {
 fun Preview_HomeScreen_Dark() {
     EmployeeManagementTheme(darkTheme = true) {
         HomeScreen(
-            state = HomeScreenState(),
+            state = HomeScreenState(
+                isDarkTheme = true
+            ),
             onDrawerClick = {},
             intentReducer = {}
         )

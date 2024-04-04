@@ -108,26 +108,30 @@ fun ComposeScreen(
     }
 }
 
-@Preview
-@Composable
-fun ComposeScreenPreview() {
-    EmployeeManagementTheme {
-        ComposeScreen(
-            intentReducer = {},
-            state = HomeScreenState(),
-            status = ""
-        )
-    }
-}
-
-@Preview
-@Composable
-fun ComposeScreenPreviewDark() {
-    EmployeeManagementTheme(darkTheme = true) {
-        ComposeScreen(
-            intentReducer = {},
-            state = HomeScreenState(),
-            status = ""
-        )
-    }
-}
+//@Preview
+//@Composable
+//fun ComposeScreenPreview() {
+//    EmployeeManagementTheme {
+//        ComposeScreen(
+//            intentReducer = {},
+//            state = HomeScreenState(
+//                isDarkTheme = false
+//            ),
+//            status = ""
+//        )
+//    }
+//}
+//
+//@Preview
+//@Composable
+//fun ComposeScreenPreviewDark() {
+//    EmployeeManagementTheme(darkTheme = true) {
+//        ComposeScreen(
+//            intentReducer = {},
+//            state = HomeScreenState(
+//                isDarkTheme = true
+//            ),
+//            status = ""
+//        )
+//    }
+//}

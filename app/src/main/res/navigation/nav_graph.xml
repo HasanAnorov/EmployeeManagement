@@ -105,7 +105,15 @@
     <fragment
         android:id="@+id/composeFragment"
         android:name="com.ierusalem.employeemanagement.features.compose.presentation.ComposeFragment"
-        android:label="ComposeFragment" />
+        android:label="ComposeFragment" >
+
+        <action
+            android:id="@+id/action_composeFragment_to_homeFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/homeFragment"
+            app:destination="@id/homeFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"

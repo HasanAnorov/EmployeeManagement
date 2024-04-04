@@ -15,10 +15,12 @@ object Constants {
     const val FROM_WORK_DESCRIPTION = "from_work_description"
 
     const val LOCALE_LANGUAGE = "local_language"
+    const val LOCALE_THEME = "local_theme"
 
     const val COMPOSE_PROFILE_ID = "compose_profile_id"
 
-//    const val BASE_URL = "https://ithelpshchool.uz/"
+    const val COMPOSE_COMMAND = "compose_command"
+
     const val BASE_URL = "https://hat.samduuf.uz/"
 
     const val MAX_FILE_SIZE:Long = 18874368

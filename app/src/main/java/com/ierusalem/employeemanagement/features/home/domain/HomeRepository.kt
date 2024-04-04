@@ -12,6 +12,8 @@ interface HomeRepository {
     suspend fun getEmployees(page: Int, perPage: Int): Response<EmployeesResponse>
     fun deleteToken()
     fun getUserFromLocal(): User
+    fun getTheme(): Boolean
+    fun saveTheme(isDarkTheme: Boolean)
     suspend fun getUserForHome():Response<ProfileResponse>
     fun deleteRefreshToken()
 }
