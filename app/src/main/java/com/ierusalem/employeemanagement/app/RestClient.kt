@@ -22,14 +22,14 @@ class RestClient(context: Context) {
     private val retrofit by lazy {
 
         val client = OkHttpClient.Builder()
-//            .addInterceptor(
-//                ChuckerInterceptor.Builder(context)
-//                    .collector(ChuckerCollector(context))
-//                    .maxContentLength(25000L)
-//                    .redactHeaders(emptySet())
-//                    .alwaysReadResponseBody(false)
-//                    .build()
-//            )
+            .addInterceptor(
+                ChuckerInterceptor.Builder(context)
+                    .collector(ChuckerCollector(context))
+                    .maxContentLength(25000L)
+                    .redactHeaders(emptySet())
+                    .alwaysReadResponseBody(false)
+                    .build()
+            )
             .build()
 
         val gson = GsonBuilder()

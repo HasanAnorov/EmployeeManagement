@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -18,7 +17,6 @@ import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenCli
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenState
 import com.ierusalem.employeemanagement.ui.components.EmptyScreen
 import com.ierusalem.employeemanagement.ui.components.WorkItem
-import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun ComposeScreen(
