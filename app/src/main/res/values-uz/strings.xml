@@ -39,10 +39,10 @@
     <string name="problem_on_loading_employees_list">Xodimlar ro\'yxatini yuklashda muammo yuzaga keldi</string>
     <string name="can_t_logout">Tizimdan chiqa olmadi!</string>
     <string name="employees">Xodimlar</string>
-    <string name="commands_sent">Buyruqlar (Yuborilgan)</string>
-    <string name="commands_received">Buyruqlar (Qabul qilingan)</string>
-    <string name="commands_done">Buyruqlar (Bajarilgan)</string>
-    <string name="commands_not_done">Buyruqlar (Bajarilmagan)</string>
+    <string name="commands_sent">Yuborilgan</string>
+    <string name="commands_received">Qabul qilingan</string>
+    <string name="commands_done">Bajarilgan</string>
+    <string name="commands_not_done">Bajarilmagan</string>
     <string name="password_has_changed">Parol o\'zgardi!</string>
     <string name="password_didn_t_change">Parol o\'zgarmadi!</string>
     <string name="position_not_given">Lavozimi mavjud emas</string>

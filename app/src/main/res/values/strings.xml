@@ -39,10 +39,10 @@
     <string name="problem_on_loading_employees_list">There was a problem loading the staff list</string>
     <string name="can_t_logout">Can\'t logout</string>
     <string name="employees">Employees</string>
-    <string name="commands_sent">Commands (Sent)</string>
-    <string name="commands_received">Commands (Received)</string>
-    <string name="commands_done">Commands (Done)</string>
-    <string name="commands_not_done">Commands (Not Done)</string>
+    <string name="commands_sent">Sent</string>
+    <string name="commands_received">Received</string>
+    <string name="commands_done">Done</string>
+    <string name="commands_not_done">Not Done</string>
     <string name="password_has_changed">Password has changed!</string>
     <string name="password_didn_t_change">Password didn\'t change!</string>
     <string name="position_not_given">Position is not available</string>

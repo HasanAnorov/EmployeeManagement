@@ -25,7 +25,6 @@ class WorkDescriptionViewModel(
         MutableStateFlow(WorkDescriptionScreenState())
     val state = _state.asStateFlow()
 
-
     fun handleEvents(event: WorkDescriptionScreenEvents){
         when(event){
             is WorkDescriptionScreenEvents.MarkAsDone -> { markAsDone(event.workId) }

@@ -71,7 +71,7 @@ fun ComposeScreen(
                 Text(
                     text = stringResource(R.string.create_a_command),
                     style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
         )

@@ -1,6 +1,7 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
@@ -22,8 +24,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -31,6 +31,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,7 +81,7 @@ fun HomeScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = {intentReducer(HomeScreenClickIntents.OnThemeChange(!state.isDarkTheme))},
+                        onClick = { intentReducer(HomeScreenClickIntents.OnThemeChange(!state.isDarkTheme)) },
                         content = {
                             val icon =
                                 if (state.isDarkTheme) Icons.Default.DarkMode else Icons.Default.LightMode
@@ -100,21 +102,25 @@ fun HomeScreen(
                 .padding(paddingValues),
             content = {
                 ScrollableTabRow(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .clip(RoundedCornerShape(9.dp))
+                        .fillMaxWidth(),
                     edgePadding = 0.dp,
                     selectedTabIndex = state.selectedTabIndex,
-                    indicator = { tabPositions ->
-                        if (state.selectedTabIndex < tabPositions.size) {
-                            SecondaryIndicator(
-                                modifier = Modifier.tabIndicatorOffset(tabPositions[state.selectedTabIndex]),
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
-                        }
-                    },
-                    contentColor = MaterialTheme.colorScheme.onBackground,
+                    containerColor = MaterialTheme.colorScheme.outline.copy(0.2F),
+                    indicator = { },
+                    divider = { },
                     tabs = {
                         state.tabItems.forEachIndexed { index, currentTab ->
                             Tab(
+                                modifier = Modifier
+                                    .background(
+                                        color = if (pagerState.currentPage == index)
+                                            MaterialTheme.colorScheme.primary
+                                        else Color.Transparent,
+                                        shape = RoundedCornerShape(12.dp)
+                                    ),
                                 selected = state.selectedTabIndex == index,
                                 selectedContentColor = MaterialTheme.colorScheme.onBackground,
                                 unselectedContentColor = MaterialTheme.colorScheme.onBackground.copy(
@@ -130,6 +136,7 @@ fun HomeScreen(
                                     Text(
                                         text = currentTab.asString(context),
                                         fontSize = 16.sp,
+                                        color = if (pagerState.currentPage == index) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
                                         style = MaterialTheme.typography.titleSmall
                                     )
                                 },

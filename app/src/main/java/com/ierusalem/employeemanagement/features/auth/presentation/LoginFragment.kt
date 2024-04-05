@@ -26,13 +26,18 @@ class LoginFragment : Fragment() {
             setContent {
                 val state by viewModel.state.collectAsState()
                 EmployeeManagementTheme {
-                    LoginScreen(state = state, onUsernameChanged = {
-                        viewModel.onUsernameChanged(it)
-                    }, onPasswordChanged = {
-                        viewModel.onPasswordChanged(it)
-                    }, onLoginClick = {
-                        viewModel.loginIfFieldsAreValid()
-                    })
+                    LoginScreen(
+                        state = state,
+                        onUsernameChanged = {
+                            viewModel.onUsernameChanged(it)
+                        },
+                        onPasswordChanged = {
+                            viewModel.onPasswordChanged(it)
+                        },
+                        onLoginClick = {
+                            viewModel.loginIfFieldsAreValid()
+                        }
+                    )
                 }
             }
         }
@@ -52,11 +57,8 @@ class LoginFragment : Fragment() {
                     requireContext(), getString(R.string.user_not_found), Toast.LENGTH_SHORT
                 ).show()
             }
-
             LoginNavigation.NavigateToStaffMain -> findNavController().navigate(R.id.action_loginFragment_to_staffHomeFragment)
-
             LoginNavigation.NavigateToMain -> findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-
         }
     }
 

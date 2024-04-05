@@ -75,25 +75,29 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
             }
         }
         if(username.successful && password.successful){
-            viewModelScope.launch {
-                authRepository.loginUser(
-                    username = state.value.username,
-                    password = state.value.password
-                ).let { response ->
-                    if (response.isSuccessful) {
-                        saveUser(response.body()!!.user)
-                        saveToken(response.body()!!.access)
-                        saveRefreshToken(response.body()!!.refresh)
+            try {
+                viewModelScope.launch {
+                    authRepository.loginUser(
+                        username = state.value.username,
+                        password = state.value.password
+                    ).let { response ->
+                        if (response.isSuccessful) {
+                            saveUser(response.body()!!.user)
+                            saveToken(response.body()!!.access)
+                            saveRefreshToken(response.body()!!.refresh)
 
-                        if(response.body()!!.user.isStaff){
-                            emitNavigation(LoginNavigation.NavigateToMain)
-                        }else{
-                            emitNavigation(LoginNavigation.NavigateToStaffMain)
+                            if(response.body()!!.user.isStaff){
+                                emitNavigation(LoginNavigation.NavigateToMain)
+                            }else{
+                                emitNavigation(LoginNavigation.NavigateToStaffMain)
+                            }
+                        } else {
+                            emitNavigation(LoginNavigation.InvalidResponse)
                         }
-                    } else {
-                        emitNavigation(LoginNavigation.InvalidResponse)
                     }
                 }
+            }catch (e: Exception){
+                emitNavigation(LoginNavigation.InvalidResponse)
             }
         }
     }
