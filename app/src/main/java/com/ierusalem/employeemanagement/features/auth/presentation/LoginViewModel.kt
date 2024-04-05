@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.auth.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.R
@@ -10,6 +11,7 @@ import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDele
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import com.ierusalem.employeemanagement.utils.UiText
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -45,6 +47,11 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
         authRepository.saveRefreshToken(refresh)
     }
 
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+        emitNavigation(LoginNavigation.InvalidResponse)
+    }
+
     fun loginIfFieldsAreValid(){
         val username = validateUsername()
         val password = validatePassword()
@@ -76,7 +83,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
         }
         if(username.successful && password.successful){
             try {
-                viewModelScope.launch {
+                viewModelScope.launch(handler) {
                     authRepository.loginUser(
                         username = state.value.username,
                         password = state.value.password

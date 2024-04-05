@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -45,7 +44,6 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     }
 
     init {
-        Log.d("ahi3646", "theme : ${repo.getTheme()} ")
         getUserForHome()
         getCommands("yuborildi")
         getCommands("qabulqildi")

@@ -37,7 +37,6 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .imePadding()
-//            .navigationBarsPadding()
             .fillMaxSize()
             .verticalScroll(scrollState)
             .background(color = MaterialTheme.colorScheme.background),
