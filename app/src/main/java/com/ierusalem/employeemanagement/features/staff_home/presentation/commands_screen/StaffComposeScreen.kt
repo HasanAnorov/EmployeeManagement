@@ -63,7 +63,11 @@ fun StaffComposeScreen(
                 is Resource.Loading -> LoadingScreen()
                 is Resource.Success -> {
                     if(data.data.isNullOrEmpty()){
-                        EmptyScreen()
+                        EmptyScreen(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = MaterialTheme.colorScheme.background)
+                        )
                     }else{
                         LazyColumn(
                             modifier = Modifier

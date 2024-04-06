@@ -91,7 +91,11 @@ fun CommandsScreen(
                 }
             ) {
                 if (data.isEmpty()){
-                    EmptyScreen()
+                    EmptyScreen(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = MaterialTheme.colorScheme.background)
+                    )
                 }else{
                     LazyColumn(
                         modifier = Modifier

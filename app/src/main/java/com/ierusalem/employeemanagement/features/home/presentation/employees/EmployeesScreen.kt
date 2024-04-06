@@ -55,7 +55,11 @@ fun EmployeesScreen(
                     )
                 }
             }else{
-                EmptyScreen()
+                EmptyScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background)
+                )
             }
         }
     }

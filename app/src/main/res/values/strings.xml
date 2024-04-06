@@ -61,9 +61,11 @@
     <string name="day">Day</string>
     <string name="can_t_get_work_description">Can\'t get work description!</string>
     <string name="deadline">Deadline: </string>
-    <string name="attached_files">Attached Files</string>
+    <string name="attached_files">Attached Files:</string>
     <string name="work_marked_as_done">Work marked as done!</string>
     <string name="can_t_mark_this_work_as_done">Can\'t mark this work as done!</string>
     <string name="mark_work_as_done">Mark work as done!</string>
     <string name="to">To: </string>
+    <string name="additional_information">Additional Information</string>
+    <string name="no_files_provided">No files provided</string>
 </resources>

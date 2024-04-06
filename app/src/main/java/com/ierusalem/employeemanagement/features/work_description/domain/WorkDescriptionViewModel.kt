@@ -11,10 +11,12 @@ import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDele
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import com.ierusalem.employeemanagement.utils.Resource
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 
 class WorkDescriptionViewModel(
     private val repo: WorkDescriptionRepository,
@@ -27,6 +29,12 @@ class WorkDescriptionViewModel(
 
     fun handleEvents(event: WorkDescriptionScreenEvents){
         when(event){
+            is WorkDescriptionScreenEvents.OnTextChanged -> {
+                onTextFormChanged(event.text)
+            }
+            WorkDescriptionScreenEvents.OnAttachFilesClick -> {
+                emitNavigation(WorkDescriptionNavigation.AttachFileClick)
+            }
             is WorkDescriptionScreenEvents.MarkAsDone -> { markAsDone(event.workId) }
             is WorkDescriptionScreenEvents.DownloadFile -> {
                 emitNavigation(WorkDescriptionNavigation.DownloadFile(event.url))
@@ -60,9 +68,14 @@ class WorkDescriptionViewModel(
         }
     }
 
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+        emitNavigation(WorkDescriptionNavigation.InvalidResponse)
+    }
+
     fun getMessageByIdAdmin(workId: String){
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.getMessageByIdAdmin(workId).let { response ->
                     if (response.isSuccessful){
                         Log.d("ahi3646", "getMessageById: ${response.body()!!} ")
@@ -122,11 +135,32 @@ class WorkDescriptionViewModel(
         }
     }
 
+    fun onFilesChanged(file: File) {
+        val newFiles = state.value.files.toMutableList().apply {
+            add(file)
+        }
+        _state.update {
+            it.copy(
+                files = newFiles
+            )
+        }
+    }
+
+    private fun onTextFormChanged(textForm: String) {
+        _state.update {
+            it.copy(
+                textForm = textForm
+            )
+        }
+    }
+
 }
 
 
 @Immutable
 data class WorkDescriptionScreenState(
     val workItem: Resource<WorkItem> = Resource.Loading(),
-    val isFromHome: Boolean = false
+    val isFromHome: Boolean = false,
+    val textForm: String = "",
+    val files: List<File> = arrayListOf()
 )
