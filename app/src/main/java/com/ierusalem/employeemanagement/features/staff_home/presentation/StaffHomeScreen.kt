@@ -108,8 +108,7 @@ fun StaffHomeScreen(
                         .fillMaxWidth(),
                     edgePadding = 0.dp,
                     selectedTabIndex = state.selectedTabIndex,
-                    indicator = { tabPositions ->
-                    },
+                    indicator = { },
                     divider = {},
                     containerColor = MaterialTheme.colorScheme.outline.copy(0.2F),
                     tabs = {
