@@ -7,6 +7,7 @@ import com.ierusalem.employeemanagement.features.work_description.data.model.res
 import com.ierusalem.employeemanagement.features.work_description.data.model.work.WorkItem
 import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionRepository
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import okhttp3.RequestBody
 import retrofit2.Response
 
 class WorkDescriptionRepositoryImpl(
@@ -29,10 +30,11 @@ class WorkDescriptionRepositoryImpl(
         )
     }
 
-    override suspend fun markAsDone(workId: String): Response<MarkAsDoneResponse> {
+    override suspend fun markAsDone(workId: String, body: RequestBody): Response<MarkAsDoneResponse> {
         return RestClient(context).workDescriptionService.markAsDone(
             authToken = preferenceHelper.getToken(),
-            workId = workId
+            workId = workId,
+            body = body
         )
     }
 }

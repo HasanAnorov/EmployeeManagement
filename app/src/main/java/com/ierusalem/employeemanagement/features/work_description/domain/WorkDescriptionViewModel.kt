@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class WorkDescriptionViewModel(
@@ -52,9 +55,25 @@ class WorkDescriptionViewModel(
     }
 
     private fun markAsDone(workId: String){
+        val requestBodyBuilder = MultipartBody.Builder()
+        requestBodyBuilder.setType(MultipartBody.FORM)
+        requestBodyBuilder.addFormDataPart("text_employee", state.value.textForm)
+        for (file in state.value.files) {
+            requestBodyBuilder.addFormDataPart(
+                "file",
+                file.name,
+                file.asRequestBody(
+                    "*/*".toMediaType()
+                )
+            )
+        }
+        val requestBody = requestBodyBuilder.build()
         try {
             viewModelScope.launch {
-                repo.markAsDone(workId).let {response ->
+                repo.markAsDone(
+                    workId = workId,
+                    body = requestBody
+                ).let {response ->
                     if(response.isSuccessful){
                         emitNavigation(WorkDescriptionNavigation.MarkedAsDone)
                     }else{

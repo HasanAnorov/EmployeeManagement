@@ -1,11 +1,13 @@
 package com.ierusalem.employeemanagement.features.compose.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.compose.domain.ComposeRepository
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -57,7 +59,12 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
-    //fixme
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+        emitNavigation(ComposeScreenNavigation.InvalidResponse)
+    }
+
+    //fixme file size validation is incorrect
     fun onSubmitClicked(userId: String) {
         val time = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
         val requestBodyBuilder = MultipartBody.Builder()
@@ -76,7 +83,7 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
         val requestBody = requestBodyBuilder.build()
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.postMessage(requestBody).let {
                     if (it.isSuccessful) {
                         emitNavigation(ComposeScreenNavigation.Success)
