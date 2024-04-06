@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Hujjat Almashinuv Tizimi</string>
+    <string name="app_name">Document Exchange System</string>
     <string name="login">Login</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="message">Message</string>
@@ -39,6 +39,7 @@
     <string name="problem_on_loading_employees_list">There was a problem loading the staff list</string>
     <string name="can_t_logout">Can\'t logout</string>
     <string name="employees">Employees</string>
+    <string name="late_done">Late Done</string>
     <string name="commands_sent">Sent</string>
     <string name="commands_received">Received</string>
     <string name="commands_done">Done</string>
@@ -53,7 +54,7 @@
     <string name="new_password">New password</string>
     <string name="app_theme">App Theme</string>
     <string name="language">Language</string>
-    <string name="work_description">Work description: </string>
+    <string name="work_description">Description:</string>
     <string name="from">From: </string>
     <string name="year">Year</string>
     <string name="month">Month</string>

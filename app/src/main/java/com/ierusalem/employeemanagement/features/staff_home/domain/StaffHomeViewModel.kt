@@ -21,7 +21,11 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
     NavigationEventDelegate<StaffHomeScreenNavigation> by DefaultNavigationEventDelegate() {
 
     private val _state: MutableStateFlow<StaffHomeScreenState> =
-        MutableStateFlow(StaffHomeScreenState())
+        MutableStateFlow(
+            StaffHomeScreenState(
+                repo.getTheme()
+            )
+        )
     val state = _state.asStateFlow()
 
     private val _drawerShouldBeOpened = MutableStateFlow(false)
@@ -35,11 +39,11 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
         _drawerShouldBeOpened.value = false
     }
 
-    private fun getUserForHome(){
+    private fun getUserForHome() {
         try {
             viewModelScope.launch {
-                repo.getUserForHome().let {response ->
-                    if(response.isSuccessful){
+                repo.getUserForHome().let { response ->
+                    if (response.isSuccessful) {
                         _state.update {
                             it.copy(
                                 username = response.body()!!.user.username
@@ -61,8 +65,8 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
                                 imageUrl = response.body()!!.user.image
                             )
                         }
-                    }else{
-                        val user =repo.getUserFromLocal()
+                    } else {
+                        val user = repo.getUserFromLocal()
                         _state.update {
                             it.copy(
                                 username = user.username
@@ -86,8 +90,8 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
                     }
                 }
             }
-        }catch (e: Exception){
-            val user =repo.getUserFromLocal()
+        } catch (e: Exception) {
+            val user = repo.getUserFromLocal()
             _state.update {
                 it.copy(
                     username = user.username
@@ -126,32 +130,43 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
                 repo.getUserMessages(status).let { response ->
                     if (response.isSuccessful) {
                         updateLoading(false)
-                        when(status){
+                        when (status) {
                             "yuborildi" -> {
                                 _state.update {
                                     it.copy(
-                                        commandsSent = Resource.Success(response.body()?.results ?: listOf())
+                                        commandsSent = Resource.Success(
+                                            response.body()?.results ?: listOf()
+                                        )
                                     )
                                 }
                             }
-                            "qabulqildi" ->{
+
+                            "qabulqildi" -> {
                                 _state.update {
                                     it.copy(
-                                        commandsReceived = Resource.Success(response.body()?.results ?: listOf())
+                                        commandsReceived = Resource.Success(
+                                            response.body()?.results ?: listOf()
+                                        )
                                     )
                                 }
                             }
-                            "bajarildi" ->{
+
+                            "bajarildi" -> {
                                 _state.update {
                                     it.copy(
-                                        commandsDone = Resource.Success(response.body()?.results ?: listOf())
+                                        commandsDone = Resource.Success(
+                                            response.body()?.results ?: listOf()
+                                        )
                                     )
                                 }
                             }
-                            "bajarilmadi" ->{
+
+                            "bajarilmadi" -> {
                                 _state.update {
                                     it.copy(
-                                        commandsNotDone = Resource.Success(response.body()?.results ?: listOf())
+                                        commandsNotDone = Resource.Success(
+                                            response.body()?.results ?: listOf()
+                                        )
                                     )
                                 }
                             }
@@ -163,7 +178,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
             }
         } catch (e: Exception) {
             updateLoading(false)
-            when(status){
+            when (status) {
                 "yuborildi" -> {
                     _state.update {
                         it.copy(
@@ -171,21 +186,24 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
                         )
                     }
                 }
-                "qabulqildi" ->{
+
+                "qabulqildi" -> {
                     _state.update {
                         it.copy(
                             commandsReceived = Resource.Failure("Unsuccessful response - ${e.localizedMessage}")
                         )
                     }
                 }
-                "bajarildi" ->{
+
+                "bajarildi" -> {
                     _state.update {
                         it.copy(
                             commandsDone = Resource.Failure("Unsuccessful response - ${e.localizedMessage}")
                         )
                     }
                 }
-                "bajarilmadi" ->{
+
+                "bajarilmadi" -> {
                     _state.update {
                         it.copy(
                             commandsNotDone = Resource.Failure("Unsuccessful response - ${e.localizedMessage}")
@@ -218,14 +236,30 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
         }
     }
 
+    private fun updateTheme(isDarkTheme: Boolean){
+        repo.saveTheme(isDarkTheme)
+        _state.update {
+            it.copy(
+                isDarkTheme = isDarkTheme
+            )
+        }
+    }
+
     fun handleEvents(event: StaffHomeScreenEvents) {
         when (event) {
-            StaffHomeScreenEvents.LogoutClick ->{
+
+            is StaffHomeScreenEvents.OnThemeChange -> {
+                updateTheme(event.isDarkTheme)
+            }
+
+            StaffHomeScreenEvents.LogoutClick -> {
                 logoutUser()
             }
-            is StaffHomeScreenEvents.OnItemClick ->{
+
+            is StaffHomeScreenEvents.OnItemClick -> {
                 emitNavigation(StaffHomeScreenNavigation.OnItemClick(event.workId))
             }
+
             is StaffHomeScreenEvents.OnPullToRefreshCommands -> getUserMessages(event.status)
             is StaffHomeScreenEvents.TabItemClick -> {
                 _state.update {
@@ -241,6 +275,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
 
 @Immutable
 data class StaffHomeScreenState(
+    val isDarkTheme: Boolean,
     val tabItems: List<UiText> = listOf(
         UiText.StringResource(resId = R.string.commands_sent),
         UiText.StringResource(resId = R.string.commands_received),
@@ -252,7 +287,7 @@ data class StaffHomeScreenState(
     val lastName: String = "",
     val email: String = "",
     val imageUrl: String = "",
-    val commandsReceived:Resource<List<Result>> = Resource.Loading(),
+    val commandsReceived: Resource<List<Result>> = Resource.Loading(),
     val commandsDone: Resource<List<Result>> = Resource.Loading(),
     val commandsNotDone: Resource<List<Result>> = Resource.Loading(),
     val commandsSent: Resource<List<Result>> = Resource.Loading(),

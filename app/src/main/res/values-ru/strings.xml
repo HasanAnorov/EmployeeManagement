@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Система Обмена Документами</string>
     <string name="login">Авторизоваться</string>
     <string name="edit_profile">Редактировать профиль</string>
     <string name="message">Сообщение</string>
@@ -53,7 +54,7 @@
     <string name="new_password">Новый пароль</string>
     <string name="app_theme">Тема приложения</string>
     <string name="language">Язык</string>
-    <string name="work_description">Описание Работы: </string>
+    <string name="work_description">Описание:</string>
     <string name="from">От: </string>
     <string name="year">Год</string>
     <string name="month">Месяц</string>
@@ -65,4 +66,6 @@
     <string name="can_t_mark_this_work_as_done">Невозможно отметить эту работу как выполненную!</string>
     <string name="mark_work_as_done">Отметьте работу как выполненную!</string>
     <string name="to">Кому: </string>
+
+    <string name="late_done">Поздно сделано</string>
 </resources>

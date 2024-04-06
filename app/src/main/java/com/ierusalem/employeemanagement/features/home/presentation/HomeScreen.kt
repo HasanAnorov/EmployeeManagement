@@ -39,7 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.home.presentation.commands.ComposeScreen
+import com.ierusalem.employeemanagement.features.home.presentation.commands.CommandsScreen
 import com.ierusalem.employeemanagement.features.home.presentation.employees.EmployeesScreen
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
@@ -60,6 +60,7 @@ fun HomeScreen(
         initialPage = state.selectedTabIndex,
         pageCount = { state.tabItems.size }
     )
+
     LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
         if (pagerState.isScrollInProgress) {
             intentReducer(HomeScreenClickIntents.TabItemClick(pagerState.currentPage))
@@ -151,31 +152,37 @@ fun HomeScreen(
                         .weight(1f)
                 ) { pageCount ->
                     when (pageCount) {
-                        0 -> ComposeScreen(
+                        0 -> CommandsScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "yuborildi"
                         )
 
-                        1 -> ComposeScreen(
+                        1 -> CommandsScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "qabulqildi"
                         )
 
-                        2 -> ComposeScreen(
+                        2 -> CommandsScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "bajarildi"
                         )
 
-                        3 -> ComposeScreen(
+                        3 -> CommandsScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "bajarilmadi"
                         )
 
-                        4 -> {
+                        4 -> CommandsScreen(
+                            state = state,
+                            intentReducer = intentReducer,
+                            status = "kechikibbajarildi"
+                        )
+
+                        5 -> {
                             EmployeesScreen(
                                 intentReducer = intentReducer,
                                 state = state.employees

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Hujjat Almashinuv Tizimi</string>
     <string name="login">Tizimga kirish</string>
     <string name="edit_profile">Profilni tahrirlash</string>
     <string name="message">Xabar</string>
@@ -53,7 +54,7 @@
     <string name="new_password">Yangi parol</string>
     <string name="app_theme">Ilova mavzusi</string>
     <string name="language">Til</string>
-    <string name="work_description">Buyruq mazmuni: </string>
+    <string name="work_description">Mazmuni:</string>
     <string name="from">Kimdan: </string>
     <string name="year">Yil</string>
     <string name="month">Oy</string>
@@ -65,4 +66,5 @@
     <string name="can_t_mark_this_work_as_done">Ishni bajarildi holatiga o\'tkazib bo\'lmadi</string>
     <string name="mark_work_as_done">Ishni bajarilgan deb belgilang!</string>
     <string name="to">Kimga: </string>
+    <string name="late_done">Kechikib bajarilgan</string>
 </resources>

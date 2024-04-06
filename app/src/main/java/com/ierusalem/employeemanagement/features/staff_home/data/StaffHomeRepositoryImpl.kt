@@ -15,6 +15,15 @@ class StaffHomeRepositoryImpl (
     private val context: Context,
     private val preferenceHelper: PreferenceHelper
 ): StaffHomeRepository{
+
+    override fun getTheme(): Boolean {
+        return preferenceHelper.getTheme()
+    }
+
+    override fun saveTheme(isDarkTheme: Boolean) {
+        preferenceHelper.saveTheme(isDarkTheme)
+    }
+
     override suspend fun getUserMessages(status: String): Response<ResponseMessages> {
         return RestClient(context).staffHomeService.getUserMessages(
             authToken = preferenceHelper.getToken(),

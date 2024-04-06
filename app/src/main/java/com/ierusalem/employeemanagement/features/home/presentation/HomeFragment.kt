@@ -38,10 +38,11 @@ class HomeFragment : Fragment() {
     ): View {
         val isFromCommand = arguments?.getBoolean(Constants.COMPOSE_COMMAND) ?: false
         if(isFromCommand){
+            //one request is enough, Nurbek said other automatically will be refreshed
             viewModel.getCommands("yuborildi")
-            viewModel.getCommands("qabulqildi")
-            viewModel.getCommands("bajarildi")
-            viewModel.getCommands("bajarilmadi")
+//            viewModel.getCommands("qabulqildi")
+//            viewModel.getCommands("bajarildi")
+//            viewModel.getCommands("bajarilmadi")
         }
 
         return ComposeView(requireContext()).apply {

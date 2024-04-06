@@ -9,6 +9,8 @@ interface StaffHomeRepository {
     suspend fun getUserMessages(status: String):Response<ResponseMessages>
     suspend fun logoutUser():Response<Unit>
     fun deleteToken()
+    fun getTheme(): Boolean
+    fun saveTheme(isDarkTheme: Boolean)
     fun getUserFromLocal(): User
     suspend fun getUserForHome():Response<ProfileResponse>
     fun deleteRefreshToken()

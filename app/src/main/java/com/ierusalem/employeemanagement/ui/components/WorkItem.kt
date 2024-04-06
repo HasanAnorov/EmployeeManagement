@@ -1,17 +1,23 @@
 package com.ierusalem.employeemanagement.ui.components
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -20,159 +26,144 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun WorkItem(
     modifier: Modifier = Modifier,
     onItemClick: () -> Unit,
-    title: String,
-    from: String,
-    to: String,
+    fullName: String,
+    position: String,
+    description: String,
+    image: String,
     deadline: String
 ) {
-    Card(
+    Column(
         modifier = modifier
-            .fillMaxWidth(),
-        shape = ShapeDefaults.Medium,
-        onClick = onItemClick
+            .clickable {
+                onItemClick()
+            }
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxWidth()
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(6F)) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        Text(
-                            modifier = Modifier,
-                            text = stringResource(R.string.work_description),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.titleSmall,
-                            color = MaterialTheme.colorScheme.outline,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
-                            text = title,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            maxLines = 6,
-                            lineHeight = 20.sp,
-                            style = MaterialTheme.typography.labelSmall,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .padding(top = 2.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        Text(
-                            modifier = Modifier,
-                            text = stringResource(R.string.from),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            maxLines = 1,
-                            color = MaterialTheme.colorScheme.outline,
-                            style = MaterialTheme.typography.titleSmall,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
+                .background(MaterialTheme.colorScheme.background),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            content = {
+                GlideImage(
+                    imageModel = { image },
+                    modifier = Modifier
+                        .padding(vertical = 4.dp)
+                        .size(48.dp)
+                        .clip(CircleShape),
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.CenterStart,
+                        contentDescription = null
+                    ),
+                    failure = {
+                        Image(
                             modifier = Modifier
-                                .weight(6f)
-                                .padding(start = 4.dp),
-                            text = from,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.labelSmall,
-                            overflow = TextOverflow.Ellipsis
+                                .size(52.dp),
+                            painter = painterResource(id = R.drawable.user),
+                            contentDescription = null
                         )
                     }
-                    Row(
+                )
+
+                Column(
+                    modifier = Modifier
+                        .weight(1F)
+                        .padding(start = 16.dp)
+                ) {
+                    Text(
+                        text = fullName,
+                        maxLines = 1,
+                        fontSize = 14.sp,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Text(
                         modifier = Modifier
-                            .padding(top = 2.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        Text(
-                            modifier = Modifier,
-                            text = stringResource(R.string.to),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            maxLines = 1,
-                            color = MaterialTheme.colorScheme.outline,
-                            style = MaterialTheme.typography.titleSmall,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
-                            modifier = Modifier
-                                .weight(6f)
-                                .padding(start = 4.dp),
-                            text = to,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.labelSmall,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .padding(top = 2.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        Text(
-                            modifier = Modifier,
-                            text = stringResource(R.string.deadline),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            maxLines = 1,
-                            color = MaterialTheme.colorScheme.outline,
-                            style = MaterialTheme.typography.titleSmall,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
-                            modifier = Modifier
-                                .weight(6f)
-                                .padding(start = 4.dp),
-                            text = deadline,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            maxLines = 1,
-                            style = MaterialTheme.typography.labelSmall,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                            .padding(top = 4.dp),
+                        text = position,
+                        fontSize = 12.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.labelSmall
+                    )
                 }
+
             }
-        }
+        )
+        Text(
+            modifier = Modifier
+                .padding(top = 8.dp),
+            text = stringResource(R.string.work_description),
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            style = MaterialTheme.typography.titleSmall,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            modifier = Modifier
+                .padding(top = 0.dp),
+            text = description,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Normal,
+            maxLines = 1,
+            lineHeight = 20.sp,
+            color = MaterialTheme.colorScheme.outline,
+            style = MaterialTheme.typography.titleSmall,
+            overflow = TextOverflow.Ellipsis
+        )
+
+        Text(
+            modifier = Modifier
+                .padding(top = 8.dp),
+            text = stringResource(R.string.deadline),
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            style = MaterialTheme.typography.titleSmall,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            modifier = Modifier
+                .padding(top = 0.dp),
+            text = deadline,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Normal,
+            maxLines = 1,
+            lineHeight = 20.sp,
+            color = MaterialTheme.colorScheme.outline,
+            style = MaterialTheme.typography.titleSmall,
+            overflow = TextOverflow.Ellipsis
+        )
     }
+
 }
 
 @Composable
 @Preview
 fun ExpandableCardPreview() {
-    WorkItem(
-        title = "I snova sedaya noch i tolka yey daveryayu ya, ti znaesh sedaya noch ti vse moi tayni",
-        from = "Hasan",
-        to = "Husan",
-        deadline = "2024-2-12",
-        onItemClick = {}
-    )
+    EmployeeManagementTheme {
+        WorkItem(
+            position = "Senior Dev",
+            fullName = "Hasan Anorov",
+            deadline = "2024-2-12",
+            image = "",
+            description = "This is a description of the task which you have requested for",
+            onItemClick = {}
+        )
+    }
 }
 
 @Composable
@@ -180,10 +171,11 @@ fun ExpandableCardPreview() {
 fun ExpandableCardPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         WorkItem(
-            title = "My Title",
-            from = "Hasan",
-            to = "Husan",
+            position = "Senior Dev",
+            fullName = "Hasan Anorov",
             deadline = "2024-2-12",
+            image = "",
+            description = "This is a description of the task which you have requested for",
             onItemClick = {}
         )
     }

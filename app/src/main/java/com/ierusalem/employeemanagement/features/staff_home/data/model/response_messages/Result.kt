@@ -26,6 +26,10 @@ data class Result(
     val adminUsername: String,
     @SerializedName("adminlast_name")
     val adminLastname: String,
+    @SerializedName("image")
+    val adminImage: String,
+    @SerializedName("adminunvoni")
+    val adminPosition: String,
     @SerializedName("end_time")
     val endTime: String
 )

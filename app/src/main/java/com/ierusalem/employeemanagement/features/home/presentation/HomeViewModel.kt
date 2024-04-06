@@ -49,6 +49,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         getCommands("qabulqildi")
         getCommands("bajarildi")
         getCommands("bajarilmadi")
+        getCommands("kechikibbajarildi")
         _state.update {
             it.copy(
                 employees = Pager(
@@ -205,6 +206,14 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                                     )
                                 }
                             }
+
+                            "kechikibbajarildi" -> {
+                                _state.update {
+                                    it.copy(
+                                        commandsLateDone = response.body()?.results ?: listOf()
+                                    )
+                                }
+                            }
                         }
                     } else {
                         updateLoading(false)
@@ -261,6 +270,7 @@ data class HomeScreenState(
         UiText.StringResource(resId = R.string.commands_received),
         UiText.StringResource(resId = R.string.commands_done),
         UiText.StringResource(resId = R.string.commands_not_done),
+        UiText.StringResource(resId = R.string.late_done),
         UiText.StringResource(resId = R.string.employees)
     ),
     val selectedTabIndex: Int = 0,
@@ -273,5 +283,6 @@ data class HomeScreenState(
     val commandsReceived: List<Result> = listOf(),
     val commandsDone: List<Result> = listOf(),
     val commandsNotDone: List<Result> = listOf(),
+    val commandsLateDone: List<Result> = listOf(),
     val employees: Flow<PagingData<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result>> = flowOf()
 )

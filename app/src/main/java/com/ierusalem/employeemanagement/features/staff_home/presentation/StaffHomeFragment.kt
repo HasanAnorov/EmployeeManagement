@@ -38,7 +38,7 @@ class StaffHomeFragment : Fragment() {
 
         val isFromWorkDesc = arguments?.getBoolean(Constants.FROM_WORK_DESCRIPTION) ?: false
         Log.d("ahi3646", "onAttach: $isFromWorkDesc ")
-        if(isFromWorkDesc){
+        if (isFromWorkDesc) {
             viewModel.getUserMessages("yuborildi")
             viewModel.getUserMessages("qabulqildi")
             viewModel.getUserMessages("bajarildi")
@@ -70,43 +70,45 @@ class StaffHomeFragment : Fragment() {
                         }
                     }
                 }
-
-                EmployeeManagementDrawer(
-                    username = "${state.username} ${state.lastName}",
-                    imageUrl = state.imageUrl,
-                    email = state.email,
-                    drawerState = drawerState,
-                    onProfileClicked = {
-                        scope.launch {
-                            drawerState.close()
-                            findNavController().navigate(R.id.action_staffHomeFragment_to_profileFragment)
-                        }
-                    },
-                    onSettingsClicked = {
-                        scope.launch {
-                            drawerState.close()
-                            findNavController().navigate(R.id.action_staffHomeFragment_to_settingsFragment)
-                        }
-                    },
-                    onLogoutClicked = {
-                        scope.launch {
-                            drawerState.close()
-                            viewModel.handleEvents(StaffHomeScreenEvents.LogoutClick)
-                        }
-                    }
-                ) {
-                    EmployeeManagementTheme {
-                        StaffHomeScreen(
-                            state = state,
-                            onDrawerClick = {
-                                viewModel.openDrawer()
+                EmployeeManagementTheme(
+                    darkTheme = state.isDarkTheme,
+                    content = {
+                        EmployeeManagementDrawer(
+                            username = "${state.username} ${state.lastName}",
+                            imageUrl = state.imageUrl,
+                            email = state.email,
+                            drawerState = drawerState,
+                            onProfileClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_staffHomeFragment_to_profileFragment)
+                                }
                             },
-                            intentReducer = {
-                                viewModel.handleEvents(it)
+                            onSettingsClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_staffHomeFragment_to_settingsFragment)
+                                }
+                            },
+                            onLogoutClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    viewModel.handleEvents(StaffHomeScreenEvents.LogoutClick)
+                                }
                             }
-                        )
+                        ) {
+                            StaffHomeScreen(
+                                state = state,
+                                onDrawerClick = {
+                                    viewModel.openDrawer()
+                                },
+                                intentReducer = {
+                                    viewModel.handleEvents(it)
+                                }
+                            )
+                        }
                     }
-                }
+                )
             }
         }
     }
