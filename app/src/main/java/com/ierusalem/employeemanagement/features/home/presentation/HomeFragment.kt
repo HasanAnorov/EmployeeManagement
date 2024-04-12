@@ -1,7 +1,10 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,21 +18,55 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.messaging
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestNotificationPermission()
+        lifecycleScope.launch {
+            Log.d("ahi3646", "onCreate: fcm token - ${Firebase.messaging.token.await()} ")
+            Log.d("ahi3646", "onCreate: fcm token x- ${FirebaseMessaging.getInstance().token.await()} ")
+        }
+    }
+
+    private fun requestNotificationPermission() {
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasPermission = ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if(!hasPermission) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,11 +75,8 @@ class HomeFragment : Fragment() {
     ): View {
         val isFromCommand = arguments?.getBoolean(Constants.COMPOSE_COMMAND) ?: false
         if(isFromCommand){
-            //one request is enough, Nurbek said other automatically will be refreshed
+            //one request is enough, backend dev said other automatically will be refreshed
             viewModel.getCommands("yuborildi")
-//            viewModel.getCommands("qabulqildi")
-//            viewModel.getCommands("bajarildi")
-//            viewModel.getCommands("bajarilmadi")
         }
 
         return ComposeView(requireContext()).apply {

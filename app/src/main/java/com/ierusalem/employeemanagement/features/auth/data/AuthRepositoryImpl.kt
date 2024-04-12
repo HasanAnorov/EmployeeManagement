@@ -15,11 +15,12 @@ class AuthRepositoryImpl(
     private val context: Context
 ) : AuthRepository {
 
-    override suspend fun loginUser(username: String, password: String): Response<AuthResponse> {
+    override suspend fun loginUser(username: String, password: String, token: String): Response<AuthResponse> {
         return RestClient(context).authService.loginUser(
             UserLoginRequest(
                 email = username,
-                password = password
+                password = password,
+                firebase_token = token
             )
         )
     }

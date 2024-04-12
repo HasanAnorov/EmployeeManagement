@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -33,24 +34,28 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.home.presentation.commands.CommandsScreen
 import com.ierusalem.employeemanagement.features.home.presentation.employees.EmployeesScreen
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     state: HomeScreenState,
     onDrawerClick: () -> Unit,
-    intentReducer: (HomeScreenClickIntents) -> Unit
+    intentReducer: (HomeScreenClickIntents) -> Unit,
 ) {
     val context = LocalContext.current
     val topBarState = rememberTopAppBarState()
@@ -60,6 +65,9 @@ fun HomeScreen(
         initialPage = state.selectedTabIndex,
         pageCount = { state.tabItems.size }
     )
+
+    val clip = LocalClipboardManager.current
+    val scopeClip = rememberCoroutineScope()
 
     LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
         if (pagerState.isScrollInProgress) {
@@ -82,7 +90,14 @@ fun HomeScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = { intentReducer(HomeScreenClickIntents.OnThemeChange(!state.isDarkTheme)) },
+                        onClick = {
+                            scopeClip.launch {
+                                val token = FirebaseMessaging.getInstance().token.await()
+                                clip.setText(AnnotatedString(token))
+                                Toast.makeText(context, "copied - $token", Toast.LENGTH_SHORT).show()
+                            }
+//                            intentReducer(HomeScreenClickIntents.OnThemeChange(!state.isDarkTheme))
+                                  },
                         content = {
                             val icon =
                                 if (state.isDarkTheme) Icons.Default.DarkMode else Icons.Default.LightMode

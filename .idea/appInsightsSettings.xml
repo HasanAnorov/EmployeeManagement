@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.ierusalem.employeemanagement" />
+                  <option name="mobileSdkAppId" value="1:1014463740980:android:9228eacf92f66ba25f9e61" />
+                  <option name="projectId" value="employeemanagement-38007" />
+                  <option name="projectNumber" value="1014463740980" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

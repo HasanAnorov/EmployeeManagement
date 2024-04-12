@@ -3,6 +3,7 @@ package com.ierusalem.employeemanagement.features.auth.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.core.ValidationResult
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
     NavigationEventDelegate<LoginNavigation> by DefaultNavigationEventDelegate() {
@@ -84,9 +86,11 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
         if(username.successful && password.successful){
             try {
                 viewModelScope.launch(handler) {
+                    val token = FirebaseMessaging.getInstance().token.await()
                     authRepository.loginUser(
                         username = state.value.username,
-                        password = state.value.password
+                        password = state.value.password,
+                        token = token
                     ).let { response ->
                         if (response.isSuccessful) {
                             saveUser(response.body()!!.user)

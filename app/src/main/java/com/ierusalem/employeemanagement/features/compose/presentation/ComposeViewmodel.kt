@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.compose.domain.ComposeRepository
+import com.ierusalem.employeemanagement.features.notification.NotificationBody
+import com.ierusalem.employeemanagement.features.notification.SendMessageDto
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
@@ -15,7 +17,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.HttpException
 import java.io.File
+import java.io.IOException
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -35,7 +39,7 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
-    fun onYearChanged(year: String){
+    fun onYearChanged(year: String) {
         _state.update {
             it.copy(
                 yearForm = year
@@ -43,7 +47,7 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
-    fun onMonthChanged(month: String){
+    fun onMonthChanged(month: String) {
         _state.update {
             it.copy(
                 monthForm = month
@@ -51,7 +55,7 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
-    fun onDayChanged(day: String){
+    fun onDayChanged(day: String) {
         _state.update {
             it.copy(
                 dayForm = day
@@ -97,6 +101,29 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
+    private fun sendMessage() {
+        viewModelScope.launch(handler) {
+            val deadline = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
+            val messageDto = SendMessageDto(
+                to = state.value.remoteToken,
+                notification = NotificationBody(
+                    title = state.value.textForm,
+                    deadline = deadline
+                )
+            )
+            try {
+                repo.send(messageDto)
+            } catch (e: HttpException) {
+                Log.d("ahi3646", "sendMessage: $e ")
+                emitNavigation(ComposeScreenNavigation.InvalidResponse)
+            } catch (e: IOException){
+                //check where device is online or offline
+                emitNavigation(ComposeScreenNavigation.InvalidResponse)
+            }
+        }
+
+    }
+
     fun onFilesChanged(file: File) {
         val newFiles = state.value.files.toMutableList().apply {
             add(file)
@@ -111,8 +138,10 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
 }
 
 data class ComposeScreenState(
+    val remoteToken: String = "",
     val textForm: String = "",
-    val yearForm: String = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR).toString(),
+    val yearForm: String = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR)
+        .toString(),
     val monthForm: String = "",
     val dayForm: String = "",
     val files: List<File> = arrayListOf()
