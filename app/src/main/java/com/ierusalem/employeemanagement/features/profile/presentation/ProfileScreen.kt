@@ -162,10 +162,10 @@ private fun UserInfoFields(
         NameAndPosition(userData)
         ProfileProperty(
             stringResource(R.string.position),
-            userData.user.unvoni
+            userData.user.unvoni ?: stringResource(R.string.not_given)
         )
         ProfileProperty(stringResource(R.string.phone_number), userData.user.phoneNo)
-        ProfileProperty(stringResource(R.string.room), userData.user.xonasi)
+        ProfileProperty(stringResource(R.string.room), userData.user.xonasi ?: stringResource(id = R.string.not_given))
         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
         var oldPassword by remember { mutableStateOf(TextFieldValue("")) }
         var newPassword by remember { mutableStateOf(TextFieldValue("")) }

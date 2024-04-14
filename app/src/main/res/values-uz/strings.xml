@@ -69,4 +69,5 @@
     <string name="additional_information">Qo\'shimcha ma\'lumot</string>
     <string name="late_done">Kechikib bajarilgan</string>
     <string name="no_files_provided">Fayllar taqdim qilinmagan</string>
+    <string name="not_given">Kiritilmagan</string>
 </resources>

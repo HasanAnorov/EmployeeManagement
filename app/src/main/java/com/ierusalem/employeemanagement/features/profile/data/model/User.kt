@@ -17,9 +17,9 @@ data class User(
     @SerializedName("phone_no")
     val phoneNo: String,
     @SerializedName("unvoni")
-    val unvoni: String,
+    val unvoni: String?,
     @SerializedName("username")
     val username: String,
     @SerializedName("xonasi")
-    val xonasi: String
+    val xonasi: String?
 )
