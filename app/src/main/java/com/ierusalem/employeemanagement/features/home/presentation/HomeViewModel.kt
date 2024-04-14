@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -14,6 +15,7 @@ import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDele
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import com.ierusalem.employeemanagement.utils.UiText
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +25,12 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     NavigationEventDelegate<HomeScreenNavigation> by DefaultNavigationEventDelegate() {
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+        emitNavigation(HomeScreenNavigation.InvalidResponse)
+    }
+
 
     private val _state: MutableStateFlow<HomeScreenState> = MutableStateFlow(
         HomeScreenState(
@@ -63,7 +71,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
 
     private fun getUserForHome(){
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.getUserForHome().let {response ->
                     if(response.isSuccessful){
                         _state.update {
@@ -154,7 +162,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     }
 
     private fun logoutUser() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             repo.logoutUser().let { response ->
                 if (response.isSuccessful) {
                     repo.deleteToken()
@@ -170,7 +178,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     fun getCommands(status: String) {
         try {
             updateLoading(true)
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.getMessage(status).let { response ->
                     if (response.isSuccessful) {
                         updateLoading(false)

@@ -41,6 +41,7 @@ fun StaffComposeScreen(
     ) {
         @Suppress("DEPRECATION")
         SwipeRefresh(
+            modifier = Modifier.fillMaxSize(),
             state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
             onRefresh = {
                 when (status) {
@@ -62,13 +63,13 @@ fun StaffComposeScreen(
             when (data) {
                 is Resource.Loading -> LoadingScreen()
                 is Resource.Success -> {
-                    if(data.data.isNullOrEmpty()){
+                    if (data.data.isNullOrEmpty()) {
                         EmptyScreen(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .background(color = MaterialTheme.colorScheme.background)
+                                .background(MaterialTheme.colorScheme.background)
+                                .fillMaxSize(),
                         )
-                    }else{
+                    } else {
                         LazyColumn(
                             modifier = Modifier
                                 .padding(bottom = 8.dp, top = 16.dp)
@@ -78,8 +79,8 @@ fun StaffComposeScreen(
                             content = {
                                 itemsIndexed(data.data) { index, command ->
                                     var image = command.adminImage
-                                    if (image.startsWith("/media")){
-                                        image =  "${Constants.BASE_URL}${command.adminImage}"
+                                    if (image.startsWith("/media")) {
+                                        image = "${Constants.BASE_URL}${command.adminImage}"
                                     }
                                     WorkItem(
                                         modifier = Modifier

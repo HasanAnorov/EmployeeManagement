@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.staff_home.domain
 
+import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import com.ierusalem.employeemanagement.utils.Resource
 import com.ierusalem.employeemanagement.utils.UiText
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,6 +21,11 @@ import kotlinx.coroutines.launch
 
 class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
     NavigationEventDelegate<StaffHomeScreenNavigation> by DefaultNavigationEventDelegate() {
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+        emitNavigation(StaffHomeScreenNavigation.InvalidResponse)
+    }
 
     private val _state: MutableStateFlow<StaffHomeScreenState> =
         MutableStateFlow(
@@ -41,7 +48,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
 
     private fun getUserForHome() {
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.getUserForHome().let { response ->
                     if (response.isSuccessful) {
                         _state.update {
@@ -126,7 +133,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
     fun getUserMessages(status: String) {
         try {
             updateLoading(true)
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.getUserMessages(status).let { response ->
                     if (response.isSuccessful) {
                         updateLoading(false)
@@ -223,7 +230,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
     }
 
     private fun logoutUser() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             repo.logoutUser().let { response ->
                 if (response.isSuccessful) {
                     repo.deleteToken()

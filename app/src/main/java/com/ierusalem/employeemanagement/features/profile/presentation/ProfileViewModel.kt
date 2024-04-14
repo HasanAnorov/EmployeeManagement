@@ -1,15 +1,15 @@
 package com.ierusalem.employeemanagement.features.profile.presentation
 
-import androidx.compose.runtime.Immutable
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.annotations.SerializedName
 import com.ierusalem.employeemanagement.features.profile.data.NewPasswordRequest
 import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
 import com.ierusalem.employeemanagement.features.profile.domain.ProfileRepository
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,9 +23,15 @@ class ProfileViewModel(private val repo: ProfileRepository) : ViewModel(),
     )
     val state = _state.asStateFlow()
 
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+        emitNavigation(ProfileNavigation.Failure)
+    }
+
+
     fun setPassword(oldPassword: String, newPassword: String){
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.setPassword(NewPasswordRequest(oldPassword, newPassword)).let {
                     if(it.isSuccessful){
                         emitNavigation(ProfileNavigation.PasswordChanged)
@@ -41,7 +47,7 @@ class ProfileViewModel(private val repo: ProfileRepository) : ViewModel(),
 
     fun getUser() {
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.getUser().let { response ->
                     if(response.isSuccessful){
                         _state.update {

@@ -31,111 +31,103 @@ fun CommandsScreen(
     intentReducer: (HomeScreenClickIntents) -> Unit,
     state: HomeScreenState
 ) {
-    val data = when (status) {
-        "yuborildi" -> state.commandsSent
-        "qabulqildi" -> state.commandsReceived
-        "bajarildi" -> state.commandsDone
-        "bajarilmadi" -> state.commandsNotDone
-        "kechikibbajarildi" -> state.commandsLateDone
-        else -> state.commandsSent
-    }
-    if (data.isEmpty()) {
-        EmptyScreen(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.background)
-        )
-    } else {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            @Suppress("DEPRECATION")
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
-                onRefresh = {
-                    when (status) {
-                        "yuborildi" -> intentReducer(
-                            HomeScreenClickIntents.OnPullToRefreshCommands(
-                                "yuborildi"
-                            )
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        @Suppress("DEPRECATION")
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
+            onRefresh = {
+                when (status) {
+                    "yuborildi" -> intentReducer(
+                        HomeScreenClickIntents.OnPullToRefreshCommands(
+                            "yuborildi"
                         )
-
-                        "qabulqildi" -> intentReducer(
-                            HomeScreenClickIntents.OnPullToRefreshCommands(
-                                "qabulqildi"
-                            )
-                        )
-
-                        "bajarildi" -> intentReducer(
-                            HomeScreenClickIntents.OnPullToRefreshCommands(
-                                "bajarildi"
-                            )
-                        )
-
-                        "bajarilmadi" -> intentReducer(
-                            HomeScreenClickIntents.OnPullToRefreshCommands(
-                                "bajarilmadi"
-                            )
-                        )
-
-                        "kechikibbajarildi" -> intentReducer(
-                            HomeScreenClickIntents.OnPullToRefreshCommands(
-                                "kechikibbajarildi"
-                            )
-                        )
-
-                        else -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
-                    }
-                }
-            ) {
-                if (data.isEmpty()){
-                    EmptyScreen(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = MaterialTheme.colorScheme.background)
                     )
-                }else{
-                    LazyColumn(
-                        modifier = Modifier
-                            .padding(bottom = 8.dp, top = 8.dp)
-                            .background(MaterialTheme.colorScheme.background)
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Top,
-                        content = {
-                            itemsIndexed(data) { index, command ->
-                                var image = command.adminImage
-                                if (image.startsWith("/media")){
-                                    image =  "${Constants.BASE_URL}${command.adminImage}"
+
+                    "qabulqildi" -> intentReducer(
+                        HomeScreenClickIntents.OnPullToRefreshCommands(
+                            "qabulqildi"
+                        )
+                    )
+
+                    "bajarildi" -> intentReducer(
+                        HomeScreenClickIntents.OnPullToRefreshCommands(
+                            "bajarildi"
+                        )
+                    )
+
+                    "bajarilmadi" -> intentReducer(
+                        HomeScreenClickIntents.OnPullToRefreshCommands(
+                            "bajarilmadi"
+                        )
+                    )
+
+                    "kechikibbajarildi" -> intentReducer(
+                        HomeScreenClickIntents.OnPullToRefreshCommands(
+                            "kechikibbajarildi"
+                        )
+                    )
+
+                    else -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
+                }
+            }
+        ) {
+            val data = when (status) {
+                "yuborildi" -> state.commandsSent
+                "qabulqildi" -> state.commandsReceived
+                "bajarildi" -> state.commandsDone
+                "bajarilmadi" -> state.commandsNotDone
+                "kechikibbajarildi" -> state.commandsLateDone
+                else -> state.commandsSent
+            }
+            if (data.isEmpty()) {
+                EmptyScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background)
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(bottom = 8.dp, top = 8.dp)
+                        .background(MaterialTheme.colorScheme.background)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
+                    content = {
+                        itemsIndexed(data) { index, command ->
+                            var image = command.adminImage
+                            if (image.startsWith("/media")){
+                                image =  "${Constants.BASE_URL}${command.adminImage}"
+                            }
+                            WorkItem(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp),
+                                image = image,
+                                position = command.adminPosition,
+                                fullName = "${command.adminUsername} ${command.adminLastname}",
+                                description = command.text,
+                                deadline = command.endTime,
+                                onItemClick = {
+                                    intentReducer(HomeScreenClickIntents.OnItemClick(command.workId.toString()))
                                 }
-                                WorkItem(
+                            )
+                            if (index < data.size - 1) {
+                                HorizontalDivider(
                                     modifier = Modifier
-                                        .padding(horizontal = 16.dp),
-                                    image = image,
-                                    position = command.adminPosition,
-                                    fullName = "${command.adminUsername} ${command.adminLastname}",
-                                    description = command.text,
-                                    deadline = command.endTime,
-                                    onItemClick = {
-                                        intentReducer(HomeScreenClickIntents.OnItemClick(command.workId.toString()))
-                                    }
+                                        .padding(
+                                            horizontal = 16.dp,
+                                            vertical = 16.dp
+                                        )
+                                        .clip(RoundedCornerShape(1.dp))
+                                        .background(MaterialTheme.colorScheme.outline)
                                 )
-                                if (index < data.size - 1) {
-                                    HorizontalDivider(
-                                        modifier = Modifier
-                                            .padding(
-                                                horizontal = 16.dp,
-                                                vertical = 16.dp
-                                            )
-                                            .clip(RoundedCornerShape(1.dp))
-                                            .background(MaterialTheme.colorScheme.outline)
-                                    )
-                                }
                             }
                         }
-                    )
-                }
+                    }
+                )
             }
         }
     }

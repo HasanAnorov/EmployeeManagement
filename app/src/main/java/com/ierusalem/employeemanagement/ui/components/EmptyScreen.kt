@@ -2,8 +2,8 @@ package com.ierusalem.employeemanagement.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,16 +19,18 @@ fun EmptyScreen(
     modifier: Modifier = Modifier,
     message: String = stringResource(R.string.no_data_available)
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
-        Text(
-            text = message,
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.titleSmall
-        )
+        item {
+            Text(
+                text = message,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.titleSmall
+            )
+        }
     }
 }
 

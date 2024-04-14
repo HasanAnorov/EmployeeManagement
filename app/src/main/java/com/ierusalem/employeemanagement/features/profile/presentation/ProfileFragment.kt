@@ -95,6 +95,10 @@ class ProfileFragment : Fragment() {
                 ).show()
             }
 
+            ProfileNavigation.Failure -> {
+                Toast.makeText(requireContext(), resources.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+            }
+
             ProfileNavigation.PasswordChanged -> {
                 Toast.makeText(
                     requireContext(),

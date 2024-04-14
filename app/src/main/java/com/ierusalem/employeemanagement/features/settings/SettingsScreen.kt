@@ -44,19 +44,13 @@ fun SettingsScreen(
         )
         Text(
             text = stringResource(R.string.language),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
+            color = MaterialTheme.colorScheme.onBackground
         )
         ChipGroupCompose(
             intentReducer = { event -> intentReducer(event) },
             locale = currentLocale
         )
-//        Text(
-//            text = stringResource(R.string.app_theme),
-//            modifier = Modifier.padding(horizontal = 16.dp)
-//        )
-//        ThemeChipGroupCompose(
-//            intentReducer = {event ->intentReducer(event)}
-//        )
     }
 }
 

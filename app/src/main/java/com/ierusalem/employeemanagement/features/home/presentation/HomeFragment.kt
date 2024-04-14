@@ -158,6 +158,9 @@ class HomeFragment : Fragment() {
 
     private fun executeNavigation(navigation: HomeScreenNavigation) {
         when (navigation) {
+            HomeScreenNavigation.InvalidResponse ->{
+                Toast.makeText(requireContext(), resources.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+            }
             is HomeScreenNavigation.OnItemClick -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
