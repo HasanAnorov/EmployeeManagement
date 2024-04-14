@@ -36,9 +36,9 @@ fun SettingsScreen(
             navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
             title = {
                 Text(
-                    text = stringResource(id = R.string.profile),
+                    text = stringResource(id = R.string.settings),
                     style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
         )
