@@ -252,15 +252,22 @@ fun ComposeScreen(
                 .padding(top = 16.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(color = MaterialTheme.colorScheme.primary)
-                .clickable { onSubmitClicked() },
+                .clickable {
+                    if (!state.isSubmitting)
+                        onSubmitClicked()
+                },
             content = {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
+                    val submitString =
+                        if (state.isSubmitting) stringResource(R.string.submitting) else stringResource(
+                            id = R.string.submit
+                        )
                     Text(
-                        text = stringResource(R.string.submit),
+                        text = submitString,
                         modifier = Modifier
                             .padding(vertical = 16.dp),
                         style = MaterialTheme.typography.labelSmall,

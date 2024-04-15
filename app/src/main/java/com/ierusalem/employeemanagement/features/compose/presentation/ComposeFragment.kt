@@ -25,8 +25,6 @@ import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.FileOutputStream
 
-//Created by H.A
-
 class ComposeFragment : Fragment() {
 
     private val viewModel: ComposeViewmodel by viewModel()

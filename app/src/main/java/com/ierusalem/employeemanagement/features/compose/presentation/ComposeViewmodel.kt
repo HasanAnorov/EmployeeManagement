@@ -70,6 +70,7 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
 
     //fixme file size validation is incorrect
     fun onSubmitClicked(userId: String) {
+        changeSubmitState(true)
         val time = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
         val requestBodyBuilder = MultipartBody.Builder()
         requestBodyBuilder.setType(MultipartBody.FORM)
@@ -90,17 +91,23 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
             viewModelScope.launch(handler) {
                 repo.postMessage(requestBody).let {
                     if (it.isSuccessful) {
+                        changeSubmitState(false)
                         emitNavigation(ComposeScreenNavigation.Success)
                     } else {
+                        changeSubmitState(false)
                         emitNavigation(ComposeScreenNavigation.InvalidResponse)
                     }
                 }
             }
         } catch (e: Exception) {
+            changeSubmitState(false)
             emitNavigation(ComposeScreenNavigation.InvalidResponse)
         }
     }
 
+
+    @Suppress("unused")
+    //todo - implement sending notification with fcm
     private fun sendMessage() {
         viewModelScope.launch(handler) {
             val deadline = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
@@ -135,6 +142,14 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         }
     }
 
+    private fun changeSubmitState(isSubmitting: Boolean){
+        _state.update{
+            it.copy(
+                isSubmitting = isSubmitting
+            )
+        }
+    }
+
 }
 
 data class ComposeScreenState(
@@ -144,5 +159,6 @@ data class ComposeScreenState(
         .toString(),
     val monthForm: String = "",
     val dayForm: String = "",
-    val files: List<File> = arrayListOf()
+    val files: List<File> = arrayListOf(),
+    var isSubmitting: Boolean = false
 )

@@ -70,4 +70,5 @@
     <string name="late_done">Kechikib bajarilgan</string>
     <string name="no_files_provided">Fayllar taqdim qilinmagan</string>
     <string name="not_given">Kiritilmagan</string>
+    <string name="submitting">Yuborilmoqda…</string>
 </resources>

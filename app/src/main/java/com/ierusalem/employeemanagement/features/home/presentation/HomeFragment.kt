@@ -22,19 +22,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.messaging
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -44,10 +39,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestNotificationPermission()
-        lifecycleScope.launch {
-            Log.d("ahi3646", "onCreate: fcm token - ${Firebase.messaging.token.await()} ")
-            Log.d("ahi3646", "onCreate: fcm token x- ${FirebaseMessaging.getInstance().token.await()} ")
-        }
     }
 
     private fun requestNotificationPermission() {

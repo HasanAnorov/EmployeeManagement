@@ -70,4 +70,5 @@
     <string name="late_done">Поздно сделано</string>
     <string name="no_files_provided">Файлы не предоставлены</string>
     <string name="not_given">Не дано</string>
+    <string name="submitting">Отправка…</string>
 </resources>
