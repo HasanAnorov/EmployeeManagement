@@ -89,7 +89,7 @@ fun ProfileScreen(
                 Text(
                     text = stringResource(id = R.string.profile),
                     style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
         )

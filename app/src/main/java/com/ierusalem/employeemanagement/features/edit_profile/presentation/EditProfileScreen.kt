@@ -61,7 +61,7 @@ fun EditProfileScreen(
                     Text(
                         text = stringResource(id = R.string.edit_profile),
                         style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = MaterialTheme.colorScheme.onBackground,
                     )
                 }
             )
@@ -116,6 +116,7 @@ fun EditProfileScreen(
                     onRoomChanged(it)
                 }
             )
+            val numberMaxChar = 9
             SimpleFilledTextField(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -124,6 +125,7 @@ fun EditProfileScreen(
                 keyboardType = KeyboardOptions(keyboardType = KeyboardType.Number),
                 label = stringResource(id = R.string.phone_number),
                 onValueChanged = {
+                    if(it.length <= numberMaxChar)
                     onPhoneNumberChanged(it)
                 }
             )

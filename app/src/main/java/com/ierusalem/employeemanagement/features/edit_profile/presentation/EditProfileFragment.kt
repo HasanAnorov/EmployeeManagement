@@ -152,6 +152,10 @@ class EditProfileFragment : Fragment() {
                 ).show()
             }
 
+            EditProfileNavigation.Failure -> {
+                Toast.makeText(requireContext(), resources.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+            }
+
             EditProfileNavigation.NavigateToMain -> {
                 val bundle = Bundle()
                 bundle.putBoolean(Constants.PROFILE_CHANGE, true)

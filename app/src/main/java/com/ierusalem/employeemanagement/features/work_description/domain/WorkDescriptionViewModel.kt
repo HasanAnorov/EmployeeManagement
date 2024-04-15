@@ -30,6 +30,12 @@ class WorkDescriptionViewModel(
         MutableStateFlow(WorkDescriptionScreenState())
     val state = _state.asStateFlow()
 
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+        emitNavigation(WorkDescriptionNavigation.InvalidResponse)
+    }
+
+
     fun handleEvents(event: WorkDescriptionScreenEvents){
         when(event){
             is WorkDescriptionScreenEvents.OnTextChanged -> {
@@ -69,7 +75,7 @@ class WorkDescriptionViewModel(
         }
         val requestBody = requestBodyBuilder.build()
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.markAsDone(
                     workId = workId,
                     body = requestBody
@@ -85,11 +91,6 @@ class WorkDescriptionViewModel(
         }catch (e:Exception){
             emitNavigation(WorkDescriptionNavigation.InvalidResponseMarkAsDone)
         }
-    }
-
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
-        emitNavigation(WorkDescriptionNavigation.InvalidResponse)
     }
 
     fun getMessageByIdAdmin(workId: String){
@@ -125,7 +126,7 @@ class WorkDescriptionViewModel(
 
     fun getMessageById(workId: String){
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 repo.getMessageById(workId).let { response ->
                     if (response.isSuccessful){
                         Log.d("ahi3646", "getMessageById: ${response.body()!!} ")

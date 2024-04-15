@@ -1,13 +1,13 @@
 package com.ierusalem.employeemanagement.features.edit_profile.presentation
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.edit_profile.domain.EditProfileRepository
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -22,9 +22,13 @@ class EditProfileViewModel(private val editProfileRepository: EditProfileReposit
     )
     val state = _state.asStateFlow()
 
+    private val handler = CoroutineExceptionHandler { _, _ ->
+        emitNavigation(EditProfileNavigation.Failure)
+    }
+
+
     fun updateProfile(requestModel: RequestBody){
-        Log.d("ahi3646", "updateProfile: $requestModel ")
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             editProfileRepository.updateProfile(requestModel).let { response ->
                 if(response.isSuccessful){
                     emitNavigation(EditProfileNavigation.NavigateToMain)
