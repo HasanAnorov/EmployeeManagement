@@ -66,6 +66,7 @@ class HomeFragment : Fragment() {
     ): View {
         val isFromCommand = arguments?.getBoolean(Constants.COMPOSE_COMMAND) ?: false
         if(isFromCommand){
+            viewModel.changeSelectedTabIndex(5)
             //one request is enough, backend dev said other automatically will be refreshed
             viewModel.getCommands("yuborildi")
         }

@@ -60,7 +60,6 @@ fun HomeScreen(
         initialPage = state.selectedTabIndex,
         pageCount = { state.tabItems.size }
     )
-
     LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
         if (pagerState.isScrollInProgress) {
             intentReducer(HomeScreenClickIntents.TabItemClick(pagerState.currentPage))

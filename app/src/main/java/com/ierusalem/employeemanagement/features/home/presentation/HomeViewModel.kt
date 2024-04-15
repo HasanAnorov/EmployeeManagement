@@ -269,6 +269,14 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         }
     }
 
+    fun changeSelectedTabIndex(tabIndex:Int){
+        _state.update {
+            it.copy(
+                selectedTabIndex = tabIndex
+            )
+        }
+    }
+
 }
 
 data class HomeScreenState(
