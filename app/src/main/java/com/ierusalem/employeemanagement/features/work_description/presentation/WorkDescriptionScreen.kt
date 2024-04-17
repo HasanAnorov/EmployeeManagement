@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -61,6 +62,7 @@ fun WorkDescriptionScreen(
             val work = state.workItem.data!!.results[0]
             Column(
                 modifier = Modifier
+                    .navigationBarsPadding()
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
             ) {
@@ -87,6 +89,7 @@ fun WorkDescriptionScreen(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleSmall,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -105,6 +108,7 @@ fun WorkDescriptionScreen(
                         modifier = Modifier.padding(start = 16.dp, top = 16.dp),
                         text = stringResource(R.string.deadline),
                         fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
                         style = MaterialTheme.typography.titleSmall,
@@ -127,6 +131,7 @@ fun WorkDescriptionScreen(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleSmall,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -216,66 +221,68 @@ fun WorkDescriptionScreen(
                         }
                     }
                 }
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 24.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(color = MaterialTheme.colorScheme.primary)
-                        .clickable {
-                            intentReducer(WorkDescriptionScreenEvents.OnAttachFilesClick)
+                if(!state.isFromHome){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 24.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(color = MaterialTheme.colorScheme.primary)
+                            .clickable {
+                                intentReducer(WorkDescriptionScreenEvents.OnAttachFilesClick)
+                            },
+                        content = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.attach_a_file),
+                                    modifier = Modifier
+                                        .padding(vertical = 16.dp),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    textAlign = TextAlign.Center
+                                )
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(start = 8.dp)
+                                        .rotate(30F),
+                                    imageVector = Icons.Default.AttachFile,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
                         },
-                    content = {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = stringResource(R.string.attach_a_file),
-                                modifier = Modifier
-                                    .padding(vertical = 16.dp),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                                textAlign = TextAlign.Center
-                            )
-                            Icon(
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .rotate(30F),
-                                imageVector = Icons.Default.AttachFile,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onPrimary
-                            )
-                        }
-                    },
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp, bottom = 24.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(color = MaterialTheme.colorScheme.primary)
-                        .clickable { intentReducer(WorkDescriptionScreenEvents.MarkAsDone(work.id.toString())) },
-                    content = {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = stringResource(R.string.mark_work_as_done),
-                                modifier = Modifier
-                                    .padding(vertical = 16.dp),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    },
-                )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp, bottom = 24.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(color = MaterialTheme.colorScheme.primary)
+                            .clickable { intentReducer(WorkDescriptionScreenEvents.MarkAsDone(work.id.toString())) },
+                        content = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.mark_work_as_done),
+                                    modifier = Modifier
+                                        .padding(vertical = 16.dp),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        },
+                    )
+                }
             }
         }
 

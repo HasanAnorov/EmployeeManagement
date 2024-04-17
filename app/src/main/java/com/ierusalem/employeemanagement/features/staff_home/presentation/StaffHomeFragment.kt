@@ -43,6 +43,8 @@ class StaffHomeFragment : Fragment() {
             viewModel.getUserMessages("qabulqildi")
             viewModel.getUserMessages("bajarildi")
             viewModel.getUserMessages("bajarilmadi")
+
+            viewModel.getUserMessages("kechikibbajarildi")
         }
 
         return ComposeView(requireContext()).apply {

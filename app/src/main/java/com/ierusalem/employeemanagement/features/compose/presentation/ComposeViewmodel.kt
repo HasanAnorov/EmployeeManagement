@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.compose.domain.ComposeRepository
-import com.ierusalem.employeemanagement.features.notification.NotificationBody
-import com.ierusalem.employeemanagement.features.notification.SendMessageDto
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
@@ -17,9 +15,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import retrofit2.HttpException
 import java.io.File
-import java.io.IOException
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -103,32 +99,6 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
             changeSubmitState(false)
             emitNavigation(ComposeScreenNavigation.InvalidResponse)
         }
-    }
-
-
-    @Suppress("unused")
-    //todo - implement sending notification with fcm
-    private fun sendMessage() {
-        viewModelScope.launch(handler) {
-            val deadline = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
-            val messageDto = SendMessageDto(
-                to = state.value.remoteToken,
-                notification = NotificationBody(
-                    title = state.value.textForm,
-                    deadline = deadline
-                )
-            )
-            try {
-                repo.send(messageDto)
-            } catch (e: HttpException) {
-                Log.d("ahi3646", "sendMessage: $e ")
-                emitNavigation(ComposeScreenNavigation.InvalidResponse)
-            } catch (e: IOException){
-                //check where device is online or offline
-                emitNavigation(ComposeScreenNavigation.InvalidResponse)
-            }
-        }
-
     }
 
     fun onFilesChanged(file: File) {

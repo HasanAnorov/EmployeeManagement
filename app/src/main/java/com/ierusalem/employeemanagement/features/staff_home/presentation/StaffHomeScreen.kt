@@ -155,17 +155,20 @@ fun StaffHomeScreen(
                             intentReducer = intentReducer,
                             status = "yuborildi"
                         )
-
                         1 -> StaffComposeScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "qabulqildi"
                         )
-
                         2 -> StaffComposeScreen(
                             state = state,
                             intentReducer = intentReducer,
                             status = "bajarildi"
+                        )
+                        3 -> StaffComposeScreen(
+                            state = state,
+                            intentReducer = intentReducer,
+                            status = "kechikibbajarildi"
                         )
                     }
                 }

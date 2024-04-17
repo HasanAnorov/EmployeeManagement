@@ -127,6 +127,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
         getUserMessages("yuborildi")
         getUserMessages("qabulqildi")
         getUserMessages("bajarildi")
+        getUserMessages("kechikibbajarildi")
         getUserMessages("bajarilmadi")
     }
 
@@ -138,6 +139,17 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
                     if (response.isSuccessful) {
                         updateLoading(false)
                         when (status) {
+
+                            "kechikibbajarildi" ->{
+                                _state.update {
+                                    it.copy(
+                                        commandsLateDone = Resource.Success(
+                                            response.body()?.results ?: listOf()
+                                        )
+                                    )
+                                }
+                            }
+
                             "yuborildi" -> {
                                 _state.update {
                                     it.copy(
@@ -186,6 +198,15 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
         } catch (e: Exception) {
             updateLoading(false)
             when (status) {
+
+                "kechikibbajarildi" ->{
+                    _state.update {
+                        it.copy(
+                            commandsLateDone = Resource.Failure("Unsuccessful response - ${e.localizedMessage}")
+                        )
+                    }
+                }
+
                 "yuborildi" -> {
                     _state.update {
                         it.copy(
@@ -287,6 +308,7 @@ data class StaffHomeScreenState(
         UiText.StringResource(resId = R.string.commands_sent),
         UiText.StringResource(resId = R.string.commands_received),
         UiText.StringResource(resId = R.string.commands_done),
+        UiText.StringResource(resId = R.string.late_done),
         UiText.StringResource(resId = R.string.commands_not_done),
     ),
     val isLoading: Boolean = false,
@@ -296,6 +318,7 @@ data class StaffHomeScreenState(
     val imageUrl: String = "",
     val commandsReceived: Resource<List<Result>> = Resource.Loading(),
     val commandsDone: Resource<List<Result>> = Resource.Loading(),
+    val commandsLateDone: Resource<List<Result>> = Resource.Loading(),
     val commandsNotDone: Resource<List<Result>> = Resource.Loading(),
     val commandsSent: Resource<List<Result>> = Resource.Loading(),
     val selectedTabIndex: Int = 0,

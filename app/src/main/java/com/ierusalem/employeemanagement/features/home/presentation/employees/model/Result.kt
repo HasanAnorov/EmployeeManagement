@@ -16,9 +16,9 @@ data class Result(
     @SerializedName("phone_no")
     val phoneNo: String,
     @SerializedName("unvoni")
-    val unvoni: Any,
+    val unvoni: String?,
     @SerializedName("username")
     val username: String,
     @SerializedName("xonasi")
-    val xonasi: Any
+    val xonasi: String?
 )

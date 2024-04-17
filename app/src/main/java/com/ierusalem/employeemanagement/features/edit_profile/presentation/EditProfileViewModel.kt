@@ -26,7 +26,6 @@ class EditProfileViewModel(private val editProfileRepository: EditProfileReposit
         emitNavigation(EditProfileNavigation.Failure)
     }
 
-
     fun updateProfile(requestModel: RequestBody){
         viewModelScope.launch(handler) {
             editProfileRepository.updateProfile(requestModel).let { response ->

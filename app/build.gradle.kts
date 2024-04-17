@@ -60,12 +60,13 @@ dependencies {
     implementation ("com.github.skydoves:landscapist-glide:2.2.9")
 
     //paging
+    //noinspection GradleDependency
     implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
     //noinspection GradleDependency
     implementation ("androidx.paging:paging-compose:1.0.0-alpha18")
 
     //firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-messaging")
 
     //firebase crashanal
@@ -91,8 +92,11 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-    implementation("com.google.ai.client.generativeai:generativeai:0.2.2")
+    implementation("com.google.ai.client.generativeai:generativeai:0.3.0")
     implementation("androidx.wear.compose:compose-material:1.3.1")
+
+    //work manager
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
     //chucker
     debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")

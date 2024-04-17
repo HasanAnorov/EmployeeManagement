@@ -15,4 +15,11 @@ class EditProfileRepositoryImpl(val context: Context, private val preferences: P
             body = body
         )
     }
+
+    override suspend fun updateFirebaseToken(token: String): Response<Unit> {
+        return RestClient(context).editProfileService.updateFirebaseToken(
+            authToken = preferences.getToken(),
+            tokenRequest = TokenRequest(token)
+        )
+    }
 }

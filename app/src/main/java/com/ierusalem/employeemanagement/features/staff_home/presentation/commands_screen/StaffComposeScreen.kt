@@ -45,6 +45,12 @@ fun StaffComposeScreen(
             state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
             onRefresh = {
                 when (status) {
+                    "kechikibbajarildi" -> intentReducer(
+                        StaffHomeScreenEvents.OnPullToRefreshCommands(
+                            "kechikibbajarildi"
+                        )
+                    )
+
                     "yuborildi" -> intentReducer(StaffHomeScreenEvents.OnPullToRefreshCommands("yuborildi"))
                     "qabulqildi" -> intentReducer(StaffHomeScreenEvents.OnPullToRefreshCommands("qabulqildi"))
                     "bajarildi" -> intentReducer(StaffHomeScreenEvents.OnPullToRefreshCommands("bajarildi"))
@@ -58,6 +64,7 @@ fun StaffComposeScreen(
                 "qabulqildi" -> state.commandsReceived
                 "bajarildi" -> state.commandsDone
                 "bajarilmadi" -> state.commandsNotDone
+                "kechikibbajarildi" -> state.commandsLateDone
                 else -> state.commandsReceived
             }
             when (data) {

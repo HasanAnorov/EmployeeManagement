@@ -15,4 +15,14 @@ interface EditProfileService {
         @Body body: RequestBody
     ): Response<ResponseModel>
 
+    @PUT("updateFirebase_token")
+    suspend fun updateFirebaseToken(
+        @Header("Authorization") authToken: String,
+        @Body tokenRequest: TokenRequest
+    ): Response<Unit>
+
 }
+
+data class TokenRequest(
+    val firebase_token: String
+)

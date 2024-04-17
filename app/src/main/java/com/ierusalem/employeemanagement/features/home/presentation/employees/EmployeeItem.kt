@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,7 @@ fun EmployeeItem(
             .padding(top = 16.dp)
             .fillMaxWidth(),
         shape = ShapeDefaults.Medium,
-        onClick = {  }
+        onClick = { }
     ) {
         Row(
             modifier = modifier
@@ -54,7 +55,7 @@ fun EmployeeItem(
             horizontalArrangement = Arrangement.Start
         ) {
             GlideImage(
-                failure = {  },
+                failure = { },
                 imageModel = { employee.image },
                 modifier = Modifier
                     .padding(start = 16.dp)
@@ -68,7 +69,7 @@ fun EmployeeItem(
                 )
             )
             Column(
-                modifier =Modifier.weight(1F)
+                modifier = Modifier.weight(1F)
             ) {
                 Text(
                     modifier = Modifier
@@ -80,16 +81,47 @@ fun EmployeeItem(
                     color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.titleSmall
                 )
-                Text(
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .padding(bottom = 8.dp),
-                    text = employee.email,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.labelSmall
-                )
+                Row {
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 8.dp),
+                        text = "${stringResource(id = R.string.position)}:",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 2.dp),
+                        text = employee.unvoni ?: stringResource(id = R.string.not_given),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+                Row {
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .padding(bottom = 8.dp),
+                        text = "${stringResource(id = R.string.room)}:",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 2.dp),
+                        text = employee.xonasi ?: stringResource(id = R.string.not_given),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
             }
             IconButton(
                 onClick = { intentReducer(HomeScreenClickIntents.CallEmployee(employee.phoneNo)) }) {
@@ -121,9 +153,9 @@ fun EmployeeItemPreview() {
                 id = 1,
                 image = "",
                 phoneNo = "",
-                unvoni = "",
+                unvoni = "Senior Dev",
                 isStaff = false,
-                xonasi = ""
+                xonasi = "12-room"
             )
         )
     }
@@ -142,9 +174,9 @@ fun EmployeeItemPreviewDark() {
                 id = 1,
                 image = "",
                 phoneNo = "",
-                unvoni = "",
+                unvoni = "Senior Dev",
                 isStaff = false,
-                xonasi = ""
+                xonasi = "240-room"
             )
         )
     }
