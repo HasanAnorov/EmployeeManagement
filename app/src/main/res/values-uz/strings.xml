@@ -71,4 +71,5 @@
     <string name="no_files_provided">Fayllar taqdim qilinmagan</string>
     <string name="not_given">Kiritilmagan</string>
     <string name="submitting">Yuborilmoqda…</string>
+    <string name="additional_files">Qo\'shimcha fayllar:</string>
 </resources>

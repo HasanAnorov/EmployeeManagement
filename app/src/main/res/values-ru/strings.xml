@@ -71,4 +71,5 @@
     <string name="no_files_provided">Файлы не предоставлены</string>
     <string name="not_given">Не дано</string>
     <string name="submitting">Отправка…</string>
+    <string name="additional_files">Дополнительные файлы:</string>
 </resources>

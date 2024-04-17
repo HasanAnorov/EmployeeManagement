@@ -10,12 +10,12 @@
 //import androidx.compose.foundation.layout.fillMaxWidth
 //import androidx.compose.foundation.layout.padding
 //import androidx.compose.foundation.lazy.LazyColumn
-//import androidx.compose.foundation.lazy.items
 //import androidx.compose.foundation.shape.RoundedCornerShape
 //import androidx.compose.material.icons.Icons
 //import androidx.compose.material.icons.automirrored.filled.ArrowBack
 //import androidx.compose.material.icons.filled.AttachFile
 //import androidx.compose.material3.ExperimentalMaterial3Api
+//import androidx.compose.material3.HorizontalDivider
 //import androidx.compose.material3.Icon
 //import androidx.compose.material3.MaterialTheme
 //import androidx.compose.material3.Text
@@ -33,7 +33,6 @@
 //import androidx.compose.ui.unit.dp
 //import com.ierusalem.employeemanagement.R
 //import com.ierusalem.employeemanagement.ui.components.CommonTopBar
-//import com.ierusalem.employeemanagement.ui.components.FileItemUrl
 //import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 //
 //@OptIn(ExperimentalMaterial3Api::class)
@@ -86,14 +85,14 @@
 //            style = MaterialTheme.typography.labelSmall,
 //            color = MaterialTheme.colorScheme.outline
 //        )
-//        if(work.file.isEmpty()){
+//        if (true) {
 //            Text(
 //                modifier = Modifier.padding(start = 16.dp, top = 8.dp),
 //                text = "Fayllar taqdim qilinmagan",
 //                style = MaterialTheme.typography.labelSmall,
 //                color = MaterialTheme.colorScheme.onBackground
 //            )
-//        }else{
+//        } else {
 //            LazyColumn(
 //                modifier = Modifier
 //                    .fillMaxWidth()
@@ -101,18 +100,18 @@
 //                    .padding(top = 16.dp, bottom = 8.dp)
 //                    .padding(horizontal = 16.dp)
 //            ) {
-//                items(work.file) {
-//                    FileItemUrl(
-//                        modifier = Modifier.padding(top = 8.dp),
-//                        file = it.file,
-//                        onDownloadFile = {
-//                            intentReducer(WorkDescriptionScreenEvents.DownloadFile(it.file))
-//                        }
-//                    )
-//                }
+////                items(work.file) {
+////                    FileItemUrl(
+////                        modifier = Modifier.padding(top = 8.dp),
+////                        file = it.file,
+////                        onDownloadFile = {
+//////                            intentReducer(WorkDescriptionScreenEvents.DownloadFile(it.file))
+////                        }
+////                    )
+////                }
 //            }
 //        }
-//        if (!state.isFromHome){
+//        if (false) {
 //            Text(
 //                modifier = Modifier.padding(start = 32.dp),
 //                text = stringResource(R.string.additional_information),
@@ -205,6 +204,65 @@
 //                },
 //            )
 //        }
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(top = 16.dp),
+//            verticalArrangement = Arrangement.Top,
+//            horizontalAlignment = Alignment.Start,
+//            content = {
+//                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+//                Text(
+//                    modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+//                    text = "Qo'shimcha ma'lumotlar",
+//                    style = MaterialTheme.typography.labelSmall,
+//                    color = MaterialTheme.colorScheme.outline
+//                )
+//                Text(
+//                    modifier = Modifier
+//                        .padding(start = 16.dp, top = 8.dp)
+//                        .clickable {
+//                            // add copy text feature
+//                        },
+//                    text = "Bu yerda xodim tomonidan yuborilgan qo'shimcha ma'lumotlar joylashadi",
+//                    style = MaterialTheme.typography.labelSmall,
+//                    maxLines = 10,
+//                    color = MaterialTheme.colorScheme.onBackground
+//                )
+//                Text(
+//                    modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+//                    text = "Qo'shimcha fayllar",
+//                    style = MaterialTheme.typography.labelSmall,
+//                    color = MaterialTheme.colorScheme.outline
+//                )
+//                if (true) {
+//                    Text(
+//                        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+//                        text = "Fayllar taqdim qilinmagan",
+//                        style = MaterialTheme.typography.labelSmall,
+//                        color = MaterialTheme.colorScheme.onBackground
+//                    )
+//                } else {
+//                    LazyColumn(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .weight(1F)
+//                            .padding(top = 16.dp, bottom = 8.dp)
+//                            .padding(horizontal = 16.dp)
+//                    ) {
+////                items(work.file) {
+////                    FileItemUrl(
+////                        modifier = Modifier.padding(top = 8.dp),
+////                        file = it.file,
+////                        onDownloadFile = {
+//////                            intentReducer(WorkDescriptionScreenEvents.DownloadFile(it.file))
+////                        }
+////                    )
+////                }
+//                    }
+//                }
+//            }
+//        )
 //    }
 //}
 //

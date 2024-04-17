@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.work_description.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -83,63 +85,20 @@ fun WorkDescriptionScreen(
                         .weight(1F)
                         .verticalScroll(scrollState)
                 ) {
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp),
-                        text = stringResource(R.string.command_description),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleSmall,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                        text = work.text,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal,
-                        maxLines = 1,
-                        lineHeight = 20.sp,
-                        color = MaterialTheme.colorScheme.outline,
-                        style = MaterialTheme.typography.titleSmall,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp, top = 16.dp),
-                        text = stringResource(R.string.deadline),
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        style = MaterialTheme.typography.titleSmall,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                        text = work.endTime,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal,
-                        maxLines = 1,
-                        lineHeight = 20.sp,
-                        color = MaterialTheme.colorScheme.outline,
-                        style = MaterialTheme.typography.titleSmall,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp, top = 16.dp),
-                        text = stringResource(R.string.attached_files),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleSmall,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    if (work.file.isEmpty()) {
+                    Column(modifier = Modifier.weight(1F)) {
                         Text(
-                            modifier = Modifier
-                                .padding(start = 16.dp, top = 8.dp),
-                            text = stringResource(R.string.no_files_provided),
+                            modifier = Modifier.padding(start = 16.dp),
+                            text = stringResource(R.string.command_description),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 1,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+                            text = work.text,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
                             maxLines = 1,
@@ -148,80 +107,203 @@ fun WorkDescriptionScreen(
                             style = MaterialTheme.typography.titleSmall,
                             overflow = TextOverflow.Ellipsis
                         )
-                    } else {
-                        val customModifier = if (state.isFromHome) Modifier.weight(1F) else Modifier.height(300.dp)
-                        LazyColumn(
-                            modifier = customModifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp, bottom = 8.dp)
-                                .padding(horizontal = 16.dp)
-                        ) {
-                            items(work.file) {
-                                FileItemUrl(
-                                    modifier = Modifier.padding(top = 8.dp),
-                                    file = it.file,
-                                    onDownloadFile = {
-                                        intentReducer(WorkDescriptionScreenEvents.DownloadFile(it.file))
-                                    }
-                                )
-                            }
-                        }
-                    }
-                    if (!state.isFromHome) {
-                        val weighCustomModifier =
-                            if (work.file.isEmpty() && state.files.isEmpty()) Modifier.weight(1F) else Modifier
                         Text(
-                            modifier = Modifier
-                                .padding(start = 16.dp, top = 16.dp),
-                            text = stringResource(R.string.additional_information),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.outline
+                            modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+                            text = stringResource(R.string.deadline),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis
                         )
-                        TextField(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 8.dp),
-                            colors = TextFieldDefaults.colors(
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent
-                            ),
-                            minLines = 6,
-                            maxLines = 8,
-                            shape = RoundedCornerShape(12.dp),
-                            textStyle = MaterialTheme.typography.titleSmall,
-                            value = state.textForm,
-                            onValueChange = {
-                                intentReducer(WorkDescriptionScreenEvents.OnTextChanged(it))
-                            },
-                            placeholder = {
-                                Text(
-                                    text = stringResource(R.string.type_here),
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
+                        Text(
+                            modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+                            text = work.endTime,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            maxLines = 1,
+                            lineHeight = 20.sp,
+                            color = MaterialTheme.colorScheme.outline,
+                            style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis
                         )
-                        Spacer(modifier = weighCustomModifier)
-                        if(state.files.isNotEmpty()){
-                            LazyColumn(
+                        Text(
+                            modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+                            text = stringResource(R.string.attached_files),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 1,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        if (work.file.isEmpty()) {
+                            Text(
                                 modifier = Modifier
+                                    .padding(start = 16.dp, top = 8.dp),
+                                text = stringResource(R.string.no_files_provided),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Normal,
+                                maxLines = 1,
+                                lineHeight = 20.sp,
+                                color = MaterialTheme.colorScheme.outline,
+                                style = MaterialTheme.typography.titleSmall,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        } else {
+                            val customModifier =
+                                if (state.isFromHome) Modifier.height(240.dp) else Modifier.height(
+                                    300.dp
+                                )
+                            LazyColumn(
+                                modifier = customModifier
                                     .fillMaxWidth()
-                                    .height(300.dp)
                                     .padding(top = 16.dp, bottom = 8.dp)
                                     .padding(horizontal = 16.dp)
                             ) {
-                                items(state.files) {
-                                    FileItem(
+                                items(work.file) {
+                                    FileItemUrl(
                                         modifier = Modifier.padding(top = 8.dp),
-                                        file = it
+                                        file = it.file,
+                                        onDownloadFile = {
+                                            intentReducer(
+                                                WorkDescriptionScreenEvents.DownloadFile(
+                                                    it.file
+                                                )
+                                            )
+                                        }
                                     )
                                 }
                             }
                         }
                     }
+                    if (!state.isFromHome) {
+                        val custom = if (state.files.isNotEmpty()) {
+                            Modifier.weight(1F)
+                        } else Modifier
+                        Column(modifier = custom) {
+                            val weighCustomModifier =
+                                if (work.file.isEmpty() && state.files.isEmpty()) Modifier.weight(1F) else Modifier
+                            Text(
+                                modifier = Modifier
+                                    .padding(start = 16.dp, top = 16.dp),
+                                text = stringResource(R.string.additional_information),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.outline
+                            )
+                            TextField(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 8.dp),
+                                colors = TextFieldDefaults.colors(
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent
+                                ),
+                                minLines = 6,
+                                maxLines = 8,
+                                shape = RoundedCornerShape(12.dp),
+                                textStyle = MaterialTheme.typography.titleSmall,
+                                value = state.textForm,
+                                onValueChange = {
+                                    intentReducer(WorkDescriptionScreenEvents.OnTextChanged(it))
+                                },
+                                placeholder = {
+                                    Text(
+                                        text = stringResource(R.string.type_here),
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                },
+                            )
+                            Spacer(modifier = weighCustomModifier)
+                            if (state.files.isNotEmpty()) {
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(300.dp)
+                                        .padding(top = 16.dp, bottom = 8.dp)
+                                        .padding(horizontal = 16.dp)
+                                ) {
+                                    items(state.files) {
+                                        FileItem(
+                                            modifier = Modifier.padding(top = 8.dp),
+                                            file = it
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (state.isFromHome) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1F)
+                                .padding(top = 16.dp),
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.Start,
+                            content = {
+                                if (work.textEmployee.isNotEmpty() || work.fileEmployee.isNotEmpty())
+                                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                                if (work.textEmployee.isNotEmpty()) {
+                                    Text(
+                                        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+                                        text = stringResource(id = R.string.additional_information),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = MaterialTheme.colorScheme.outline
+                                    )
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(start = 16.dp, top = 8.dp),
+                                        text = work.textEmployee,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Normal,
+                                        maxLines = 10,
+                                        color = MaterialTheme.colorScheme.onBackground
+                                    )
+                                }
+                                if (work.fileEmployee.isNotEmpty()) {
+                                    Text(
+                                        modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+                                        text = stringResource(R.string.additional_files),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = MaterialTheme.colorScheme.outline
+                                    )
+                                    LazyColumn(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .weight(1F)
+                                            .padding(top = 16.dp, bottom = 8.dp)
+                                            .padding(horizontal = 16.dp)
+                                    ) {
+                                        items(work.fileEmployee) {
+                                            Log.d("ahi3646", "WorkDescriptionScreen: ${it.file} ")
+                                            FileItemUrl(
+                                                modifier = Modifier.padding(top = 8.dp),
+                                                file = it.file,
+                                                onDownloadFile = {
+                                                    intentReducer(
+                                                        WorkDescriptionScreenEvents.DownloadFile(
+                                                            it.file
+                                                        )
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                    }
                 }
-                if(!state.isFromHome){
+                if (!state.isFromHome) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

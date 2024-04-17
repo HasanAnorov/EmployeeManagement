@@ -70,4 +70,5 @@
     <string name="no_files_provided">No files provided</string>
     <string name="not_given">Not given</string>
     <string name="submitting">Submitting …</string>
+    <string name="additional_files">Additional Files:</string>
 </resources>
