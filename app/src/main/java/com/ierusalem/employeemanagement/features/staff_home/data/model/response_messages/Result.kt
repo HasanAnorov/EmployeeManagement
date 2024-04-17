@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.staff_home.data.model.response_messages
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Result(
@@ -29,7 +28,7 @@ data class Result(
     @SerializedName("image")
     val adminImage: String,
     @SerializedName("adminunvoni")
-    val adminPosition: String,
+    val adminPosition: String?,
     @SerializedName("end_time")
     val endTime: String
 )

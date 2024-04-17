@@ -87,6 +87,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel(),
             try {
                 viewModelScope.launch(handler) {
                     val token = FirebaseMessaging.getInstance().token.await()
+                    
                     authRepository.loginUser(
                         username = state.value.username,
                         password = state.value.password,

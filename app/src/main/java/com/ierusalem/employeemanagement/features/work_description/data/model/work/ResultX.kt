@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.work_description.data.model.work
 
-
 import com.google.gson.annotations.SerializedName
 
 data class ResultX(

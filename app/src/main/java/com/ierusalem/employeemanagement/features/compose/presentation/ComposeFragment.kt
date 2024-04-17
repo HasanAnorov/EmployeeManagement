@@ -31,10 +31,11 @@ class ComposeFragment : Fragment() {
 
     private val getFilesLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == Activity.RESULT_OK) {
+    ) {result ->
+        if (result.resultCode == Activity.RESULT_OK) {
             val contentResolver = activity?.contentResolver
-            val data: Intent = it.data!!
+            val data: Intent = result.data!!
+
 
             val mimeType: String? = data.data?.let { returnUri ->
                 contentResolver?.getType(returnUri)
@@ -58,7 +59,8 @@ class ComposeFragment : Fragment() {
             }
 
             if (fileSize != null) {
-                if (fileSize!! < Constants.MAX_FILE_SIZE) {
+//                Nurbek said, limit has been removed for server
+//                if (fileSize!! < Constants.MAX_FILE_SIZE) {
                     val inputStream =
                         requireContext().contentResolver.openInputStream(data.data!!)
 
@@ -83,16 +85,16 @@ class ComposeFragment : Fragment() {
                     inputStream?.copyTo(fileOutputStream)
                     fileOutputStream.close()
                     viewModel.onFilesChanged(file)
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.please_choose_a_file_under_20_mb),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+//                } else {
+//                    Toast.makeText(
+//                        requireContext(),
+//                        getString(R.string.please_choose_a_file_under_20_mb),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
             }
         }
-        if (it.resultCode == Activity.RESULT_CANCELED) {
+        if (result.resultCode == Activity.RESULT_CANCELED) {
             // Write your code if there's no result
             Log.d("ahi3646", "onActivityResult: RESULT CANCELED ")
         }

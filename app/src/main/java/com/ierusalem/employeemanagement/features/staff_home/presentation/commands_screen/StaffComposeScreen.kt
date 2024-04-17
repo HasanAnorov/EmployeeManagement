@@ -13,10 +13,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.staff_home.domain.StaffHomeScreenState
 import com.ierusalem.employeemanagement.features.staff_home.presentation.StaffHomeScreenEvents
 import com.ierusalem.employeemanagement.ui.components.EmptyScreen
@@ -50,7 +52,6 @@ fun StaffComposeScreen(
                             "kechikibbajarildi"
                         )
                     )
-
                     "yuborildi" -> intentReducer(StaffHomeScreenEvents.OnPullToRefreshCommands("yuborildi"))
                     "qabulqildi" -> intentReducer(StaffHomeScreenEvents.OnPullToRefreshCommands("qabulqildi"))
                     "bajarildi" -> intentReducer(StaffHomeScreenEvents.OnPullToRefreshCommands("bajarildi"))
@@ -95,7 +96,7 @@ fun StaffComposeScreen(
                                             .padding(top = 8.dp),
                                         fullName = "${command.adminUsername} ${command.adminLastname}",
                                         image = image,
-                                        position = command.adminPosition,
+                                        position = command.adminPosition?: stringResource(id = R.string.not_given),
                                         description = command.text,
                                         deadline = command.endTime,
                                         onItemClick = {
