@@ -71,4 +71,5 @@
     <string name="not_given">Not given</string>
     <string name="submitting">Submitting …</string>
     <string name="additional_files">Additional Files:</string>
+    <string name="new_message">New message</string>
 </resources>
