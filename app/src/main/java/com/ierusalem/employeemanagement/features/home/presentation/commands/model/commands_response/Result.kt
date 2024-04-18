@@ -28,7 +28,7 @@ data class Result(
     @SerializedName("image")
     val adminImage: String,
     @SerializedName("adminunvoni")
-    val adminPosition: String,
+    val adminPosition: String?,
     @SerializedName("end_time")
     val endTime: String
 )
