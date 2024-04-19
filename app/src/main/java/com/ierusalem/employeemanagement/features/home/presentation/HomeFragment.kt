@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.ui.MainActivity
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
@@ -36,9 +37,22 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModel()
 
+    override fun onStart() {
+        super.onStart()
+        if (requireActivity().intent.hasExtra(Constants.NOTIFICATION)) {
+            Log.d("ahi3646", "onStart: ")
+        }
+        (activity as MainActivity).addOnNewIntentListener {
+            Log.d("ahi3646", "noStart: ${it.data} ")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestNotificationPermission()
+        (activity as MainActivity).addOnNewIntentListener {
+            Log.d("ahi3646", "onCreate: ${it.data} ")
+        }
     }
 
     private fun requestNotificationPermission() {

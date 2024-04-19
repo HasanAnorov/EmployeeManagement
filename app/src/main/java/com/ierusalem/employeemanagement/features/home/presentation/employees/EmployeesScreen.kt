@@ -1,3 +1,4 @@
+
 package com.ierusalem.employeemanagement.features.home.presentation.employees
 
 import androidx.compose.foundation.background
@@ -11,23 +12,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenClickIntents
-import com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result
+import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenState
 import com.ierusalem.employeemanagement.ui.components.EmptyScreen
 import com.ierusalem.employeemanagement.ui.components.ErrorScreen
 import com.ierusalem.employeemanagement.ui.components.LoadingScreen
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun EmployeesScreen(
     modifier: Modifier = Modifier,
     intentReducer: (HomeScreenClickIntents) -> Unit,
-    state: Flow<PagingData<Result>>
+    state: HomeScreenState
 ) {
-    val results = state.collectAsLazyPagingItems()
+    val results = state.employees.collectAsLazyPagingItems()
     when (results.loadState.refresh) {
         is LoadState.Loading -> LoadingScreen()
         is LoadState.Error -> ErrorScreen()
@@ -38,21 +39,30 @@ fun EmployeesScreen(
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background)
                 ) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .padding(bottom = 16.dp, top = 8.dp)
-                            .background(MaterialTheme.colorScheme.background)
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Top,
-                        content = {
-                            items(results) { command ->
-                                EmployeeItem(
-                                    employee = command!!,
-                                    intentReducer = intentReducer
-                                )
-                            }
+                    SwipeRefresh(
+                        state = rememberSwipeRefreshState(isRefreshing = state.isEmployeesLoading),
+                        onRefresh = {
+                            intentReducer(
+                                HomeScreenClickIntents.OnPullToRefreshEmployees
+                            )
                         }
-                    )
+                    ) {
+                        LazyColumn(
+                            modifier = Modifier
+                                .padding(bottom = 16.dp, top = 8.dp)
+                                .background(MaterialTheme.colorScheme.background)
+                                .fillMaxSize(),
+                            verticalArrangement = Arrangement.Top,
+                            content = {
+                                items(results) { command ->
+                                    EmployeeItem(
+                                        employee = command!!,
+                                        intentReducer = intentReducer
+                                    )
+                                }
+                            }
+                        )
+                    }
                 }
             }else{
                 EmptyScreen(

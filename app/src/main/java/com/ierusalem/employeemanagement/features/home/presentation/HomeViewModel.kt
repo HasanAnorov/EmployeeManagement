@@ -31,7 +31,6 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         emitNavigation(HomeScreenNavigation.InvalidResponse)
     }
 
-
     private val _state: MutableStateFlow<HomeScreenState> = MutableStateFlow(
         HomeScreenState(
             isDarkTheme = repo.getTheme()
@@ -42,7 +41,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     private val _drawerShouldBeOpened = MutableStateFlow(false)
     val drawerShouldBeOpened = _drawerShouldBeOpened.asStateFlow()
 
-    private fun updateTheme(isDarkTheme: Boolean){
+    private fun updateTheme(isDarkTheme: Boolean) {
         repo.saveTheme(isDarkTheme)
         _state.update {
             it.copy(
@@ -58,22 +57,28 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         getCommands("bajarildi")
         getCommands("bajarilmadi")
         getCommands("kechikibbajarildi")
-        _state.update {
-            it.copy(
+        _state.update { homeScreenState ->
+            homeScreenState.copy(
                 employees = Pager(
                     PagingConfig(pageSize = 15)
                 ) {
-                    EmployeesDataSource(repo)
+                    EmployeesDataSource(repo) { isLoading ->
+                        _state.update {
+                            it.copy(
+                                isEmployeesLoading = isLoading
+                            )
+                        }
+                    }
                 }.flow.cachedIn(viewModelScope)
             )
         }
     }
 
-    private fun getUserForHome(){
+    private fun getUserForHome() {
         try {
             viewModelScope.launch(handler) {
-                repo.getUserForHome().let {response ->
-                    if(response.isSuccessful){
+                repo.getUserForHome().let { response ->
+                    if (response.isSuccessful) {
                         _state.update {
                             it.copy(
                                 username = response.body()!!.user.username
@@ -95,8 +100,8 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                                 imageUrl = response.body()!!.user.image
                             )
                         }
-                    }else{
-                        val user =repo.getUserFromLocal()
+                    } else {
+                        val user = repo.getUserFromLocal()
                         _state.update {
                             it.copy(
                                 username = user.username
@@ -120,8 +125,8 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                     }
                 }
             }
-        }catch (e: Exception){
-            val user =repo.getUserFromLocal()
+        } catch (e: Exception) {
+            val user = repo.getUserFromLocal()
             _state.update {
                 it.copy(
                     username = user.username
@@ -248,7 +253,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
             }
 
             is HomeScreenClickIntents.OnItemClick -> {
-               emitNavigation(HomeScreenNavigation.OnItemClick(intent.workId))
+                emitNavigation(HomeScreenNavigation.OnItemClick(intent.workId))
             }
 
             is HomeScreenClickIntents.CreateCommand -> {
@@ -257,6 +262,24 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
 
             is HomeScreenClickIntents.OnPullToRefreshCommands -> {
                 getCommands(intent.status)
+            }
+
+            HomeScreenClickIntents.OnPullToRefreshEmployees -> {
+                _state.update { homeScreenState ->
+                    homeScreenState.copy(
+                        employees = Pager(
+                            PagingConfig(pageSize = 15)
+                        ) {
+                            EmployeesDataSource(repo) { isLoading ->
+                                _state.update {
+                                    it.copy(
+                                        isEmployeesLoading = isLoading
+                                    )
+                                }
+                            }
+                        }.flow.cachedIn(viewModelScope)
+                    )
+                }
             }
 
             is HomeScreenClickIntents.TabItemClick -> {
@@ -269,7 +292,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         }
     }
 
-    fun changeSelectedTabIndex(tabIndex:Int){
+    fun changeSelectedTabIndex(tabIndex: Int) {
         _state.update {
             it.copy(
                 selectedTabIndex = tabIndex
@@ -295,6 +318,7 @@ data class HomeScreenState(
     val email: String = "",
     val imageUrl: String = "",
     val isLoading: Boolean = false,
+    val isEmployeesLoading: Boolean = false,
     val commandsSent: List<Result> = listOf(),
     val commandsReceived: List<Result> = listOf(),
     val commandsDone: List<Result> = listOf(),

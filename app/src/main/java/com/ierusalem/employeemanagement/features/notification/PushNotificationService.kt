@@ -1,7 +1,9 @@
 package com.ierusalem.employeemanagement.features.notification
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.Constraints
@@ -12,6 +14,7 @@ import androidx.work.workDataOf
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.ui.MainActivity
 import com.ierusalem.employeemanagement.utils.Constants
 
 class PushNotificationService : FirebaseMessagingService() {
@@ -37,20 +40,30 @@ class PushNotificationService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        Log.d("ahi3646", "onMessageReceived: ${message.data} ")
-        Log.d("ahi3646", "onMessageReceived: ${message.data.entries} ")
-        Log.d("ahi3646", "onMessageReceived: ${message.data.values} ")
-        showNotification(this.resources.getString(R.string.app_name),
-            getString(R.string.new_message))
+        showNotification(
+            title = this.resources.getString(R.string.app_name),
+            description = getString(R.string.new_message)
+        )
     }
 
-    private fun showNotification(title:String, description: String) {
+    private fun showNotification(title: String, description: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(Constants.NOTIFICATION, "notification")
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            1,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
         val notification = NotificationCompat.Builder(applicationContext, "channel_id")
-            .setSmallIcon(R.drawable.plus)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setContentText(description)
+            .setContentIntent(pendingIntent)
             .build()
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(1, notification)
     }
 

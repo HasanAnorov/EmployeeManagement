@@ -6,7 +6,8 @@ import com.ierusalem.employeemanagement.features.home.domain.HomeRepository
 import com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result
 
 class EmployeesDataSource(
-    private val repo: HomeRepository
+    private val repo: HomeRepository,
+    onRefresh: (Boolean) -> Unit
 ) : PagingSource<Int, Result>() {
     override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
         return state.anchorPosition?.let { position ->
@@ -18,12 +19,16 @@ class EmployeesDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
         return try {
             val page = params.key ?: 1
-            val response = repo.getEmployees(page, 15)
-            LoadResult.Page(
-                data = response.body()!!.results,
-                prevKey = null,
-                nextKey = if (response.body()!!.results.isNotEmpty()) response.body()!!.totalPages + 1 else null
-            )
+            val response = repo.getEmployees(page, 10)
+            if(response.isSuccessful){
+                LoadResult.Page(
+                    data = response.body()!!.results,
+                    prevKey = null,
+                    nextKey = if (response.body()!!.results.isNotEmpty()) response.body()!!.totalPages + 1 else null
+                )
+            }else{
+                LoadResult.Error(Throwable(response.errorBody().toString()))
+            }
         } catch (error: Exception) {
             LoadResult.Error(error)
         }
