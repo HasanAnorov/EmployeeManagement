@@ -73,4 +73,5 @@
     <string name="submitting">Отправка…</string>
     <string name="additional_files">Дополнительные файлы:</string>
     <string name="new_message">Новое сообщение</string>
+    <string name="create_a_job">Создать задачу</string>
 </resources>

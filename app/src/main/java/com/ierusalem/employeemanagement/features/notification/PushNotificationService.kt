@@ -49,7 +49,9 @@ class PushNotificationService : FirebaseMessagingService() {
     private fun showNotification(title: String, description: String) {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(Constants.NOTIFICATION, "notification")
+        //fixme
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val pendingIntent = PendingIntent.getActivity(
             this,
             1,

@@ -24,7 +24,7 @@ data class ResultX(
     @SerializedName("text")
     val text: String,
     @SerializedName("text_employee")
-    val textEmployee: String,
+    val textEmployee: String?,
     @SerializedName("user")
     val user: String,
     @SerializedName("user_email")

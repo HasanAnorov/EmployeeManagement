@@ -20,10 +20,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.MainActivity
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
@@ -164,6 +166,11 @@ class HomeFragment : Fragment() {
 
     private fun executeNavigation(navigation: HomeScreenNavigation) {
         when (navigation) {
+            is HomeScreenNavigation.OnCreateCommands -> {
+                val listString = Gson().toJson(Users(navigation.users))
+                val bundle = bundleOf(Constants.USERS_TO_COMMAND to listString)
+                findNavController().navigate(R.id.action_homeFragment_to_composeFragment, bundle)
+            }
             HomeScreenNavigation.InvalidResponse ->{
                 Toast.makeText(requireContext(), resources.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
@@ -211,3 +218,7 @@ class HomeFragment : Fragment() {
     }
 
 }
+
+data class Users(
+    val users: List<String>
+)

@@ -245,9 +245,9 @@ fun WorkDescriptionScreen(
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.Start,
                             content = {
-                                if (work.textEmployee.isNotEmpty() || work.fileEmployee.isNotEmpty())
+                                if (work.textEmployee?.isNotEmpty() == true || work.fileEmployee.isNotEmpty())
                                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                                if (work.textEmployee.isNotEmpty()) {
+                                if (work.textEmployee?.isNotEmpty() == true) {
                                     Text(
                                         modifier = Modifier.padding(start = 16.dp, top = 8.dp),
                                         text = stringResource(id = R.string.additional_information),

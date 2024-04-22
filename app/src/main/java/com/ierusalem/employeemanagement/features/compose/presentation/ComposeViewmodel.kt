@@ -64,13 +64,51 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         emitNavigation(ComposeScreenNavigation.InvalidResponse)
     }
 
-    //fixme file size validation is incorrect
     fun onSubmitClicked(userId: String) {
         changeSubmitState(true)
         val time = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
         val requestBodyBuilder = MultipartBody.Builder()
         requestBodyBuilder.setType(MultipartBody.FORM)
         requestBodyBuilder.addFormDataPart("user", userId)
+        requestBodyBuilder.addFormDataPart("text", state.value.textForm)
+        requestBodyBuilder.addFormDataPart("end_time", time)
+        for (file in state.value.files) {
+            requestBodyBuilder.addFormDataPart(
+                "file",
+                file.name,
+                file.asRequestBody(
+                    "*/*".toMediaType()
+                )
+            )
+        }
+        val requestBody = requestBodyBuilder.build()
+        try {
+            viewModelScope.launch(handler) {
+                repo.postMessage(requestBody).let {
+                    if (it.isSuccessful) {
+                        changeSubmitState(false)
+                        emitNavigation(ComposeScreenNavigation.Success)
+                    } else {
+                        changeSubmitState(false)
+                        emitNavigation(ComposeScreenNavigation.InvalidResponse)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            changeSubmitState(false)
+            emitNavigation(ComposeScreenNavigation.InvalidResponse)
+        }
+    }
+
+    fun onSubmitClickedForUsers(users:List<String>) {
+        changeSubmitState(true)
+        val time = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
+        val requestBodyBuilder = MultipartBody.Builder()
+        requestBodyBuilder.setType(MultipartBody.FORM)
+        for (user in users){
+            Log.d("ahi3646", "$user : ${user.filter { it.isDigit() }} ")
+            requestBodyBuilder.addFormDataPart(user, user.filter { it.isDigit() })
+        }
         requestBodyBuilder.addFormDataPart("text", state.value.textForm)
         requestBodyBuilder.addFormDataPart("end_time", time)
         for (file in state.value.files) {

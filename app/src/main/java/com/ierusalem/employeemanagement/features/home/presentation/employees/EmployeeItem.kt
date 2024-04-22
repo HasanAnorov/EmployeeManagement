@@ -38,6 +38,7 @@ import com.skydoves.landscapist.glide.GlideImage
 fun EmployeeItem(
     modifier: Modifier = Modifier,
     employee: Result,
+    isSelected: Boolean,
     intentReducer: (HomeScreenClickIntents) -> Unit
 ) {
     Card(
@@ -45,29 +46,43 @@ fun EmployeeItem(
             .padding(top = 16.dp)
             .fillMaxWidth(),
         shape = ShapeDefaults.Medium,
-        onClick = { }
+        onClick = { intentReducer(HomeScreenClickIntents.OnEmployeeClick(employee.id)) }
     ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background),
+                .background(
+                    color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer.copy(0.2F) else MaterialTheme.colorScheme.background
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            GlideImage(
-                failure = { },
-                imageModel = { employee.image },
-                modifier = Modifier
-                    .padding(start = 16.dp)
-                    .padding(vertical = 4.dp)
-                    .size(width = 48.dp, height = 48.dp)
-                    .clip(CircleShape),
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.CenterStart,
+            if (isSelected) {
+                Image(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .padding(vertical = 4.dp)
+                        .size(width = 48.dp, height = 48.dp)
+                        .clip(CircleShape),
+                    painter = painterResource(id = R.drawable.check),
                     contentDescription = null
                 )
-            )
+            } else {
+                GlideImage(
+                    failure = { },
+                    imageModel = { employee.image },
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .padding(vertical = 4.dp)
+                        .size(width = 48.dp, height = 48.dp)
+                        .clip(CircleShape),
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.CenterStart,
+                        contentDescription = null
+                    )
+                )
+            }
             Column(
                 modifier = Modifier.weight(1F)
             ) {
@@ -146,6 +161,7 @@ fun EmployeeItemPreview() {
     EmployeeManagementTheme {
         EmployeeItem(
             intentReducer = {},
+            isSelected = false,
             employee = Result(
                 email = "anorov@gmail.com",
                 username = "Hasan",
@@ -167,6 +183,7 @@ fun EmployeeItemPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         EmployeeItem(
             intentReducer = {},
+            isSelected = true,
             employee = Result(
                 email = "anorov@gmail.com",
                 username = "Hasan",

@@ -18,7 +18,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.features.home.presentation.Users
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
@@ -31,7 +33,7 @@ class ComposeFragment : Fragment() {
 
     private val getFilesLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {result ->
+    ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val contentResolver = activity?.contentResolver
             val data: Intent = result.data!!
@@ -61,30 +63,30 @@ class ComposeFragment : Fragment() {
             if (fileSize != null) {
 //                Nurbek said, limit has been removed for server
 //                if (fileSize!! < Constants.MAX_FILE_SIZE) {
-                    val inputStream =
-                        requireContext().contentResolver.openInputStream(data.data!!)
+                val inputStream =
+                    requireContext().contentResolver.openInputStream(data.data!!)
 
-                    val suffix: String = when (mimeType) {
-                        "application/pdf" -> ".pdf"
-                        "application/json" -> ".json"
-                        "text/plain" -> ".text"
-                        "image/jpeg", "image/pjpeg" -> ".jpeg"
-                        "video/mp4" -> ".mp4"
-                        "application/vnd.android.package-archive" -> ".apk"
-                        "image/svg+xml" -> ".svg"
-                        "image/png" -> ".png"
-                        "application/msword" -> ".doc"
-                        else -> ".text"
-                    }
-                    val file = java.io.File.createTempFile(
-                        fileName,
-                        suffix,
-                        requireActivity().cacheDir
-                    )
-                    val fileOutputStream = FileOutputStream(file)
-                    inputStream?.copyTo(fileOutputStream)
-                    fileOutputStream.close()
-                    viewModel.onFilesChanged(file)
+                val suffix: String = when (mimeType) {
+                    "application/pdf" -> ".pdf"
+                    "application/json" -> ".json"
+                    "text/plain" -> ".text"
+                    "image/jpeg", "image/pjpeg" -> ".jpeg"
+                    "video/mp4" -> ".mp4"
+                    "application/vnd.android.package-archive" -> ".apk"
+                    "image/svg+xml" -> ".svg"
+                    "image/png" -> ".png"
+                    "application/msword" -> ".doc"
+                    else -> ".text"
+                }
+                val file = java.io.File.createTempFile(
+                    fileName,
+                    suffix,
+                    requireActivity().cacheDir
+                )
+                val fileOutputStream = FileOutputStream(file)
+                inputStream?.copyTo(fileOutputStream)
+                fileOutputStream.close()
+                viewModel.onFilesChanged(file)
 //                } else {
 //                    Toast.makeText(
 //                        requireContext(),
@@ -106,7 +108,9 @@ class ComposeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val userId = arguments?.getString(Constants.COMPOSE_PROFILE_ID) ?: "-1"
+        val usersString = arguments?.getString(Constants.USERS_TO_COMMAND) ?: ""
+        val userId = arguments?.getString(Constants.COMPOSE_PROFILE_ID) ?: ""
+        val users = Gson().fromJson(usersString, Users::class.java)
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -116,7 +120,13 @@ class ComposeFragment : Fragment() {
                         onAttachFileClick = { showFileChooser() },
                         onNavIconClicked = { navigateToHomeWithRefresh() },
                         onTextChanged = { viewModel.onTextFormChanged(it) },
-                        onSubmitClicked = { viewModel.onSubmitClicked(userId) },
+                        onSubmitClicked = {
+                            if (usersString.isNotEmpty()) {
+                                viewModel.onSubmitClickedForUsers(users.users)
+                            } else {
+                                viewModel.onSubmitClicked(userId)
+                            }
+                        },
                         onYearChanged = { viewModel.onYearChanged(it) },
                         onMonthChanged = { viewModel.onMonthChanged(it) },
                         onDayChanged = { viewModel.onDayChanged(it) },

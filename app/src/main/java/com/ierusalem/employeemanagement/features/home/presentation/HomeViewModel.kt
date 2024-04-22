@@ -240,6 +240,31 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
 
     fun handleClickIntents(intent: HomeScreenClickIntents) {
         when (intent) {
+            is HomeScreenClickIntents.ClearEmployeesCommandsList -> {
+                _state.update {
+                    it.copy(
+                        employeesToSendCommand = listOf()
+                    )
+                }
+            }
+            is HomeScreenClickIntents.OnEmployeeClick -> {
+                val employees = state.value.employeesToSendCommand.toMutableList()
+                if(employees.contains("user[${intent.userId}]")){
+                    employees.remove("user[${intent.userId}]")
+                }else{
+                    employees.add("user[${intent.userId}]")
+                }
+               _state.update {
+                   it.copy(
+                       employeesToSendCommand = employees
+                   )
+               }
+            }
+
+            is HomeScreenClickIntents.CreateCommands -> {
+                emitNavigation(HomeScreenNavigation.OnCreateCommands(intent.users))
+            }
+
             is HomeScreenClickIntents.OnThemeChange -> {
                 updateTheme(intent.isDarkTheme)
             }
@@ -324,5 +349,6 @@ data class HomeScreenState(
     val commandsDone: List<Result> = listOf(),
     val commandsNotDone: List<Result> = listOf(),
     val commandsLateDone: List<Result> = listOf(),
-    val employees: Flow<PagingData<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result>> = flowOf()
+    val employees: Flow<PagingData<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result>> = flowOf(),
+    val employeesToSendCommand : List<String> = listOf()
 )

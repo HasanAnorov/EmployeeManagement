@@ -20,5 +20,6 @@ data class Result(
     @SerializedName("username")
     val username: String,
     @SerializedName("xonasi")
-    val xonasi: String?
+    val xonasi: String?,
+
 )
