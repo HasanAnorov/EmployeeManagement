@@ -72,7 +72,6 @@ fun CommandsScreen(
                             "kechikibbajarildi"
                         )
                     )
-
                     else -> intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands("yuborildi"))
                 }
             }

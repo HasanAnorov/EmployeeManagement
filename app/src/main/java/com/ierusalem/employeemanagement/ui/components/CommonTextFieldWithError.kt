@@ -26,6 +26,10 @@ fun CommonTextFieldWithError(
     value: String,
     errorMessage: String? = null,
     onTextChanged: (String) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        imeAction = ImeAction.Next, // ** Done. Close the keyboard **
+        keyboardType = KeyboardType.Text
+    )
 ) {
     Column(modifier= modifier) {
         TextField(
@@ -49,10 +53,7 @@ fun CommonTextFieldWithError(
             onValueChange = {
                             onTextChanged(it)
             },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next, // ** Done. Close the keyboard **
-                keyboardType = KeyboardType.Text
-            ),
+            keyboardOptions = keyboardOptions,
             shape = RoundedCornerShape(size = 12.dp),
             singleLine = true,
         )
