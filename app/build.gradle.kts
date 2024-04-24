@@ -13,8 +13,8 @@ android {
         applicationId = "com.ierusalem.employeemanagement"
         minSdk = 25
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -54,16 +54,8 @@ android {
 
 dependencies {
 
-    implementation("io.coil-kt:coil-compose:2.5.0")
-
     //landscapist
     implementation ("com.github.skydoves:landscapist-glide:2.2.9")
-
-    //paging
-    //noinspection GradleDependency
-    implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
-    //noinspection GradleDependency
-    implementation ("androidx.paging:paging-compose:1.0.0-alpha18")
 
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
@@ -74,7 +66,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
 
     //android view binding
-    implementation ("androidx.compose.ui:ui-viewbinding:1.6.5")
+    implementation ("androidx.compose.ui:ui-viewbinding:1.6.6")
 
     // Koin for Android
     implementation ("io.insert-koin:koin-androidx-compose:3.5.0")
@@ -83,6 +75,7 @@ dependencies {
     //appCompat features
     implementation("androidx.appcompat:appcompat:1.6.1")
 
+    //extended version of icons
     implementation("androidx.compose.material:material-icons-extended")
 
     //view model
@@ -92,7 +85,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-    implementation("com.google.ai.client.generativeai:generativeai:0.3.0")
+    implementation("com.google.ai.client.generativeai:generativeai:0.4.0")
     implementation("androidx.wear.compose:compose-material:1.3.1")
 
     //work manager
@@ -111,10 +104,10 @@ dependencies {
     //pull to refresh
     implementation ("com.google.accompanist:accompanist-swiperefresh:0.35.0-alpha")
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation(platform("androidx.compose:compose-bom:2024.04.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -122,7 +115,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")

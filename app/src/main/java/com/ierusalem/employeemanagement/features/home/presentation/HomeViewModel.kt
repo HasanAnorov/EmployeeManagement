@@ -1,14 +1,8 @@
 package com.ierusalem.employeemanagement.features.home.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.home.data.EmployeesDataSource
 import com.ierusalem.employeemanagement.features.home.domain.HomeRepository
 import com.ierusalem.employeemanagement.features.home.presentation.commands.model.commands_response.Result
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
@@ -16,18 +10,15 @@ import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import com.ierusalem.employeemanagement.utils.UiText
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     NavigationEventDelegate<HomeScreenNavigation> by DefaultNavigationEventDelegate() {
 
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.d("ahi3646", " coroutineExceptionHandler : error - $exception ")
+    private val handler = CoroutineExceptionHandler { _, _ ->
         emitNavigation(HomeScreenNavigation.InvalidResponse)
     }
 
@@ -57,20 +48,45 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         getCommands("bajarildi")
         getCommands("bajarilmadi")
         getCommands("kechikibbajarildi")
-        _state.update { homeScreenState ->
-            homeScreenState.copy(
-                employees = Pager(
-                    PagingConfig(pageSize = 15)
-                ) {
-                    EmployeesDataSource(repo) { isLoading ->
+        getEmployees()
+    }
+
+    fun openDrawer() {
+        _drawerShouldBeOpened.value = true
+    }
+
+    fun resetOpenDrawerAction() {
+        _drawerShouldBeOpened.value = false
+    }
+
+    private fun updateLoading(isLoading: Boolean) {
+        _state.update {
+            it.copy(
+                isLoading = isLoading
+            )
+        }
+    }
+
+    private fun getEmployees() {
+        try {
+            updateLoading(true)
+            viewModelScope.launch(handler) {
+                repo.getEmployees().let { response ->
+                    if (response.isSuccessful) {
+                        updateLoading(false)
                         _state.update {
                             it.copy(
-                                isEmployeesLoading = isLoading
+                                employees = response.body()?.results ?: listOf()
                             )
                         }
+                    }else{
+                        updateLoading(false)
                     }
-                }.flow.cachedIn(viewModelScope)
-            )
+                }
+            }
+        } catch (e: Exception) {
+            updateLoading(false)
+            emitNavigation(HomeScreenNavigation.FailedToLoadEmployees)
         }
     }
 
@@ -148,22 +164,6 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                 )
             }
         }
-    }
-
-    private fun updateLoading(isLoading: Boolean) {
-        _state.update {
-            it.copy(
-                isLoading = isLoading
-            )
-        }
-    }
-
-    fun openDrawer() {
-        _drawerShouldBeOpened.value = true
-    }
-
-    fun resetOpenDrawerAction() {
-        _drawerShouldBeOpened.value = false
     }
 
     private fun logoutUser() {
@@ -290,21 +290,22 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
             }
 
             HomeScreenClickIntents.OnPullToRefreshEmployees -> {
-                _state.update { homeScreenState ->
-                    homeScreenState.copy(
-                        employees = Pager(
-                            PagingConfig(pageSize = 15)
-                        ) {
-                            EmployeesDataSource(repo) { isLoading ->
-                                _state.update {
-                                    it.copy(
-                                        isEmployeesLoading = isLoading
-                                    )
-                                }
-                            }
-                        }.flow.cachedIn(viewModelScope)
-                    )
-                }
+                getEmployees()
+//                _state.update { homeScreenState ->
+//                    homeScreenState.copy(
+//                        employees = Pager(
+//                            PagingConfig(pageSize = 15)
+//                        ) {
+//                            EmployeesDataSource(repo) { isLoading ->
+//                                _state.update {
+//                                    it.copy(
+//                                        isEmployeesLoading = isLoading
+//                                    )
+//                                }
+//                            }
+//                        }.flow.cachedIn(viewModelScope)
+//                    )
+//                }
             }
 
             is HomeScreenClickIntents.TabItemClick -> {
@@ -343,12 +344,11 @@ data class HomeScreenState(
     val email: String = "",
     val imageUrl: String = "",
     val isLoading: Boolean = false,
-    val isEmployeesLoading: Boolean = false,
     val commandsSent: List<Result> = listOf(),
     val commandsReceived: List<Result> = listOf(),
     val commandsDone: List<Result> = listOf(),
     val commandsNotDone: List<Result> = listOf(),
     val commandsLateDone: List<Result> = listOf(),
-    val employees: Flow<PagingData<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result>> = flowOf(),
+    val employees: List<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result> = listOf(),
     val employeesToSendCommand : List<String> = listOf()
 )

@@ -110,7 +110,7 @@ fun EmployeeItem(
                         modifier = Modifier
                             .padding(start = 2.dp),
                         text = employee.unvoni ?: stringResource(id = R.string.not_given),
-                        maxLines = 1,
+                        maxLines = 4,
                         overflow = TextOverflow.Ellipsis,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         style = MaterialTheme.typography.labelSmall

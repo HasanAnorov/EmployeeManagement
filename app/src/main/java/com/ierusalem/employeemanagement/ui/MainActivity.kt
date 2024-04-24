@@ -12,10 +12,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.databinding.ActivityMainBinding
-import com.ierusalem.employeemanagement.features.home.presentation.HomeFragment
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import java.util.Locale
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
@@ -53,15 +53,12 @@ class MainActivity : AppCompatActivity() {
         controller.graph = graph.apply {
             setStartDestination(destination)
         }
-
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        Log.d("ahi3646", "onNewIntent: ${intent?.data}")
-//        val fragment = supportFragmentManager.findFragmentById(R.id.homeFragment) as HomeFragment
-//        fragment.load()
+        Log.d("ahi3646", "onNewIntent: ${intent.data}")
     }
 
     override fun onDestroy() {

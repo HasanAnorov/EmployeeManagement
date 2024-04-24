@@ -1,6 +1,5 @@
 package com.ierusalem.employeemanagement.features.home.data
 
-import com.ierusalem.employeemanagement.features.home.data.entity.UserLogoutRequest
 import com.ierusalem.employeemanagement.features.home.presentation.commands.model.commands_response.CommandsResponse
 import com.ierusalem.employeemanagement.features.home.presentation.employees.model.EmployeesResponse
 import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
@@ -34,8 +33,10 @@ interface HomeService {
     @GET("get_users")
     suspend fun getEmployees(
         @Header("Authorization") authToken: String,
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int,
     ): Response<EmployeesResponse>
 
 }
+
+data class UserLogoutRequest(
+    val refresh: String
+)

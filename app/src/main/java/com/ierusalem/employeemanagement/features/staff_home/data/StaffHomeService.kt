@@ -1,6 +1,6 @@
 package com.ierusalem.employeemanagement.features.staff_home.data
 
-import com.ierusalem.employeemanagement.features.home.data.entity.UserLogoutRequest
+import com.ierusalem.employeemanagement.features.home.data.UserLogoutRequest
 import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
 import com.ierusalem.employeemanagement.features.staff_home.data.model.response_messages.ResponseMessages
 import retrofit2.Response
