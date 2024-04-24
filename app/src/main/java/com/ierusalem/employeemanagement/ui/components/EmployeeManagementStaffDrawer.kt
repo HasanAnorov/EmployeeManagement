@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
-fun EmployeeManagementDrawer(
+fun EmployeeManagementStaffDrawer(
     username: String,
     imageUrl: String,
     email: String,
@@ -17,7 +17,6 @@ fun EmployeeManagementDrawer(
     onProfileClicked: (String) -> Unit,
     onSettingsClicked: () -> Unit,
     onLogoutClicked: () -> Unit,
-    onPrivateJobsClicked: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     EmployeeManagementTheme {
@@ -25,16 +24,16 @@ fun EmployeeManagementDrawer(
             drawerState = drawerState,
             drawerContent = {
                 ModalDrawerSheet {
-                    EmployeeManagementDrawerContent(
-                        username = username,
-                        imageUrl = imageUrl,
-                        email = email,
-                        onProfileClicked = onProfileClicked,
-                        onSettingsClicked = onSettingsClicked,
-                        onLogoutClicked = onLogoutClicked,
-                        onPrivateJobClicked = onPrivateJobsClicked,
-                    )
+                        EmployeeManagementStaffDrawerContent(
+                            username = username,
+                            imageUrl = imageUrl,
+                            email = email,
+                            onProfileClicked = onProfileClicked,
+                            onSettingsClicked = onSettingsClicked,
+                            onLogoutClicked = onLogoutClicked
+                        )
                 }
+
             },
             content = content
         )

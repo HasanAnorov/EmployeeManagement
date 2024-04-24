@@ -181,7 +181,11 @@ fun HomeScreen(
                                         4 -> "kechikibbajarildi"
                                         else -> "yuborildi"
                                     }
-                                    intentReducer(HomeScreenClickIntents.OnPullToRefreshCommands(status))
+                                    intentReducer(
+                                        HomeScreenClickIntents.OnPullToRefreshCommands(
+                                            status
+                                        )
+                                    )
                                     intentReducer(HomeScreenClickIntents.TabItemClick(index))
                                     scope.launch {
                                         pagerState.animateScrollToPage(index)
@@ -202,7 +206,7 @@ fun HomeScreen(
                                             color = if (pagerState.currentPage == index) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
                                             style = MaterialTheme.typography.titleSmall
                                         )
-                                        if (data>0) {
+                                        if (data > 0) {
                                             Box(
                                                 modifier = Modifier
                                                     .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -275,9 +279,13 @@ fun HomeScreen(
 @Composable
 fun Preview_HomeScreen_Light() {
     EmployeeManagementTheme(darkTheme = false) {
-        HomeScreen(state = HomeScreenState(
-            isDarkTheme = false
-        ), onDrawerClick = {}, intentReducer = {})
+        HomeScreen(
+            state = HomeScreenState(
+                isDarkTheme = false
+            ),
+            onDrawerClick = {},
+            intentReducer = {}
+        )
     }
 }
 
@@ -285,8 +293,12 @@ fun Preview_HomeScreen_Light() {
 @Composable
 fun Preview_HomeScreen_Dark() {
     EmployeeManagementTheme(darkTheme = true) {
-        HomeScreen(state = HomeScreenState(
-            isDarkTheme = true
-        ), onDrawerClick = {}, intentReducer = {})
+        HomeScreen(
+            state = HomeScreenState(
+                isDarkTheme = true
+            ),
+            onDrawerClick = {},
+            intentReducer = {}
+        )
     }
 }

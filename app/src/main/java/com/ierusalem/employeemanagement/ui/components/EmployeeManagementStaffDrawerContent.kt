@@ -21,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -42,11 +41,10 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun EmployeeManagementDrawerContent(
+fun EmployeeManagementStaffDrawerContent(
     onProfileClicked: (String) -> Unit,
     onSettingsClicked: () -> Unit,
     onLogoutClicked: () -> Unit,
-    onPrivateJobClicked: () -> Unit,
     username: String,
     imageUrl: String,
     email: String
@@ -62,9 +60,6 @@ fun EmployeeManagementDrawerContent(
         ProfileItem(
             onProfileClicked = { onProfileClicked("user_id") }
         )
-        PrivateJobsItem {
-            onPrivateJobClicked()
-        }
         SettingsItem {
             onSettingsClicked()
         }
@@ -157,35 +152,6 @@ private fun ProfileItem(
 }
 
 @Composable
-private fun PrivateJobsItem(
-    onPrivateJobClicked: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .height(56.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp)
-            .clip(CircleShape)
-            .clickable(onClick = onPrivateJobClicked),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            modifier = Modifier.padding(start = 8.dp),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
-            painter = painterResource(id = R.drawable.work),
-            contentScale = ContentScale.Crop,
-            contentDescription = null
-        )
-        Text(
-            text = stringResource(R.string.private_jobs),
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(start = 12.dp)
-        )
-    }
-}
-
-@Composable
 private fun LogoutItem(
     onLogoutClicked: () -> Unit,
 ) {
@@ -244,27 +210,18 @@ private fun SettingsItem(
 }
 
 @Composable
-fun DividerItem(modifier: Modifier = Modifier) {
-    HorizontalDivider(
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-    )
-}
-
-@Composable
 @Preview
-fun DrawerPreview() {
+fun StaffDrawerPreview() {
     EmployeeManagementTheme {
         Surface {
             Column {
-                EmployeeManagementDrawerContent(
+                EmployeeManagementStaffDrawerContent(
                     username = "Hasan Anorov",
                     imageUrl = "",
                     email = "anorovhasan@gmail.com",
                     onProfileClicked = {},
                     onLogoutClicked = {},
-                    onSettingsClicked = {},
-                    onPrivateJobClicked = {},
+                    onSettingsClicked = {}
                 )
             }
         }
@@ -273,18 +230,17 @@ fun DrawerPreview() {
 
 @Composable
 @Preview
-fun DrawerPreviewDark() {
+fun StaffDrawerPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         Surface {
             Column {
-                EmployeeManagementDrawerContent(
+                EmployeeManagementStaffDrawerContent(
                     username = "Hasan Anorov",
                     imageUrl = "",
                     email = "anorovhasan@gmail.com",
                     onProfileClicked = {},
                     onLogoutClicked = {},
-                    onSettingsClicked = {},
-                    onPrivateJobClicked = {},
+                    onSettingsClicked = {}
                 )
             }
         }

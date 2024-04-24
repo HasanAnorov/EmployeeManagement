@@ -74,4 +74,5 @@
     <string name="additional_files">Qo\'shimcha fayllar:</string>
     <string name="new_message">Yangi xabar</string>
     <string name="create_a_job">Vazifa yaratish</string>
+    <string name="private_jobs">Sizga yuborilgan topshiriqlar</string>
 </resources>

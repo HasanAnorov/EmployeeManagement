@@ -19,7 +19,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.staff_home.domain.StaffHomeViewModel
-import com.ierusalem.employeemanagement.ui.components.EmployeeManagementDrawer
+import com.ierusalem.employeemanagement.ui.components.EmployeeManagementStaffDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
@@ -75,7 +75,7 @@ class StaffHomeFragment : Fragment() {
                 EmployeeManagementTheme(
                     darkTheme = state.isDarkTheme,
                     content = {
-                        EmployeeManagementDrawer(
+                        EmployeeManagementStaffDrawer(
                             username = "${state.username} ${state.lastName}",
                             imageUrl = state.imageUrl,
                             email = state.email,

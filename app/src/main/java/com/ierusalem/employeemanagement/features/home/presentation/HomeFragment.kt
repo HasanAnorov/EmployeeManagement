@@ -59,13 +59,13 @@ class HomeFragment : Fragment() {
 
     private fun requestNotificationPermission() {
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val hasPermission = ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
 
-            if(!hasPermission) {
+            if (!hasPermission) {
                 ActivityCompat.requestPermissions(
                     requireActivity(),
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val isFromCommand = arguments?.getBoolean(Constants.COMPOSE_COMMAND) ?: false
-        if(isFromCommand){
+        if (isFromCommand) {
             viewModel.changeSelectedTabIndex(5)
             //one request is enough, backend dev said other automatically will be refreshed
             viewModel.getCommands("yuborildi")
@@ -138,6 +138,12 @@ class HomeFragment : Fragment() {
                                     viewModel.handleClickIntents(HomeScreenClickIntents.LogoutClick)
                                 }
                             },
+                            onPrivateJobsClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_homeFragment_to_privateJobsFragment)
+                                }
+                            },
                             content = {
                                 HomeScreen(
                                     state = state,
@@ -171,9 +177,15 @@ class HomeFragment : Fragment() {
                 val bundle = bundleOf(Constants.USERS_TO_COMMAND to listString)
                 findNavController().navigate(R.id.action_homeFragment_to_composeFragment, bundle)
             }
-            HomeScreenNavigation.InvalidResponse ->{
-                Toast.makeText(requireContext(), resources.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+
+            HomeScreenNavigation.InvalidResponse -> {
+                Toast.makeText(
+                    requireContext(),
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             is HomeScreenNavigation.OnItemClick -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
