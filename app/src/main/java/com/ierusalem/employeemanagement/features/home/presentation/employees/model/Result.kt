@@ -21,5 +21,4 @@ data class Result(
     val username: String,
     @SerializedName("xonasi")
     val xonasi: String?,
-
 )

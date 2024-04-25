@@ -109,6 +109,7 @@ fun WorkItem(
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,
+            color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.titleSmall,
             overflow = TextOverflow.Ellipsis
         )
@@ -132,6 +133,7 @@ fun WorkItem(
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,
+            color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.titleSmall,
             overflow = TextOverflow.Ellipsis
         )

@@ -350,5 +350,8 @@ data class HomeScreenState(
     val commandsNotDone: List<Result> = listOf(),
     val commandsLateDone: List<Result> = listOf(),
     val employees: Flow<PagingData<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result>> = flowOf(),
-    val employeesToSendCommand : List<String> = listOf()
+    val employeesToSendCommand : List<String> = listOf(),
+
+    val searchText: String = "",
+    val isSearching: Boolean = false
 )

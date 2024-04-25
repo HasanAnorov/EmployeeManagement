@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.home.data
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ierusalem.employeemanagement.features.home.domain.HomeRepository
@@ -19,14 +20,15 @@ class EmployeesDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
         return try {
             onRefresh(true)
+            Log.d("ahi3646", "load: ${params.key} ")
             val page = params.key ?: 1
-            val response = repo.getEmployees(page, 15)
+            val response = repo.getEmployees(page, 9)
             if(response.isSuccessful){
                 onRefresh(false)
                 LoadResult.Page(
                     data = response.body()!!.results,
                     prevKey = null,
-                    nextKey = if (response.body()!!.results.isNotEmpty()) response.body()!!.totalPages + 1 else null
+                    nextKey = if (response.body()!!.results.isNotEmpty()) page+1  else null
                 )
             }else{
                 onRefresh(false)

@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.private_jobs.domain.PrivateJobsViewModel
+import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,12 +29,14 @@ class PrivateJobsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val state by viewModel.state.collectAsStateWithLifecycle()
-                PrivateJobsScreen(
-                    state = state,
-                    intentReducer = {
-                        viewModel.handleEvents(it)
-                    }
-                )
+                EmployeeManagementTheme {
+                    PrivateJobsScreen(
+                        state = state,
+                        intentReducer = {
+                            viewModel.handleEvents(it)
+                        }
+                    )
+                }
             }
         }
     }
