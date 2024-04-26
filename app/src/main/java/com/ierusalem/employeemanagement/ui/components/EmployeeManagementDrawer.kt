@@ -6,18 +6,18 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenState
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun EmployeeManagementDrawer(
-    username: String,
-    imageUrl: String,
-    email: String,
+    state: HomeScreenState,
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     onProfileClicked: (String) -> Unit,
     onSettingsClicked: () -> Unit,
     onLogoutClicked: () -> Unit,
     onPrivateJobsClicked: () -> Unit,
+    onStatisticsClicked: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     EmployeeManagementTheme {
@@ -26,13 +26,12 @@ fun EmployeeManagementDrawer(
             drawerContent = {
                 ModalDrawerSheet {
                     EmployeeManagementDrawerContent(
-                        username = username,
-                        imageUrl = imageUrl,
-                        email = email,
+                        state = state,
                         onProfileClicked = onProfileClicked,
                         onSettingsClicked = onSettingsClicked,
                         onLogoutClicked = onLogoutClicked,
                         onPrivateJobClicked = onPrivateJobsClicked,
+                        onStatisticsClicked = onStatisticsClicked
                     )
                 }
             },

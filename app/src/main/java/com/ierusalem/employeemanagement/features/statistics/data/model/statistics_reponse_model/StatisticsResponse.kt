@@ -1,15 +1,15 @@
-package com.ierusalem.employeemanagement.features.home.presentation.employees.model
+package com.ierusalem.employeemanagement.features.statistics.data.model.statistics_reponse_model
 
 
 import com.google.gson.annotations.SerializedName
 
-data class EmployeesResponse(
+data class StatisticsResponse(
     @SerializedName("count")
     val count: Int,
     @SerializedName("links")
     val links: Links,
     @SerializedName("results")
-    val results: List<EmployeeModel>,
+    val results: List<Result>,
     @SerializedName("total_pages")
     val totalPages: Int
 )

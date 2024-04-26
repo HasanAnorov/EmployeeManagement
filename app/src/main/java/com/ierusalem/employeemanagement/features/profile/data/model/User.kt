@@ -21,5 +21,8 @@ data class User(
     @SerializedName("username")
     val username: String,
     @SerializedName("xonasi")
-    val xonasi: String?
+    val xonasi: String?,
+
+    @SerializedName("superuser")
+    val isSuperUser: Boolean
 )

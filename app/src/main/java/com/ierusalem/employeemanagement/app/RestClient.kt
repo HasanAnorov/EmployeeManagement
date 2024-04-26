@@ -11,6 +11,7 @@ import com.ierusalem.employeemanagement.features.home.data.HomeService
 import com.ierusalem.employeemanagement.features.private_jobs.data.PrivateJobService
 import com.ierusalem.employeemanagement.features.profile.data.ProfileService
 import com.ierusalem.employeemanagement.features.staff_home.data.StaffHomeService
+import com.ierusalem.employeemanagement.features.statistics.data.StatisticsService
 import com.ierusalem.employeemanagement.features.work_description.data.WorkDescriptionService
 import com.ierusalem.employeemanagement.utils.Constants
 import okhttp3.OkHttpClient
@@ -53,6 +54,10 @@ class RestClient(context: Context) {
 
     val privateJobsService: PrivateJobService by lazy {
         retrofit.create(PrivateJobService::class.java)
+    }
+
+    val statisticsService: StatisticsService by lazy {
+        retrofit.create(StatisticsService::class.java)
     }
 
     val workDescriptionService: WorkDescriptionService by lazy {

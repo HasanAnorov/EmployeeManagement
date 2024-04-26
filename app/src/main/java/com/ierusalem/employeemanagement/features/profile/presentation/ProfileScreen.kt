@@ -356,7 +356,8 @@ fun ConvPreviewLandscapeMeDefault() {
                         unvoni = "Senior Dev",
                         xonasi = "240",
                         id = 1,
-                        isStaff = true
+                        isStaff = true,
+                        isSuperUser = false
                     )
                 )
             )
@@ -384,7 +385,8 @@ fun ConvPreviewPortraitMeDefault() {
                         unvoni = "Senior Dev",
                         xonasi = "240",
                         id = 1,
-                        isStaff = true
+                        isStaff = true,
+                        isSuperUser = false
                     )
                 )
             )

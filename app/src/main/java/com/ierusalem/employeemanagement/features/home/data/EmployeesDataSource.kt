@@ -4,20 +4,20 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ierusalem.employeemanagement.features.home.domain.HomeRepository
-import com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result
+import com.ierusalem.employeemanagement.features.home.presentation.employees.model.EmployeeModel
 
 class EmployeesDataSource(
     private val repo: HomeRepository,
     val onRefresh: (Boolean) -> Unit
-) : PagingSource<Int, Result>() {
-    override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
+) : PagingSource<Int, EmployeeModel>() {
+    override fun getRefreshKey(state: PagingState<Int, EmployeeModel>): Int? {
         return state.anchorPosition?.let { position ->
             val page = state.closestPageToPosition(position)
             page?.prevKey?.minus(1) ?: page?.prevKey?.plus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EmployeeModel> {
         return try {
             onRefresh(true)
             Log.d("ahi3646", "load: ${params.key} ")

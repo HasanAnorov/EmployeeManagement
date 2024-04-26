@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenClickIntents
-import com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result
+import com.ierusalem.employeemanagement.features.home.presentation.employees.model.EmployeeModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
@@ -37,7 +37,7 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun EmployeeItem(
     modifier: Modifier = Modifier,
-    employee: Result,
+    employee: EmployeeModel,
     isSelected: Boolean,
     intentReducer: (HomeScreenClickIntents) -> Unit
 ) {
@@ -162,7 +162,7 @@ fun EmployeeItemPreview() {
         EmployeeItem(
             intentReducer = {},
             isSelected = false,
-            employee = Result(
+            employee = EmployeeModel(
                 email = "anorov@gmail.com",
                 username = "Hasan",
                 lastName = "Anorov",
@@ -184,7 +184,7 @@ fun EmployeeItemPreviewDark() {
         EmployeeItem(
             intentReducer = {},
             isSelected = true,
-            employee = Result(
+            employee = EmployeeModel(
                 email = "anorov@gmail.com",
                 username = "Hasan",
                 lastName = "Anorov",

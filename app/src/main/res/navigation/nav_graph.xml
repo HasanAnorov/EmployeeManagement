@@ -82,6 +82,14 @@
             app:popExitAnim="@anim/slide_out"
             app:destination="@id/privateJobsFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_statisticsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:destination="@id/statisticsFragment" />
+
     </fragment>
 
     <fragment
@@ -193,5 +201,9 @@
             app:popExitAnim="@anim/slide_out"
             app:destination="@id/workDescriptionFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.ierusalem.employeemanagement.features.statistics.presentation.StatisticsFragment"
+        android:label="StatisticsFragment" />
 
 </navigation>

@@ -11,6 +11,7 @@ import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.home.data.EmployeesDataSource
 import com.ierusalem.employeemanagement.features.home.domain.HomeRepository
 import com.ierusalem.employeemanagement.features.home.presentation.commands.model.commands_response.Result
+import com.ierusalem.employeemanagement.features.home.presentation.employees.model.EmployeeModel
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
@@ -81,6 +82,11 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                     if (response.isSuccessful) {
                         _state.update {
                             it.copy(
+                                isSuperUser = response.body()!!.user.isSuperUser
+                            )
+                        }
+                        _state.update {
+                            it.copy(
                                 username = response.body()!!.user.username
                             )
                         }
@@ -102,6 +108,11 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                         }
                     } else {
                         val user = repo.getUserFromLocal()
+                        _state.update {
+                            it.copy(
+                                isSuperUser = user.isSuperUser
+                            )
+                        }
                         _state.update {
                             it.copy(
                                 username = user.username
@@ -127,6 +138,11 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
             }
         } catch (e: Exception) {
             val user = repo.getUserFromLocal()
+            _state.update {
+                it.copy(
+                    isSuperUser = user.isSuperUser
+                )
+            }
             _state.update {
                 it.copy(
                     username = user.username
@@ -342,6 +358,9 @@ data class HomeScreenState(
     val lastName: String = "",
     val email: String = "",
     val imageUrl: String = "",
+
+    val isSuperUser: Boolean = false,
+
     val isLoading: Boolean = false,
     val isEmployeesLoading: Boolean = false,
     val commandsSent: List<Result> = listOf(),
@@ -349,7 +368,7 @@ data class HomeScreenState(
     val commandsDone: List<Result> = listOf(),
     val commandsNotDone: List<Result> = listOf(),
     val commandsLateDone: List<Result> = listOf(),
-    val employees: Flow<PagingData<com.ierusalem.employeemanagement.features.home.presentation.employees.model.Result>> = flowOf(),
+    val employees: Flow<PagingData<EmployeeModel>> = flowOf(),
     val employeesToSendCommand : List<String> = listOf(),
 
     val searchText: String = "",

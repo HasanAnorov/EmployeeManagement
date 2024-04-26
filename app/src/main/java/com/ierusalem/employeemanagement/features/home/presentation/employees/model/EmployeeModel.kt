@@ -2,7 +2,7 @@ package com.ierusalem.employeemanagement.features.home.presentation.employees.mo
 
 import com.google.gson.annotations.SerializedName
 
-data class Result(
+data class EmployeeModel(
     @SerializedName("email")
     val email: String,
     @SerializedName("id")

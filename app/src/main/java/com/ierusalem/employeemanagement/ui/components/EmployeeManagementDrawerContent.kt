@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenState
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
@@ -47,9 +48,8 @@ fun EmployeeManagementDrawerContent(
     onSettingsClicked: () -> Unit,
     onLogoutClicked: () -> Unit,
     onPrivateJobClicked: () -> Unit,
-    username: String,
-    imageUrl: String,
-    email: String
+    onStatisticsClicked: () -> Unit,
+    state: HomeScreenState
 ) {
     Column(
         modifier = Modifier
@@ -57,13 +57,22 @@ fun EmployeeManagementDrawerContent(
             .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
-        DrawerHeader(username = username, imageUrl = imageUrl, email = email)
+        DrawerHeader(
+            username = "${state.username} ${state.lastName}",
+            imageUrl = state.imageUrl,
+            email = state.email
+        )
         DividerItem()
         ProfileItem(
             onProfileClicked = { onProfileClicked("user_id") }
         )
         PrivateJobsItem {
             onPrivateJobClicked()
+        }
+        if (state.isSuperUser) {
+            StatisticsItem {
+                onStatisticsClicked()
+            }
         }
         SettingsItem {
             onSettingsClicked()
@@ -186,6 +195,35 @@ private fun PrivateJobsItem(
 }
 
 @Composable
+private fun StatisticsItem(
+    onStatisticsClicked: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .height(56.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .clip(CircleShape)
+            .clickable(onClick = onStatisticsClicked),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier.padding(start = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+            painter = painterResource(id = R.drawable.statistic),
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            text = stringResource(R.string.statistics),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(start = 12.dp)
+        )
+    }
+}
+
+@Composable
 private fun LogoutItem(
     onLogoutClicked: () -> Unit,
 ) {
@@ -258,13 +296,12 @@ fun DrawerPreview() {
         Surface {
             Column {
                 EmployeeManagementDrawerContent(
-                    username = "Hasan Anorov",
-                    imageUrl = "",
-                    email = "anorovhasan@gmail.com",
+                    state = HomeScreenState(true),
                     onProfileClicked = {},
                     onLogoutClicked = {},
                     onSettingsClicked = {},
                     onPrivateJobClicked = {},
+                    onStatisticsClicked = {}
                 )
             }
         }
@@ -278,13 +315,12 @@ fun DrawerPreviewDark() {
         Surface {
             Column {
                 EmployeeManagementDrawerContent(
-                    username = "Hasan Anorov",
-                    imageUrl = "",
-                    email = "anorovhasan@gmail.com",
+                    state = HomeScreenState(true),
                     onProfileClicked = {},
                     onLogoutClicked = {},
                     onSettingsClicked = {},
                     onPrivateJobClicked = {},
+                    onStatisticsClicked = {}
                 )
             }
         }

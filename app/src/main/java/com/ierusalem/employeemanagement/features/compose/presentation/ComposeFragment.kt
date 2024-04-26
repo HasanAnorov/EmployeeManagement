@@ -48,11 +48,6 @@ class ComposeFragment : Fragment() {
             data.data?.let { returnUri ->
                 contentResolver?.query(returnUri, null, null, null, null)
             }?.use { cursor ->
-                /*
-                 * Get the column indexes of the data in the Cursor,
-                 * move to the first row in the Cursor, get the data,
-                 * and display it.
-                 */
                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
                 cursor.moveToFirst()
@@ -61,8 +56,6 @@ class ComposeFragment : Fragment() {
             }
 
             if (fileSize != null) {
-//                Nurbek said, limit has been removed for server
-//                if (fileSize!! < Constants.MAX_FILE_SIZE) {
                 val inputStream =
                     requireContext().contentResolver.openInputStream(data.data!!)
 
@@ -87,17 +80,9 @@ class ComposeFragment : Fragment() {
                 inputStream?.copyTo(fileOutputStream)
                 fileOutputStream.close()
                 viewModel.onFilesChanged(file)
-//                } else {
-//                    Toast.makeText(
-//                        requireContext(),
-//                        getString(R.string.please_choose_a_file_under_20_mb),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
             }
         }
         if (result.resultCode == Activity.RESULT_CANCELED) {
-            // Write your code if there's no result
             Log.d("ahi3646", "onActivityResult: RESULT CANCELED ")
         }
     }

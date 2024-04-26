@@ -74,4 +74,5 @@
     <string name="new_message">New message</string>
     <string name="create_a_job">Create a task</string>
     <string name="private_jobs">Task sent to you</string>
+    <string name="statistics">Statistics</string>
 </resources>

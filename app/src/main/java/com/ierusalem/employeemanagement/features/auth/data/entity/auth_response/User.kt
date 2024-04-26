@@ -16,4 +16,7 @@ data class User(
     val username: String,
     @SerializedName("is_staff")
     val isStaff: Boolean,
+
+    @SerializedName("superuser")
+    val isSuperUser: Boolean
 )

@@ -116,14 +116,35 @@ class HomeFragment : Fragment() {
                     darkTheme = state.isDarkTheme,
                     content = {
                         EmployeeManagementDrawer(
-                            username = "${state.username} ${state.lastName}",
-                            imageUrl = state.imageUrl,
-                            email = state.email,
+                            state = state,
                             drawerState = drawerState,
+                            content = {
+                                HomeScreen(
+                                    state = state,
+                                    onDrawerClick = {
+                                        viewModel.openDrawer()
+                                    },
+                                    intentReducer = {
+                                        viewModel.handleClickIntents(it)
+                                    }
+                                )
+                            },
                             onProfileClicked = {
                                 scope.launch {
                                     drawerState.close()
                                     findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+                                }
+                            },
+                            onPrivateJobsClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_homeFragment_to_privateJobsFragment)
+                                }
+                            },
+                            onStatisticsClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_homeFragment_to_statisticsFragment)
                                 }
                             },
                             onSettingsClicked = {
@@ -137,23 +158,6 @@ class HomeFragment : Fragment() {
                                     drawerState.close()
                                     viewModel.handleClickIntents(HomeScreenClickIntents.LogoutClick)
                                 }
-                            },
-                            onPrivateJobsClicked = {
-                                scope.launch {
-                                    drawerState.close()
-                                    findNavController().navigate(R.id.action_homeFragment_to_privateJobsFragment)
-                                }
-                            },
-                            content = {
-                                HomeScreen(
-                                    state = state,
-                                    onDrawerClick = {
-                                        viewModel.openDrawer()
-                                    },
-                                    intentReducer = {
-                                        viewModel.handleClickIntents(it)
-                                    }
-                                )
                             }
                         )
                     }
