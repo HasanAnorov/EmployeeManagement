@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ierusalem.employeemanagement.features.statistics.data.StatisticsRepository
+import com.ierusalem.employeemanagement.features.statistics.presentation.StatisticsScreenEvents
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
@@ -26,6 +27,17 @@ class StatisticsViewModel(private val repo: StatisticsRepository): ViewModel(),
 
     init {
         getStatistics()
+    }
+
+    fun handleEvents(event: StatisticsScreenEvents){
+        when(event){
+            StatisticsScreenEvents.NavIconClick -> {
+                emitNavigation(StatisticsScreenNavigation.NavIconClick)
+            }
+            StatisticsScreenEvents.DownloadStatistics -> {
+                emitNavigation(StatisticsScreenNavigation.DownloadStatistics)
+            }
+        }
     }
 
     private fun getStatistics(){

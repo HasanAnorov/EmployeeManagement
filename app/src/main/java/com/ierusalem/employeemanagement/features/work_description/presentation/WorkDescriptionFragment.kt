@@ -136,9 +136,6 @@ class WorkDescriptionFragment : Fragment() {
 
             WorkDescriptionNavigation.NavIconClick -> {
                 findNavController().popBackStack()
-//                val bundle = Bundle()
-//                bundle.putBoolean(Constants.FROM_WORK_DESCRIPTION, true)
-//                findNavController().navigate(R.id.action_workDescriptionFragment_to_staffHomeFragment, bundle)
             }
         }
     }
