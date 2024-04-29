@@ -72,16 +72,16 @@ fun StatisticsScreen(
         Row(
             modifier = Modifier
                 .horizontalScroll(horizontalScrollState)
-                .padding(start = 16.dp),
+                .padding(start = 8.dp),
         ) {
             Column(
                 modifier = Modifier.padding(start = 4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text ="Employees",
+                    text = stringResource(id = R.string.employees),
                     modifier = Modifier
-                        .padding(vertical = 6.dp)
+                        .padding(top = 6.dp)
                         .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -106,9 +106,9 @@ fun StatisticsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text ="Sent",
+                    text = stringResource(id = R.string.commands_sent),
                     modifier = Modifier
-                        .padding(vertical = 6.dp)
+                        .padding(top = 6.dp)
                         .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -133,9 +133,9 @@ fun StatisticsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text ="Received",
+                    text = stringResource(id = R.string.commands_received),
                     modifier = Modifier
-                        .padding(vertical = 6.dp)
+                        .padding(top = 6.dp)
                         .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -160,9 +160,9 @@ fun StatisticsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text ="Done",
+                    text = stringResource(id = R.string.commands_done),
                     modifier = Modifier
-                        .padding(vertical = 6.dp)
+                        .padding(top = 6.dp)
                         .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -187,9 +187,9 @@ fun StatisticsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text ="Late Done",
+                    text = stringResource(id = R.string.late_done),
                     modifier = Modifier
-                        .padding(vertical = 6.dp)
+                        .padding(top = 6.dp)
                         .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -214,9 +214,9 @@ fun StatisticsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text ="Not done",
+                    text = stringResource(id = R.string.commands_not_done),
                     modifier = Modifier
-                        .padding(vertical = 6.dp)
+                        .padding(top = 6.dp)
                         .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,

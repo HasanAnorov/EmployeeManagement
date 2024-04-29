@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.features.compose.presentation.AlertDialogExample
 import com.ierusalem.employeemanagement.features.compose.presentation.FileItem
 import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionScreenState
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
@@ -55,6 +56,8 @@ import com.ierusalem.employeemanagement.utils.Resource
 @Composable
 fun WorkDescriptionScreen(
     state: WorkDescriptionScreenState,
+    dismissDialog:() -> Unit,
+    gotoStorageSetting: () -> Unit,
     intentReducer: (WorkDescriptionScreenEvents) -> Unit,
 ) {
     when (state.workItem) {
@@ -62,6 +65,14 @@ fun WorkDescriptionScreen(
         is Resource.Success -> {
             val scrollState = rememberScrollState()
             val work = state.workItem.data!!.results[0]
+            if(state.showAlertDialog){
+                AlertDialogExample(
+                    onDismissRequest = { dismissDialog() },
+                    onConfirmation = { gotoStorageSetting() },
+                    dialogTitle = stringResource(R.string.ma_lumotlardan_foydalanish_uchun_ruxsat_bering),
+                    dialogText = stringResource(R.string.allow_the_app_to_use_device_data),
+                )
+            }
             Column(
                 modifier = Modifier
                     .navigationBarsPadding()
@@ -379,7 +390,9 @@ private fun WorkDescriptionScreenPreview() {
     EmployeeManagementTheme {
         WorkDescriptionScreen(
             state = WorkDescriptionScreenState(),
-            intentReducer = {}
+            intentReducer = {},
+            dismissDialog = {},
+            gotoStorageSetting = {}
         )
     }
 }
@@ -390,7 +403,9 @@ private fun WorkDescriptionScreenPreviewDark() {
     EmployeeManagementTheme(darkTheme = true) {
         WorkDescriptionScreen(
             state = WorkDescriptionScreenState(),
-            intentReducer = {}
+            intentReducer = {},
+            dismissDialog = {},
+            gotoStorageSetting = {}
         )
     }
 }

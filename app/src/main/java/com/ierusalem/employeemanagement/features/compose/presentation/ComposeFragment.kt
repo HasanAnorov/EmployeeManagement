@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.OpenableColumns
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -25,7 +29,9 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 import java.io.FileOutputStream
+
 
 class ComposeFragment : Fragment() {
 
@@ -38,10 +44,6 @@ class ComposeFragment : Fragment() {
             val contentResolver = activity?.contentResolver
             val data: Intent = result.data!!
 
-
-            val mimeType: String? = data.data?.let { returnUri ->
-                contentResolver?.getType(returnUri)
-            }
             var fileName = "file"
             var fileSize: Long? = null
 
@@ -56,26 +58,11 @@ class ComposeFragment : Fragment() {
             }
 
             if (fileSize != null) {
-                val inputStream =
-                    requireContext().contentResolver.openInputStream(data.data!!)
+                val inputStream = requireContext().contentResolver.openInputStream(data.data!!)
+                val filePathToSave =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
-                val suffix: String = when (mimeType) {
-                    "application/pdf" -> ".pdf"
-                    "application/json" -> ".json"
-                    "text/plain" -> ".text"
-                    "image/jpeg", "image/pjpeg" -> ".jpeg"
-                    "video/mp4" -> ".mp4"
-                    "application/vnd.android.package-archive" -> ".apk"
-                    "image/svg+xml" -> ".svg"
-                    "image/png" -> ".png"
-                    "application/msword" -> ".doc"
-                    else -> ".text"
-                }
-                val file = java.io.File.createTempFile(
-                    fileName,
-                    suffix,
-                    requireActivity().cacheDir
-                )
+                val file = File(filePathToSave, fileName)
                 val fileOutputStream = FileOutputStream(file)
                 inputStream?.copyTo(fileOutputStream)
                 fileOutputStream.close()
@@ -87,6 +74,7 @@ class ComposeFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -102,7 +90,13 @@ class ComposeFragment : Fragment() {
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 EmployeeManagementTheme {
                     ComposeScreen(
-                        onAttachFileClick = { showFileChooser() },
+                        onAttachFileClick = {
+                            if (Environment.isExternalStorageManager()) {
+                                showFileChooser()
+                            } else {
+                                viewModel.showAlertDialog(true)
+                            }
+                        },
                         onNavIconClicked = { navigateToHomeWithRefresh() },
                         onTextChanged = { viewModel.onTextFormChanged(it) },
                         onSubmitClicked = {
@@ -115,6 +109,15 @@ class ComposeFragment : Fragment() {
                         onYearChanged = { viewModel.onYearChanged(it) },
                         onMonthChanged = { viewModel.onMonthChanged(it) },
                         onDayChanged = { viewModel.onDayChanged(it) },
+                        dismissDialog = { viewModel.showAlertDialog(false) },
+                        gotoStorageSetting = {
+                            if (Build.VERSION.SDK_INT >= 30) {
+                                val getPermission = Intent()
+                                getPermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                                startActivity(getPermission)
+                            }
+                            viewModel.showAlertDialog(false)
+                        },
                         state = state
                     )
                 }
@@ -134,6 +137,8 @@ class ComposeFragment : Fragment() {
             .setAction(Intent.ACTION_GET_CONTENT)
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
         intent.flags = FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_WRITE_URI_PERMISSION
         try {
             getFilesLauncher.launch(intent)

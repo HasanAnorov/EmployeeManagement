@@ -76,4 +76,6 @@
     <string name="create_a_job">Vazifa yaratish</string>
     <string name="private_jobs">Sizga yuborilgan topshiriqlar</string>
     <string name="statistics">Statistika</string>
+    <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Ma\'lumotlardan foydalanish uchun ruxsat bering!</string>
+    <string name="allow_the_app_to_use_device_data">Ilovaga qurilma maʼlumotlaridan foydalanishiga ruxsat bering!</string>
 </resources>

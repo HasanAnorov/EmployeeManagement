@@ -27,6 +27,14 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
     )
     val state = _state.asStateFlow()
 
+    fun showAlertDialog(isShown: Boolean){
+        _state.update {
+            it.copy(
+                showAlertDialog = isShown
+            )
+        }
+    }
+
     fun onTextFormChanged(textForm: String) {
         _state.update {
             it.copy(
@@ -161,6 +169,7 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
 }
 
 data class ComposeScreenState(
+    val showAlertDialog: Boolean = false,
     val remoteToken: String = "",
     val textForm: String = "",
     val yearForm: String = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR)

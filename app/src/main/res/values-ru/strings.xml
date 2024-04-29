@@ -76,4 +76,6 @@
     <string name="create_a_job">Создать задачу</string>
     <string name="private_jobs">Вам отправлены задачи</string>
     <string name="statistics">Статистика</string>
+    <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Дайте разрешение на использование данных!</string>
+    <string name="allow_the_app_to_use_device_data">Разрешите приложению использовать данные устройства!</string>
 </resources>

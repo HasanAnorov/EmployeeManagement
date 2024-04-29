@@ -35,6 +35,13 @@ class WorkDescriptionViewModel(
         emitNavigation(WorkDescriptionNavigation.InvalidResponse)
     }
 
+    fun showAlertDialog(isShown: Boolean){
+        _state.update {
+            it.copy(
+                showAlertDialog = isShown
+            )
+        }
+    }
 
     fun handleEvents(event: WorkDescriptionScreenEvents){
         when(event){
@@ -179,6 +186,7 @@ class WorkDescriptionViewModel(
 
 @Immutable
 data class WorkDescriptionScreenState(
+    val showAlertDialog: Boolean = false,
     val workItem: Resource<WorkItem> = Resource.Loading(),
     val isFromHome: Boolean = false,
     val textForm: String = "",

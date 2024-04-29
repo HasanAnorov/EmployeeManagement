@@ -3,8 +3,11 @@ package com.ierusalem.employeemanagement.features.work_description.presentation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.OpenableColumns
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -24,6 +28,7 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 import java.io.FileOutputStream
 
 class WorkDescriptionFragment : Fragment() {
@@ -34,15 +39,13 @@ class WorkDescriptionFragment : Fragment() {
         super.onAttach(context)
         val workId = arguments?.getString(Constants.WORK_DESCRIPTION_KEY)
         val isFromHome = arguments?.getBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME) ?: false
-        if (isFromHome){
+        if (isFromHome) {
             viewModel.isFromHome(true)
         }
-        if (workId!= null && !isFromHome){
-            Log.d("ahi3646", "onAttach: user ")
+        if (workId != null && !isFromHome) {
             viewModel.getMessageById(workId)
         }
-        if(isFromHome && workId != null){
-            Log.d("ahi3646", "onAttach: admin ")
+        if (isFromHome && workId != null) {
             viewModel.getMessageByIdAdmin(workId)
         }
         if (workId == null) {
@@ -67,7 +70,16 @@ class WorkDescriptionFragment : Fragment() {
                         state = state,
                         intentReducer = {
                             viewModel.handleEvents(it)
-                        }
+                        },
+                        dismissDialog = { viewModel.showAlertDialog(false) },
+                        gotoStorageSetting = {
+                            if (Build.VERSION.SDK_INT >= 30) {
+                                val getPermission = Intent()
+                                getPermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                                startActivity(getPermission)
+                            }
+                            viewModel.showAlertDialog(false)
+                        },
                     )
                 }
             }
@@ -80,7 +92,8 @@ class WorkDescriptionFragment : Fragment() {
             .setAction(Intent.ACTION_GET_CONTENT)
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        intent.flags =
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         try {
             getFilesLauncher.launch(intent)
         } catch (e: Exception) {
@@ -92,6 +105,7 @@ class WorkDescriptionFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.screenNavigation.executeWithLifecycle(
@@ -100,11 +114,17 @@ class WorkDescriptionFragment : Fragment() {
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun executeNavigation(navigation: WorkDescriptionNavigation) {
         when (navigation) {
             WorkDescriptionNavigation.AttachFileClick -> {
-                showFileChooser()
+                if (Environment.isExternalStorageManager()) {
+                    showFileChooser()
+                } else {
+                    viewModel.showAlertDialog(true)
+                }
             }
+
             WorkDescriptionNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
@@ -121,7 +141,7 @@ class WorkDescriptionFragment : Fragment() {
                 ).show()
             }
 
-            is WorkDescriptionNavigation.DownloadFile ->{
+            is WorkDescriptionNavigation.DownloadFile -> {
                 val downloader = AndroidDownloader(requireContext())
                 downloader.downloadFile(navigation.url)
             }
@@ -147,9 +167,6 @@ class WorkDescriptionFragment : Fragment() {
             val contentResolver = activity?.contentResolver
             val data: Intent = it.data!!
 
-            val mimeType: String? = data.data?.let { returnUri ->
-                contentResolver?.getType(returnUri)
-            }
             var fileName = "file"
             var fileSize: Long? = null
 
@@ -169,38 +186,14 @@ class WorkDescriptionFragment : Fragment() {
             }
 
             if (fileSize != null) {
-                if (fileSize!! < Constants.MAX_FILE_SIZE) {
-                    val inputStream =
-                        requireContext().contentResolver.openInputStream(data.data!!)
-
-                    val suffix: String = when (mimeType) {
-                        "application/pdf" -> ".pdf"
-                        "application/json" -> ".json"
-                        "text/plain" -> ".text"
-                        "image/jpeg", "image/pjpeg" -> ".jpeg"
-                        "video/mp4" -> ".mp4"
-                        "application/vnd.android.package-archive" -> ".apk"
-                        "image/svg+xml" -> ".svg"
-                        "image/png" -> ".png"
-                        "application/msword" -> ".doc"
-                        else -> ".text"
-                    }
-                    val file = java.io.File.createTempFile(
-                        fileName,
-                        suffix,
-                        requireActivity().cacheDir
-                    )
-                    val fileOutputStream = FileOutputStream(file)
-                    inputStream?.copyTo(fileOutputStream)
-                    fileOutputStream.close()
-                    viewModel.onFilesChanged(file)
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.please_choose_a_file_under_20_mb),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                val inputStream = requireContext().contentResolver.openInputStream(data.data!!)
+                val filePathToSave =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                val file = File(filePathToSave, fileName)
+                val fileOutputStream = FileOutputStream(file)
+                inputStream?.copyTo(fileOutputStream)
+                fileOutputStream.close()
+                viewModel.onFilesChanged(file)
             }
         }
         if (it.resultCode == Activity.RESULT_CANCELED) {

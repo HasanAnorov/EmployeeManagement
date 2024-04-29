@@ -28,8 +28,6 @@ object Constants {
 
     const val STATISTICS_DOWNLOAD_URL = "https://hat.samduuf.uz/exel/"
 
-    const val MAX_FILE_SIZE:Long = 18874368
-
     const val TO_EDIT_PROFILE_USERNAME = "to_edit_profile_username"
     const val TO_EDIT_PROFILE_LASTNAME = "to_edit_profile_lastname"
     const val TO_EDIT_PROFILE_EMAIL = "to_edit_profile_email"

@@ -75,4 +75,6 @@
     <string name="create_a_job">Create a task</string>
     <string name="private_jobs">Task sent to you</string>
     <string name="statistics">Statistics</string>
+    <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Give permission to use the data!</string>
+    <string name="allow_the_app_to_use_device_data">Allow the app to use device data!</string>
 </resources>

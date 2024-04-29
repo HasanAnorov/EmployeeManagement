@@ -48,6 +48,8 @@ fun ComposeScreen(
     onYearChanged: (String) -> Unit,
     onMonthChanged: (String) -> Unit,
     onDayChanged: (String) -> Unit,
+    dismissDialog: () -> Unit,
+    gotoStorageSetting: () -> Unit,
     state: ComposeScreenState
 ) {
     val yearMaxChar = 4
@@ -63,6 +65,14 @@ fun ComposeScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+        if(state.showAlertDialog){
+            AlertDialogExample(
+                onDismissRequest = { dismissDialog() },
+                onConfirmation = { gotoStorageSetting() },
+                dialogTitle = stringResource(R.string.ma_lumotlardan_foydalanish_uchun_ruxsat_bering),
+                dialogText = stringResource(R.string.allow_the_app_to_use_device_data),
+            )
+        }
         CommonTopBar(
             containerColor = MaterialTheme.colorScheme.background,
             onNavIconPressed = { onNavIconClicked() },
@@ -308,6 +318,8 @@ fun ComposeScreenPreview() {
             onYearChanged = {},
             onMonthChanged = {},
             onDayChanged = {},
+            dismissDialog = {},
+            gotoStorageSetting = {},
             state = ComposeScreenState()
         )
     }
@@ -325,6 +337,8 @@ fun ComposeScreenPreviewDark() {
             onYearChanged = {},
             onMonthChanged = {},
             onDayChanged = {},
+            dismissDialog = {},
+            gotoStorageSetting = {},
             state = ComposeScreenState()
         )
     }
