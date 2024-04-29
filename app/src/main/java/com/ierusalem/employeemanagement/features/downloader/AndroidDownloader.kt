@@ -19,8 +19,8 @@ class AndroidDownloader(
     private val downloadManager = context.getSystemService(DownloadManager::class.java)
 
     override fun downloadFile(url: String): Long {
-        val uri  = Uri.parse(url)
-            val name = uri.lastPathSegment
+        val uri = Uri.parse(url)
+        val name = uri.lastPathSegment
         val mimeType = getMimeType(uri)
         Log.d("ahi3646", "downloadFile mimeType: $mimeType")
 

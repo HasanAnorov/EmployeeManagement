@@ -165,7 +165,10 @@ private fun UserInfoFields(
             userData.user.unvoni ?: stringResource(R.string.not_given)
         )
         ProfileProperty(stringResource(R.string.phone_number), userData.user.phoneNo)
-        ProfileProperty(stringResource(R.string.room), userData.user.xonasi ?: stringResource(id = R.string.not_given))
+        ProfileProperty(
+            stringResource(R.string.room),
+            userData.user.xonasi ?: stringResource(id = R.string.not_given)
+        )
         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
         var oldPassword by remember { mutableStateOf(TextFieldValue("")) }
         var newPassword by remember { mutableStateOf(TextFieldValue("")) }
@@ -184,14 +187,17 @@ private fun UserInfoFields(
             leadingIcon = Icons.Default.Lock,
             label = stringResource(R.string.new_password),
             value = newPassword.text,
-            onValueChanged = { newPassword = TextFieldValue(it) })
+            onValueChanged = { newPassword = TextFieldValue(it) }
+        )
         CommonJetHubLoginButton(
             onClick = {
-                if(oldPassword.text.length>2 && newPassword.text.length>2){
+                if (oldPassword.text.length > 2 && newPassword.text.length > 2) {
                     onPasswordChange(oldPassword.text, newPassword.text)
-                }else{
-                    Toast.makeText(context,
-                        context.getString(R.string.enter_at_leas_3_characters), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.enter_at_leas_3_characters), Toast.LENGTH_SHORT
+                    ).show()
                 }
             },
             textStyle = MaterialTheme.typography.labelSmall,

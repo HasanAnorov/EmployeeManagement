@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,7 +57,7 @@ fun StatisticsScreen(
             },
             actions = {
                 IconButton(
-                    onClick = { StatisticsScreenEvents.DownloadStatistics },
+                    onClick = { intentReducer(StatisticsScreenEvents.DownloadStatistics) },
                     content = {
                         Image(
                             painter = painterResource(id = R.drawable.download),
@@ -64,6 +67,7 @@ fun StatisticsScreen(
                 )
             }
         )
+        HorizontalDivider()
         val horizontalScrollState = rememberScrollState()
         Row(
             modifier = Modifier
@@ -71,24 +75,30 @@ fun StatisticsScreen(
                 .padding(start = 16.dp),
         ) {
             Column(
-                modifier = Modifier,
-                horizontalAlignment = Alignment.Start
+                modifier = Modifier.padding(start = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "F.I.SH",
-                    modifier = Modifier.padding(vertical = 6.dp),
+                    text ="Employees",
+                    modifier = Modifier
+                        .padding(vertical = 6.dp)
+                        .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.titleSmall
                 )
-                repeat(5){
-                    Text(
-                        text = "Hasan",
-                        modifier = Modifier.padding(vertical = 6.dp),
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleSmall
-                    )
+                LazyColumn {
+                    items(state.employees){
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(vertical = 6.dp)
+                                .padding(horizontal = 6.dp),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground.copy(0.9F),
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
                 }
             }
             Column(
@@ -96,20 +106,134 @@ fun StatisticsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Yuborilgan",
-                    modifier = Modifier.padding(vertical = 6.dp),
+                    text ="Sent",
+                    modifier = Modifier
+                        .padding(vertical = 6.dp)
+                        .padding(horizontal = 6.dp),
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.titleSmall
                 )
-                repeat(5){
-                    Text(
-                        text = "0",
-                        modifier = Modifier.padding(vertical = 6.dp),
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleSmall
-                    )
+                LazyColumn {
+                    items(state.sent){
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(vertical = 6.dp)
+                                .padding(horizontal = 6.dp),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground.copy(0.9F),
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
+                }
+            }
+            Column(
+                modifier = Modifier.padding(start = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text ="Received",
+                    modifier = Modifier
+                        .padding(vertical = 6.dp)
+                        .padding(horizontal = 6.dp),
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                LazyColumn {
+                    items(state.received){
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(vertical = 6.dp)
+                                .padding(horizontal = 6.dp),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground.copy(0.9F),
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
+                }
+            }
+            Column(
+                modifier = Modifier.padding(start = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text ="Done",
+                    modifier = Modifier
+                        .padding(vertical = 6.dp)
+                        .padding(horizontal = 6.dp),
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                LazyColumn {
+                    items(state.done){
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(vertical = 6.dp)
+                                .padding(horizontal = 6.dp),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground.copy(0.9F),
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
+                }
+            }
+            Column(
+                modifier = Modifier.padding(start = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text ="Late Done",
+                    modifier = Modifier
+                        .padding(vertical = 6.dp)
+                        .padding(horizontal = 6.dp),
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                LazyColumn {
+                    items(state.lateDone){
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(vertical = 6.dp)
+                                .padding(horizontal = 6.dp),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground.copy(0.9F),
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
+                }
+            }
+            Column(
+                modifier = Modifier.padding(start = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text ="Not done",
+                    modifier = Modifier
+                        .padding(vertical = 6.dp)
+                        .padding(horizontal = 6.dp),
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                LazyColumn {
+                    items(state.notDone){
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(vertical = 6.dp)
+                                .padding(horizontal = 6.dp),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground.copy(0.9F),
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
                 }
             }
         }

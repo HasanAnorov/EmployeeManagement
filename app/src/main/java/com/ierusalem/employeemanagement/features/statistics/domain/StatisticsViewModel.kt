@@ -11,10 +11,11 @@ import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.annotation.concurrent.Immutable
 
-class StatisticsViewModel(private val repo: StatisticsRepository): ViewModel(),
+class StatisticsViewModel(private val repo: StatisticsRepository) : ViewModel(),
     NavigationEventDelegate<StatisticsScreenNavigation> by DefaultNavigationEventDelegate() {
 
     private val handler = CoroutineExceptionHandler { _, exception ->
@@ -29,33 +30,74 @@ class StatisticsViewModel(private val repo: StatisticsRepository): ViewModel(),
         getStatistics()
     }
 
-    fun handleEvents(event: StatisticsScreenEvents){
-        when(event){
+    fun handleEvents(event: StatisticsScreenEvents) {
+        when (event) {
             StatisticsScreenEvents.NavIconClick -> {
                 emitNavigation(StatisticsScreenNavigation.NavIconClick)
             }
+
             StatisticsScreenEvents.DownloadStatistics -> {
                 emitNavigation(StatisticsScreenNavigation.DownloadStatistics)
             }
         }
     }
 
-    private fun getStatistics(){
+    private fun getStatistics() {
         viewModelScope.launch(handler) {
             repo.getStatistics(pageSize = 10000000).let {
-                if (it.isSuccessful){
+                if (it.isSuccessful) {
+
+                    val employees = mutableListOf("")
+                    it.body()!!.results.forEach { result ->
+                        employees.add("${result.username} ${result.lastName}")
+                    }
+                    val sent = mutableListOf("")
+                    it.body()!!.results.forEach { result ->
+                        sent.add(result.yuborildi.toString())
+                    }
+                    val received = mutableListOf("")
+                    it.body()!!.results.forEach { result ->
+                        received.add(result.qabulqildi.toString())
+                    }
+                    val done = mutableListOf("")
+                    it.body()!!.results.forEach { result ->
+                        done.add(result.bajarildi.toString())
+                    }
+                    val notDone = mutableListOf("")
+                    it.body()!!.results.forEach { result ->
+                        notDone.add(result.bajarilmadi.toString())
+                    }
+                    val lateDone = mutableListOf("")
+                    it.body()!!.results.forEach { result ->
+                        lateDone.add(result.kechikibbajarildi.toString())
+                    }
+                    _state.update { state ->
+                        state.copy(
+                            employees = employees,
+                            sent = sent,
+                            done = done,
+                            lateDone = lateDone,
+                            notDone = notDone,
+                            received = received
+                        )
+                    }
                     Log.d("ahi3646", "getStatistics: ${it.body()} ")
-                }else{
+                } else {
+                    emitNavigation(StatisticsScreenNavigation.Failure)
                     Log.d("ahi3646", "getStatistics: ${it.errorBody()} ")
                 }
             }
         }
     }
-
-
 }
 
 @Immutable
 data class StatisticsUiState(
-    val downloadUrl: String = ""
+    val downloadUrl: String = "",
+    val employees: List<String> = listOf(),
+    val sent: List<String> = listOf(),
+    val received: List<String> = listOf(),
+    val done: List<String> = listOf(),
+    val notDone: List<String> = listOf(),
+    val lateDone: List<String> = listOf()
 )

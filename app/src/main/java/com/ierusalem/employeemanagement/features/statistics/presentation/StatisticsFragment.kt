@@ -1,5 +1,7 @@
 package com.ierusalem.employeemanagement.features.statistics.presentation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.downloader.AndroidDownloader
 import com.ierusalem.employeemanagement.features.statistics.domain.StatisticsScreenNavigation
 import com.ierusalem.employeemanagement.features.statistics.domain.StatisticsViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class StatisticsFragment: Fragment() {
 
@@ -54,8 +56,9 @@ class StatisticsFragment: Fragment() {
     private fun executeNavigation(navigation: StatisticsScreenNavigation) {
         when (navigation) {
             StatisticsScreenNavigation.DownloadStatistics -> {
-                val downloader = AndroidDownloader(requireContext())
-                downloader.downloadFile(Constants.STATISTICS_DOWNLOAD_URL)
+                val i = Intent(Intent.ACTION_VIEW)
+                i.setData(Uri.parse(Constants.STATISTICS_DOWNLOAD_URL))
+                startActivity(i)
             }
 
             StatisticsScreenNavigation.NavIconClick -> {
