@@ -20,12 +20,15 @@ class HomeRepositoryImpl(
     override fun getUserFromLocal(): User {
         return preferenceHelper.getUser()
     }
+
     override fun getTheme(): Boolean {
         return preferenceHelper.getTheme()
     }
+
     override fun saveTheme(isDarkTheme: Boolean) {
         preferenceHelper.saveTheme(isDarkTheme)
     }
+
     override suspend fun logoutUser(): Response<Unit> {
         return RestClient(context).homeService.logoutUser(
             authToken = preferenceHelper.getToken(),
@@ -44,11 +47,16 @@ class HomeRepositoryImpl(
         )
     }
 
-    override suspend fun getEmployees(page: Int, perPage: Int): Response<EmployeesResponse> {
+    override suspend fun getEmployees(
+        page: Int,
+        perPage: Int,
+        searchQuery: String
+    ): Response<EmployeesResponse> {
         return RestClient(context).homeService.getEmployees(
             authToken = preferenceHelper.getToken(),
             page = page,
-            perPage = perPage
+            perPage = perPage,
+            searchQuery = searchQuery
         )
     }
 
@@ -56,6 +64,7 @@ class HomeRepositoryImpl(
         preferenceHelper.deleteToken()
         Log.d("ahi3646", "deleteToken: ${preferenceHelper.getToken()} ")
     }
+
     override fun deleteRefreshToken() {
         preferenceHelper.deleteRefreshToken()
         Log.d("ahi3646", "deleteToken: ${preferenceHelper.getToken()} ")

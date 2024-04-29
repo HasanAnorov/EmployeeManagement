@@ -9,7 +9,7 @@ import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.
 interface HomeRepository {
     suspend fun logoutUser():Response<Unit>
     suspend fun getMessage(status: String): Response<CommandsResponse>
-    suspend fun getEmployees(page: Int, perPage: Int): Response<EmployeesResponse>
+    suspend fun getEmployees(page: Int, perPage: Int, searchQuery: String): Response<EmployeesResponse>
     fun deleteToken()
     fun getUserFromLocal(): User
     fun getTheme(): Boolean

@@ -8,6 +8,7 @@ import com.ierusalem.employeemanagement.features.home.presentation.employees.mod
 
 class EmployeesDataSource(
     private val repo: HomeRepository,
+    private val searchQuery: String,
     val onRefresh: (Boolean) -> Unit
 ) : PagingSource<Int, EmployeeModel>() {
     override fun getRefreshKey(state: PagingState<Int, EmployeeModel>): Int? {
@@ -22,7 +23,7 @@ class EmployeesDataSource(
             onRefresh(true)
             Log.d("ahi3646", "load: ${params.key} ")
             val page = params.key ?: 1
-            val response = repo.getEmployees(page, 9)
+            val response = repo.getEmployees(page, 9, searchQuery)
             if(response.isSuccessful){
                 onRefresh(false)
                 LoadResult.Page(

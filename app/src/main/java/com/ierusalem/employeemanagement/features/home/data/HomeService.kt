@@ -36,6 +36,7 @@ interface HomeService {
         @Header("Authorization") authToken: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
+        @Query("username") searchQuery: String,
     ): Response<EmployeesResponse>
 
 }

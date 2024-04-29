@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 
 package com.ierusalem.employeemanagement.features.home.presentation.employees
 
@@ -15,12 +16,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -33,6 +38,7 @@ import com.ierusalem.employeemanagement.features.home.presentation.HomeScreenSta
 import com.ierusalem.employeemanagement.ui.components.EmptyScreen
 import com.ierusalem.employeemanagement.ui.components.ErrorScreen
 import com.ierusalem.employeemanagement.ui.components.LoadingScreen
+import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 
 @Composable
 fun EmployeesScreen(
@@ -41,12 +47,41 @@ fun EmployeesScreen(
     state: HomeScreenState
 ) {
     val results = state.employees.collectAsLazyPagingItems()
-    Box(
+    Column(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+        TextField(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .padding(top = 8.dp)
+                .fillMaxWidth(),
+            value = state.searchText,
+            textStyle = MaterialTheme.typography.titleMedium,
+            colors = TextFieldDefaults.colors(
+                cursorColor = MaterialTheme.colorScheme.onPrimary,
+                disabledLabelColor = Color.Red,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = MaterialTheme.colorScheme.outline.copy(0.2F),
+                focusedContainerColor = MaterialTheme.colorScheme.outline.copy(0.2F)
+            ),
+            placeholder = {
+                Text(
+                    text = "Search",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
+            onValueChange = {
+                intentReducer(HomeScreenClickIntents.SearchTextChanged(it))
+            },
+            shape = RoundedCornerShape(size = 12.dp),
+            singleLine = true,
+        )
         SwipeRefresh(
+            modifier = Modifier.weight(1F),
             state = rememberSwipeRefreshState(isRefreshing = state.isEmployeesLoading),
             onRefresh = {
                 intentReducer(
@@ -61,7 +96,7 @@ fun EmployeesScreen(
                     BackHandler(state.employeesToSendCommand.isNotEmpty()) {
                         intentReducer(HomeScreenClickIntents.ClearEmployeesCommandsList)
                     }
-                    if (results.itemSnapshotList.isNotEmpty()){
+                    if (results.itemSnapshotList.isNotEmpty()) {
                         Column(
                             modifier = Modifier.fillMaxSize()
                         ) {
@@ -84,7 +119,7 @@ fun EmployeesScreen(
                                     }
                                 }
                             )
-                            if(state.employeesToSendCommand.isNotEmpty()){
+                            if (state.employeesToSendCommand.isNotEmpty()) {
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -118,7 +153,7 @@ fun EmployeesScreen(
                                 )
                             }
                         }
-                    }else{
+                    } else {
                         EmptyScreen(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -128,5 +163,16 @@ fun EmployeesScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun EmployeesScreenPreview() {
+    EmployeeManagementTheme {
+        EmployeesScreen(
+            intentReducer = {},
+            state = HomeScreenState(isDarkTheme = false)
+        )
     }
 }

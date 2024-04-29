@@ -63,7 +63,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                 employees = Pager(
                     PagingConfig(pageSize = 15)
                 ) {
-                    EmployeesDataSource(repo) { isLoading ->
+                    EmployeesDataSource(repo, "") { isLoading ->
                         _state.update {
                             it.copy(
                                 isEmployeesLoading = isLoading
@@ -263,6 +263,29 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                     )
                 }
             }
+
+            is HomeScreenClickIntents.SearchTextChanged -> {
+                _state.update {
+                    it.copy(
+                        searchText = intent.text
+                    )
+                }
+                _state.update { homeScreenState ->
+                    homeScreenState.copy(
+                        employees = Pager(
+                            PagingConfig(pageSize = 15)
+                        ) {
+                            EmployeesDataSource(repo, intent.text) { isLoading ->
+                                _state.update {
+                                    it.copy(
+                                        isEmployeesLoading = isLoading
+                                    )
+                                }
+                            }
+                        }.flow.cachedIn(viewModelScope)
+                    )
+                }
+            }
             is HomeScreenClickIntents.OnEmployeeClick -> {
                 val employees = state.value.employeesToSendCommand.toMutableList()
                 if(employees.contains("user[${intent.userId}]")){
@@ -311,7 +334,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
                         employees = Pager(
                             PagingConfig(pageSize = 15)
                         ) {
-                            EmployeesDataSource(repo) { isLoading ->
+                            EmployeesDataSource(repo, "") { isLoading ->
                                 _state.update {
                                     it.copy(
                                         isEmployeesLoading = isLoading
@@ -372,5 +395,4 @@ data class HomeScreenState(
     val employeesToSendCommand : List<String> = listOf(),
 
     val searchText: String = "",
-    val isSearching: Boolean = false
 )
