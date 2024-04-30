@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.statistics.presentation
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,6 +25,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class StatisticsFragment: Fragment() {
 
     private val viewModel: StatisticsViewModel by viewModel()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val isSuperUser = arguments?.getBoolean(Constants.SUPER_USER) ?: false
+        viewModel.setSuperUser(isSuperUser)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

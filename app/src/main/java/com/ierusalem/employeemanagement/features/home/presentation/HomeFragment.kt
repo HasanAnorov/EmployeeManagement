@@ -144,7 +144,8 @@ class HomeFragment : Fragment() {
                             onStatisticsClicked = {
                                 scope.launch {
                                     drawerState.close()
-                                    findNavController().navigate(R.id.action_homeFragment_to_statisticsFragment)
+                                    val bundle = bundleOf(Constants.SUPER_USER to state.isSuperUser)
+                                    findNavController().navigate(R.id.action_homeFragment_to_statisticsFragment, bundle)
                                 }
                             },
                             onSettingsClicked = {

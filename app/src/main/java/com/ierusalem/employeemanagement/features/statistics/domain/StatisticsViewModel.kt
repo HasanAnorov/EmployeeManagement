@@ -31,6 +31,14 @@ class StatisticsViewModel(private val repo: StatisticsRepository) : ViewModel(),
         getSoloStatistics()
     }
 
+    fun setSuperUser(isSuperUser: Boolean){
+        _state.update {
+            it.copy(
+                isSuperUser = isSuperUser
+            )
+        }
+    }
+
     fun handleEvents(event: StatisticsScreenEvents) {
         when (event) {
             StatisticsScreenEvents.DownloadPersonalStatistics -> {
@@ -132,6 +140,7 @@ class StatisticsViewModel(private val repo: StatisticsRepository) : ViewModel(),
 
 @Immutable
 data class StatisticsUiState(
+    val isSuperUser: Boolean = false,
     val downloadUrl: String = "",
     val employees: List<String> = listOf(),
     val sent: List<String> = listOf(),
