@@ -78,4 +78,7 @@
     <string name="statistics">Статистика</string>
     <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Дайте разрешение на использование данных!</string>
     <string name="allow_the_app_to_use_device_data">Разрешите приложению использовать данные устройства!</string>
+    <string name="staff_statistics">Статистика персонала</string>
+    <string name="personal_info">Личная информация</string>
+    <string name="personal_statistics">Личная статистика</string>
 </resources>

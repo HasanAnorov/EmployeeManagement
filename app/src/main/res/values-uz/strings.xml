@@ -78,4 +78,7 @@
     <string name="statistics">Statistika</string>
     <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Ma\'lumotlardan foydalanish uchun ruxsat bering!</string>
     <string name="allow_the_app_to_use_device_data">Ilovaga qurilma maʼlumotlaridan foydalanishiga ruxsat bering!</string>
+    <string name="staff_statistics">Xodimlar statistikasi</string>
+    <string name="personal_info">Shaxsiy ma\'lumotlar</string>
+    <string name="personal_statistics">Shaxsiy statistika</string>
 </resources>

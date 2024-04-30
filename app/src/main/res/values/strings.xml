@@ -77,4 +77,7 @@
     <string name="statistics">Statistics</string>
     <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Give permission to use the data!</string>
     <string name="allow_the_app_to_use_device_data">Allow the app to use device data!</string>
+    <string name="staff_statistics">Staff statistics</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="personal_statistics">Personal statistics</string>
 </resources>

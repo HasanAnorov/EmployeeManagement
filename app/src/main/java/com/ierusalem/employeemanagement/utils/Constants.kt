@@ -27,6 +27,7 @@ object Constants {
     const val BASE_URL = "https://hat.samduuf.uz/"
 
     const val STATISTICS_DOWNLOAD_URL = "https://hat.samduuf.uz/exel/"
+    const val PERSONAL_STATISTICS_DOWNLOAD_URL = "https://hat.samduuf.uz/solo_exel/"
 
     const val TO_EDIT_PROFILE_USERNAME = "to_edit_profile_username"
     const val TO_EDIT_PROFILE_LASTNAME = "to_edit_profile_lastname"

@@ -3,7 +3,6 @@ package com.ierusalem.employeemanagement.ui
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +11,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.databinding.ActivityMainBinding
-import com.ierusalem.employeemanagement.features.home.presentation.HomeFragment
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import java.util.Locale
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
@@ -56,12 +55,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        Log.d("ahi3646", "onNewIntent: ${intent?.data}")
-//        val fragment = supportFragmentManager.findFragmentById(R.id.homeFragment) as HomeFragment
-//        fragment.load()
     }
 
     override fun onDestroy() {

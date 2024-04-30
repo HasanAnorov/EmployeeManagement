@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.statistics.data
 
+import com.ierusalem.employeemanagement.features.statistics.data.model.solo_statistics_response_model.SoloStatisticsResponse
 import com.ierusalem.employeemanagement.features.statistics.data.model.statistics_reponse_model.StatisticsResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,4 +13,10 @@ interface StatisticsService {
         @Header("Authorization") authToken: String,
         @Query("page_size") pageSize: Int
     ): Response<StatisticsResponse>
+
+    @GET("solo_statistics")
+    suspend fun getSoloStatistics(
+        @Header("Authorization") authToken: String,
+        @Query("page_size") pageSize: Int
+    ): Response<SoloStatisticsResponse>
 }

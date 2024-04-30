@@ -65,6 +65,12 @@ class StatisticsFragment: Fragment() {
                 findNavController().popBackStack()
             }
 
+            StatisticsScreenNavigation.DownloadPersonalStatistics -> {
+                val i = Intent(Intent.ACTION_VIEW)
+                i.setData(Uri.parse(Constants.PERSONAL_STATISTICS_DOWNLOAD_URL))
+                startActivity(i)
+            }
+
             StatisticsScreenNavigation.Failure -> {
                 Toast.makeText(
                     requireContext(),
