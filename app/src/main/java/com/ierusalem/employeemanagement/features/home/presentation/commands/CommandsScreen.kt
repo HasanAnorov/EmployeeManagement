@@ -101,14 +101,14 @@ fun CommandsScreen(
                         itemsIndexed(data) { index, command ->
                             var image = command.adminImage
                             if (image.startsWith("/media")){
-                                image =  "${Constants.BASE_URL}${command.adminImage}"
+                                image =  "${Constants.BASE_URL}${command.userImage}"
                             }
                             WorkItem(
                                 modifier = Modifier
                                     .padding(horizontal = 16.dp),
                                 image = image,
-                                position = command.adminPosition ?: stringResource(id = R.string.not_given),
-                                fullName = "${command.adminUsername} ${command.adminLastname}",
+                                position = command.userUnvoni ?: stringResource(id = R.string.not_given),
+                                fullName = "${command.user} ${command.userLastName}",
                                 description = command.text,
                                 deadline = command.endTime,
                                 onItemClick = {

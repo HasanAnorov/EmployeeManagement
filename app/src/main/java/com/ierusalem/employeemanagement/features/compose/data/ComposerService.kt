@@ -15,4 +15,10 @@ interface ComposerService {
         @Body body: RequestBody
     ): Response<ResponsePostMessage>
 
+    @POST("post_malumotuchun")
+    suspend fun composeInformation(
+        @Header("Authorization") authToken: String,
+        @Body body: RequestBody
+    ): Response<ResponsePostMessage>
+
 }

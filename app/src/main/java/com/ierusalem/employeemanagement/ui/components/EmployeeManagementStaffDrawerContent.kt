@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +46,7 @@ fun EmployeeManagementStaffDrawerContent(
     onProfileClicked: (String) -> Unit,
     onSettingsClicked: () -> Unit,
     onLogoutClicked: () -> Unit,
+    onForInformationClick: () -> Unit,
     username: String,
     imageUrl: String,
     email: String
@@ -60,6 +62,9 @@ fun EmployeeManagementStaffDrawerContent(
         ProfileItem(
             onProfileClicked = { onProfileClicked("user_id") }
         )
+        ForInformation {
+            onForInformationClick()
+        }
         SettingsItem {
             onSettingsClicked()
         }
@@ -152,6 +157,35 @@ private fun ProfileItem(
 }
 
 @Composable
+private fun ForInformation(
+    onForInformationClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .height(56.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .clip(CircleShape)
+            .clickable(onClick = onForInformationClick),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier.padding(start = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+            imageVector = Icons.Default.Info,
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            text = stringResource(R.string.for_information),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(start = 12.dp)
+        )
+    }
+}
+
+@Composable
 private fun LogoutItem(
     onLogoutClicked: () -> Unit,
 ) {
@@ -221,7 +255,8 @@ fun StaffDrawerPreview() {
                     email = "anorovhasan@gmail.com",
                     onProfileClicked = {},
                     onLogoutClicked = {},
-                    onSettingsClicked = {}
+                    onSettingsClicked = {},
+                    onForInformationClick = {}
                 )
             }
         }
@@ -240,7 +275,8 @@ fun StaffDrawerPreviewDark() {
                     email = "anorovhasan@gmail.com",
                     onProfileClicked = {},
                     onLogoutClicked = {},
-                    onSettingsClicked = {}
+                    onSettingsClicked = {},
+                    onForInformationClick = {}
                 )
             }
         }

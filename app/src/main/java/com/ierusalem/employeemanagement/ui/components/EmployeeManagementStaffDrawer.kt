@@ -16,6 +16,7 @@ fun EmployeeManagementStaffDrawer(
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     onProfileClicked: (String) -> Unit,
     onSettingsClicked: () -> Unit,
+    onForInformationClick: () -> Unit,
     onLogoutClicked: () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -30,7 +31,8 @@ fun EmployeeManagementStaffDrawer(
                             email = email,
                             onProfileClicked = onProfileClicked,
                             onSettingsClicked = onSettingsClicked,
-                            onLogoutClicked = onLogoutClicked
+                            onLogoutClicked = onLogoutClicked,
+                            onForInformationClick = onForInformationClick
                         )
                 }
 

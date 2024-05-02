@@ -27,6 +27,8 @@
     <string name="can_not_create_a_command">Can not create a command</string>
     <string name="the_command_has_been_created">The Command has been created</string>
     <string name="submit">Submit</string>
+    <string name="submit_task">Submit Task</string>
+    <string name="submit_information">Submit Information</string>
     <string name="attach_a_file">Attach a file</string>
     <string name="type_here">Type here …</string>
     <string name="command_description">Command description</string>
@@ -80,4 +82,7 @@
     <string name="staff_statistics">Staff statistics</string>
     <string name="personal_info">Personal Info</string>
     <string name="personal_statistics">Personal statistics</string>
+    <string name="for_information">For information</string>
+    <string name="task">Task</string>
+    <string name="information">Information</string>
 </resources>

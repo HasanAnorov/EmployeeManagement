@@ -19,4 +19,11 @@ class ComposeRepositoryImpl(
         )
     }
 
+    override suspend fun postInformation(body: RequestBody): Response<ResponsePostMessage> {
+        return RestClient(context).composeService.composeInformation(
+            authToken = preferences.getToken(),
+            body = body
+        )
+    }
+
 }

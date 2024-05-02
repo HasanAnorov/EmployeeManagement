@@ -81,4 +81,9 @@
     <string name="staff_statistics">Xodimlar statistikasi</string>
     <string name="personal_info">Shaxsiy ma\'lumotlar</string>
     <string name="personal_statistics">Shaxsiy statistika</string>
+    <string name="for_information">Ma\'lumot uchun</string>
+    <string name="submit_task">Vazifani yuborish</string>
+    <string name="submit_information">Ma\'lumotni yuborish</string>
+    <string name="task">Vazifa</string>
+    <string name="information">Ma `lumot</string>
 </resources>

@@ -118,6 +118,12 @@ class ComposeFragment : Fragment() {
                             }
                             viewModel.showAlertDialog(false)
                         },
+                        onTaskClick = {
+                            viewModel.changeIsCommand(true)
+                        },
+                        onInformationClick = {
+                            viewModel.changeIsCommand(false)
+                        },
                         state = state
                     )
                 }

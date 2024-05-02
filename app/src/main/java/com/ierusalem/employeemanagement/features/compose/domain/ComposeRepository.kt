@@ -6,4 +6,5 @@ import retrofit2.Response
 
 interface ComposeRepository {
     suspend fun postMessage(body: RequestBody): Response<ResponsePostMessage>
+    suspend fun postInformation(body: RequestBody): Response<ResponsePostMessage>
 }

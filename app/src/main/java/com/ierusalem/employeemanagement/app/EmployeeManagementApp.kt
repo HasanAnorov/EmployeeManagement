@@ -8,6 +8,7 @@ import android.os.Build
 import com.ierusalem.employeemanagement.features.auth.di.authModel
 import com.ierusalem.employeemanagement.features.compose.di.composeModule
 import com.ierusalem.employeemanagement.features.edit_profile.di.editProfileViewModule
+import com.ierusalem.employeemanagement.features.for_information.di.forInformationModule
 import com.ierusalem.employeemanagement.features.home.di.homeModule
 import com.ierusalem.employeemanagement.features.private_jobs.di.privateJobsModule
 import com.ierusalem.employeemanagement.features.profile.di.profileModule
@@ -40,6 +41,7 @@ class EmployeeManagementApp : Application() {
                 authModel,
                 statisticsModule,
                 homeModule,
+                forInformationModule,
                 privateJobsModule,
                 profileModule,
                 editProfileViewModule,

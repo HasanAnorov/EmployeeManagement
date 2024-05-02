@@ -3,10 +3,12 @@ package com.ierusalem.employeemanagement.features.compose.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.compose.domain.ComposeRepository
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
+import com.ierusalem.employeemanagement.utils.UiText
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -92,13 +94,25 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
         val requestBody = requestBodyBuilder.build()
         try {
             viewModelScope.launch(handler) {
-                repo.postMessage(requestBody).let {
-                    if (it.isSuccessful) {
-                        changeSubmitState(false)
-                        emitNavigation(ComposeScreenNavigation.Success)
-                    } else {
-                        changeSubmitState(false)
-                        emitNavigation(ComposeScreenNavigation.InvalidResponse)
+                if(state.value.isCommand){
+                    repo.postMessage(requestBody).let {
+                        if (it.isSuccessful) {
+                            changeSubmitState(false)
+                            emitNavigation(ComposeScreenNavigation.Success)
+                        } else {
+                            changeSubmitState(false)
+                            emitNavigation(ComposeScreenNavigation.InvalidResponse)
+                        }
+                    }
+                }else{
+                    repo.postInformation(requestBody).let {
+                        if (it.isSuccessful) {
+                            changeSubmitState(false)
+                            emitNavigation(ComposeScreenNavigation.Success)
+                        } else {
+                            changeSubmitState(false)
+                            emitNavigation(ComposeScreenNavigation.InvalidResponse)
+                        }
                     }
                 }
             }
@@ -164,15 +178,61 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
                 isSubmitting = isSubmitting
             )
         }
+        if(isSubmitting){
+            _state.update {
+                it.copy(
+                    submitString = UiText.StringResource(R.string.submitting)
+                )
+            }
+        }else {
+            if(state.value.isCommand){
+                _state.update {
+                    it.copy(
+                        submitString = UiText.StringResource(R.string.submit_task)
+                    )
+                }
+            }else {
+                _state.update {
+                    it.copy(
+                        submitString = UiText.StringResource(R.string.submit_information)
+                    )
+                }
+            }
+        }
+    }
+
+    fun changeIsCommand(isCommand: Boolean){
+        _state.update {
+            it.copy(
+                isCommand = isCommand
+            )
+        }
+        if(isCommand){
+            _state.update {
+                it.copy(
+                    submitString = UiText.StringResource(R.string.submit_task)
+                )
+            }
+        }else {
+            _state.update {
+                it.copy(
+                    submitString = UiText.StringResource(R.string.submit_information)
+                )
+            }
+        }
     }
 
 }
 
 data class ComposeScreenState(
+    val submitString: UiText = UiText.StringResource(R.string.submit_task),
+    val isCommand: Boolean = true,
     val showAlertDialog: Boolean = false,
     val remoteToken: String = "",
     val textForm: String = "",
-    val yearForm: String = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR)
+    val yearForm: String = Calendar
+        .getInstance(TimeZone.getDefault())
+        .get(Calendar.YEAR)
         .toString(),
     val monthForm: String = "",
     val dayForm: String = "",

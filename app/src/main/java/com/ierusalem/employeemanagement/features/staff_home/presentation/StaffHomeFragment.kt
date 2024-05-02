@@ -97,6 +97,12 @@ class StaffHomeFragment : Fragment() {
                                     drawerState.close()
                                     viewModel.handleEvents(StaffHomeScreenEvents.LogoutClick)
                                 }
+                            },
+                            onForInformationClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_staffHomeFragment_to_forInformationFragment)
+                                }
                             }
                         ) {
                             StaffHomeScreen(

@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -49,6 +50,7 @@ fun EmployeeManagementDrawerContent(
     onLogoutClicked: () -> Unit,
     onPrivateJobClicked: () -> Unit,
     onStatisticsClicked: () -> Unit,
+    onForInformationClick: () -> Unit,
     state: HomeScreenState
 ) {
     Column(
@@ -69,13 +71,11 @@ fun EmployeeManagementDrawerContent(
         PrivateJobsItem {
             onPrivateJobClicked()
         }
-//        if (state.isSuperUser) {
-//            StatisticsItem {
-//                onStatisticsClicked()
-//            }
-//        }
         StatisticsItem {
             onStatisticsClicked()
+        }
+        ForInformation {
+            onForInformationClick()
         }
         SettingsItem {
             onSettingsClicked()
@@ -256,6 +256,35 @@ private fun LogoutItem(
 }
 
 @Composable
+private fun ForInformation(
+    onForInformationClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .height(56.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .clip(CircleShape)
+            .clickable(onClick = onForInformationClick),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier.padding(start = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+            imageVector = Icons.Default.Info,
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            text = stringResource(R.string.for_information),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(start = 12.dp)
+        )
+    }
+}
+
+@Composable
 private fun SettingsItem(
     onSettingsClicked: () -> Unit,
 ) {
@@ -304,7 +333,8 @@ fun DrawerPreview() {
                     onLogoutClicked = {},
                     onSettingsClicked = {},
                     onPrivateJobClicked = {},
-                    onStatisticsClicked = {}
+                    onStatisticsClicked = {},
+                    onForInformationClick = {}
                 )
             }
         }
@@ -323,7 +353,8 @@ fun DrawerPreviewDark() {
                     onLogoutClicked = {},
                     onSettingsClicked = {},
                     onPrivateJobClicked = {},
-                    onStatisticsClicked = {}
+                    onStatisticsClicked = {},
+                    onForInformationClick = {}
                 )
             }
         }

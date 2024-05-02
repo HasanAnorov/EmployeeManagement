@@ -111,7 +111,6 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                Log.d("ahi3646", "onCreateView: ${state.isDarkTheme} ")
                 EmployeeManagementTheme(
                     darkTheme = state.isDarkTheme,
                     content = {
@@ -158,6 +157,12 @@ class HomeFragment : Fragment() {
                                 scope.launch {
                                     drawerState.close()
                                     viewModel.handleClickIntents(HomeScreenClickIntents.LogoutClick)
+                                }
+                            },
+                            onForInformationClick = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_homeFragment_to_forInformationFragment)
                                 }
                             }
                         )

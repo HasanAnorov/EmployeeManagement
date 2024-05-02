@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import com.google.gson.Gson
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
 import java.util.Locale
@@ -88,6 +89,7 @@ class PreferenceHelper(private val context: Context) {
     }
 
     fun getToken(): String {
+        Log.d("ahi3646", "getToken: ${sharedPref.getString(Constants.TOKEN_KEY, "")!!} ")
         return sharedPref.getString(Constants.TOKEN_KEY, "")!!
     }
 

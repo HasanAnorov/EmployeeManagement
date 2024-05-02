@@ -81,4 +81,9 @@
     <string name="staff_statistics">Статистика персонала</string>
     <string name="personal_info">Личная информация</string>
     <string name="personal_statistics">Личная статистика</string>
+    <string name="for_information">Для информации</string>
+    <string name="submit_task">Отправить задачу</string>
+    <string name="submit_information">Отправить информацию</string>
+    <string name="task">Задача</string>
+    <string name="information">Информация</string>
 </resources>

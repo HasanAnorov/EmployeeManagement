@@ -13,14 +13,18 @@ data class Result(
     val text: String,
     @SerializedName("user")
     val user: String,
+    @SerializedName("last_name")
+    val userLastName: String,
     @SerializedName("user_email")
     val userEmail: String,
+    @SerializedName("img_user")
+    val userImage: String,
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("user_unvoni")
-    val userUnvoni: String,
+    val userUnvoni: String?,
     @SerializedName("user_xonasi")
-    val userXonasi: String,
+    val userXonasi: String?,
     @SerializedName("adminusername")
     val adminUsername: String,
     @SerializedName("adminlast_name")
