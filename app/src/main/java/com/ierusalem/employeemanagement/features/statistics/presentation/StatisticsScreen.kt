@@ -109,7 +109,8 @@ fun StatisticsScreen(
                     content = {
                         Icon(
                             painter = painterResource(id = R.drawable.download),
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 )

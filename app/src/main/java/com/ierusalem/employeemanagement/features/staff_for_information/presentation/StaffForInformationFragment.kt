@@ -1,4 +1,4 @@
-package com.ierusalem.employeemanagement.features.for_information.presentation
+package com.ierusalem.employeemanagement.features.staff_for_information.presentation
 
 import android.content.Context
 import android.os.Bundle
@@ -12,19 +12,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.for_information.domain.ForInformationViewModel
+import com.ierusalem.employeemanagement.features.staff_for_information.domain.StaffForInformationNavigation
+import com.ierusalem.employeemanagement.features.staff_for_information.domain.StaffForInformationViewmodel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ForInformationFragment : Fragment() {
+class StaffForInformationFragment : Fragment() {
 
-    private val viewModel: ForInformationViewModel by viewModel()
+    private val viewModel: StaffForInformationViewmodel by viewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel.getReceivedInformation()
-        viewModel.getSenInformation()
     }
 
     override fun onCreateView(
@@ -37,7 +37,7 @@ class ForInformationFragment : Fragment() {
                 val state by viewModel.state.collectAsStateWithLifecycle()
 
                 EmployeeManagementTheme {
-                    ForInformationScreen(
+                    StaffForInformationScreen(
                         state = state,
                         intentReducer = {
                             viewModel.handleClickIntents(it)
@@ -56,13 +56,13 @@ class ForInformationFragment : Fragment() {
         )
     }
 
-    private fun executeNavigation(event: ForInformationNavigation){
+    private fun executeNavigation(event: StaffForInformationNavigation){
         when(event){
-            ForInformationNavigation.ArrowBackClick -> {
+            StaffForInformationNavigation.ArrowBackClick -> {
                 findNavController().popBackStack()
             }
 
-            ForInformationNavigation.InvalidResponse -> {
+            StaffForInformationNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.something_went_wrong),

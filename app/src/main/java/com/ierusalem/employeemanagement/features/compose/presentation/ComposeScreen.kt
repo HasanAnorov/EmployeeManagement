@@ -352,14 +352,14 @@ fun Demo_DropDownMenu(onTaskClick: () -> Unit, onInformationClick: () -> Unit) {
                 text = { Text(stringResource(R.string.information)) },
                 onClick = {
                     expanded = false
-                    onTaskClick()
+                    onInformationClick()
                 }
             )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.task)) },
                 onClick = {
                     expanded = false
-                    onInformationClick()
+                    onTaskClick()
                 }
             )
         }

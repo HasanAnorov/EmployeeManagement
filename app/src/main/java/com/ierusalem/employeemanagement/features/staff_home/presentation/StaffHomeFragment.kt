@@ -101,7 +101,7 @@ class StaffHomeFragment : Fragment() {
                             onForInformationClick = {
                                 scope.launch {
                                     drawerState.close()
-                                    findNavController().navigate(R.id.action_staffHomeFragment_to_forInformationFragment)
+                                    findNavController().navigate(R.id.action_staffHomeFragment_to_staffForInformationFragment)
                                 }
                             }
                         ) {

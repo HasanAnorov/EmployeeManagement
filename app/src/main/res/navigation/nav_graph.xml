@@ -179,12 +179,12 @@
             app:popUpToInclusive="true"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_staffHomeFragment_to_forInformationFragment"
+            android:id="@+id/action_staffHomeFragment_to_staffForInformationFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
-            app:destination="@id/forInformationFragment" />
+            app:destination="@id/staffForInformationFragment" />
 
     </fragment>
 
@@ -223,5 +223,9 @@
         android:id="@+id/forInformationFragment"
         android:name="com.ierusalem.employeemanagement.features.for_information.presentation.ForInformationFragment"
         android:label="ForInformationFragment" />
+    <fragment
+        android:id="@+id/staffForInformationFragment"
+        android:name="com.ierusalem.employeemanagement.features.staff_for_information.presentation.StaffForInformationFragment"
+        android:label="StaffForInformationFragment" />
 
 </navigation>

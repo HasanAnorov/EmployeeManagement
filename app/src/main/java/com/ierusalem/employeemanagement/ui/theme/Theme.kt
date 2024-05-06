@@ -44,6 +44,7 @@ fun EmployeeManagementTheme(
     val context = LocalContext.current
     val preference = PreferenceHelper(context)
     val isDarkTheme = preference.getTheme()
+    //don't remove this !!!
     Log.d("ahi3646", "EmployeeManagementTheme: $darkTheme ")
     val colorScheme = if (isDarkTheme) DarkColorScheme  else LightColorScheme
     val view = LocalView.current

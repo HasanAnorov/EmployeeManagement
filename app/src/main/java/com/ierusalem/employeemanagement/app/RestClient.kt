@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder
 import com.ierusalem.employeemanagement.features.auth.data.AuthorizationService
 import com.ierusalem.employeemanagement.features.compose.data.ComposerService
 import com.ierusalem.employeemanagement.features.edit_profile.data.EditProfileService
+import com.ierusalem.employeemanagement.features.for_information.data.ForInformationService
 import com.ierusalem.employeemanagement.features.home.data.HomeService
 import com.ierusalem.employeemanagement.features.private_jobs.data.PrivateJobService
 import com.ierusalem.employeemanagement.features.profile.data.ProfileService
@@ -78,6 +79,10 @@ class RestClient(context: Context) {
 
     val editProfileService: EditProfileService by lazy {
         retrofit.create(EditProfileService::class.java)
+    }
+
+    val forInformationService: ForInformationService by lazy {
+        retrofit.create(ForInformationService::class.java)
     }
 
 }

@@ -12,6 +12,7 @@ import com.ierusalem.employeemanagement.features.for_information.di.forInformati
 import com.ierusalem.employeemanagement.features.home.di.homeModule
 import com.ierusalem.employeemanagement.features.private_jobs.di.privateJobsModule
 import com.ierusalem.employeemanagement.features.profile.di.profileModule
+import com.ierusalem.employeemanagement.features.staff_for_information.di.staffInformationModule
 import com.ierusalem.employeemanagement.features.staff_home.di.staffHomeScreenModule
 import com.ierusalem.employeemanagement.features.statistics.di.statisticsModule
 import com.ierusalem.employeemanagement.features.work_description.di.workDescriptionModule
@@ -42,6 +43,7 @@ class EmployeeManagementApp : Application() {
                 statisticsModule,
                 homeModule,
                 forInformationModule,
+                staffInformationModule,
                 privateJobsModule,
                 profileModule,
                 editProfileViewModule,

@@ -37,7 +37,7 @@ fun WorkItem(
     position: String,
     description: String,
     image: String,
-    deadline: String
+    deadline: String? = null
 ) {
     Column(
         modifier = modifier
@@ -125,30 +125,31 @@ fun WorkItem(
             style = MaterialTheme.typography.titleSmall,
             overflow = TextOverflow.Ellipsis
         )
-
-        Text(
-            modifier = Modifier
-                .padding(top = 8.dp),
-            text = stringResource(R.string.deadline),
-            fontSize = 14.sp,
-            fontWeight = FontWeight.SemiBold,
-            maxLines = 1,
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.titleSmall,
-            overflow = TextOverflow.Ellipsis
-        )
-        Text(
-            modifier = Modifier
-                .padding(top = 0.dp),
-            text = deadline,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Normal,
-            maxLines = 1,
-            lineHeight = 20.sp,
-            color = MaterialTheme.colorScheme.outline,
-            style = MaterialTheme.typography.titleSmall,
-            overflow = TextOverflow.Ellipsis
-        )
+        if(deadline != null){
+            Text(
+                modifier = Modifier
+                    .padding(top = 8.dp),
+                text = stringResource(R.string.deadline),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.titleSmall,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                modifier = Modifier
+                    .padding(top = 0.dp),
+                text = deadline,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                maxLines = 1,
+                lineHeight = 20.sp,
+                color = MaterialTheme.colorScheme.outline,
+                style = MaterialTheme.typography.titleSmall,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 
 }
