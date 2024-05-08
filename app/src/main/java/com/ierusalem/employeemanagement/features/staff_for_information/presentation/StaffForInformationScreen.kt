@@ -27,7 +27,8 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 @Composable
 fun StaffForInformationScreen(
     state: StaffForInformationState,
-    intentReducer: (StaffForInformationEvents) -> Unit
+    intentReducer: (StaffForInformationEvents) -> Unit,
+    onItemClick:(Int) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -65,7 +66,10 @@ fun StaffForInformationScreen(
                 ForInformationContent(
                     data = state.receivedInformation,
                     isLoading = false,
-                    onPullRefresh = {}
+                    onPullRefresh = {intentReducer(StaffForInformationEvents.OnPullRefresh)},
+                    onItemClick = {
+                        onItemClick(it)
+                    }
                 )
             }
         }
@@ -78,7 +82,8 @@ private fun Preview() {
     EmployeeManagementTheme {
         StaffForInformationScreen(
             state = StaffForInformationState(),
-            intentReducer = {}
+            intentReducer = {},
+            onItemClick = {}
         )
     }
 }

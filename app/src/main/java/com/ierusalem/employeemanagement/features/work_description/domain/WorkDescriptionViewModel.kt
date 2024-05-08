@@ -180,7 +180,6 @@ class WorkDescriptionViewModel(
             )
         }
     }
-
 }
 
 

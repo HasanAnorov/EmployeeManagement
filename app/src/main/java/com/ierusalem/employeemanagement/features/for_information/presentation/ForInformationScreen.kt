@@ -37,6 +37,8 @@ import kotlinx.coroutines.launch
 fun ForInformationScreen(
     state: ForInformationState,
     intentReducer: (ForInformationEvents) -> Unit,
+    onItemClick:(Int) ->Unit,
+    onItemClickSent:(Int) ->Unit
 ) {
     Scaffold(
         topBar = {
@@ -123,6 +125,9 @@ fun ForInformationScreen(
                         isLoading = state.isLoading,
                         onPullRefresh = {
                             intentReducer(ForInformationEvents.OnPullRefresh)
+                        },
+                        onItemClick = {
+                            onItemClickSent(it)
                         }
                     )
 
@@ -131,6 +136,9 @@ fun ForInformationScreen(
                         isLoading = state.isLoading,
                         onPullRefresh = {
                             intentReducer(ForInformationEvents.OnPullRefresh)
+                        },
+                        onItemClick = {
+                            onItemClick(it)
                         }
                     )
                 }
@@ -145,7 +153,9 @@ private fun PreviewLight() {
     EmployeeManagementTheme {
         ForInformationScreen(
             state = ForInformationState(),
-            intentReducer = {}
+            intentReducer = {},
+            onItemClick = {},
+            onItemClickSent = {}
         )
     }
 }

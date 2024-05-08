@@ -26,7 +26,8 @@ import com.ierusalem.employeemanagement.utils.Constants
 fun ForInformationContent(
     data: List<ForInformationData>,
     isLoading: Boolean,
-    onPullRefresh: () -> Unit
+    onPullRefresh: () -> Unit,
+    onItemClick:(Int) ->Unit
 ) {
     Box(
         modifier = Modifier
@@ -65,7 +66,7 @@ fun ForInformationContent(
                             fullName = "${command.fullName} ",
                             description = command.text,
                             deadline = null,
-                            onItemClick = {}
+                            onItemClick = { onItemClick(command.id) }
                         )
                         if (index < data.size - 1) {
                             HorizontalDivider(

@@ -30,10 +30,18 @@ class StaffForInformationViewmodel(
         MutableStateFlow(StaffForInformationState())
     val state = _state.asStateFlow()
 
+    private fun updateLoading(isLoading: Boolean){
+        _state.update {
+            it.copy(isLoading = isLoading)
+        }
+    }
+
     fun getReceivedInformation(){
+        updateLoading(true)
         viewModelScope.launch(handler) {
-            repository.getReceivedInformation().let {response ->
+            repository.getReceivedInformation(id = "").let {response ->
                 if (response.isSuccessful){
+                    updateLoading(false)
                     _state.update {uiState ->
                         uiState.copy(
                             receivedInformation = response.body()!!.results.map {
@@ -41,13 +49,15 @@ class StaffForInformationViewmodel(
                                     fullName = "${it.adminusername} ${it.adminlastName} ${it.patronymicName ?:""}",
                                     image = it.img,
                                     text = it.text,
-                                    position = it.adminunvoni
+                                    position = it.adminunvoni,
+                                    id = it.id
                                 )
                             }
                         )
                     }
                     Log.d("ahi3646", "getReceivedInformation: ${response.body()!!}")
                 }else{
+                    updateLoading(false)
                     emitNavigation(StaffForInformationNavigation.InvalidResponse)
                     Log.d("ahi3646", "getReceivedInformation: false")
                 }

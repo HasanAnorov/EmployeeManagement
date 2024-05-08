@@ -2,6 +2,7 @@ package com.ierusalem.employeemanagement.features.for_information.data.model
 
 
 import com.google.gson.annotations.SerializedName
+import com.ierusalem.employeemanagement.features.work_description.data.model.work.FileX
 
 data class Result(
     @SerializedName("adminlast_name")
@@ -15,7 +16,7 @@ data class Result(
     @SerializedName("created_user")
     val createdUser: Int,
     @SerializedName("file")
-    val `file`: List<Any>,
+    val `file`: List<FileX>,
     @SerializedName("id")
     val id: Int,
     @SerializedName("img")

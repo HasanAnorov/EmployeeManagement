@@ -15,6 +15,9 @@ object Constants {
 
     const val PROFILE_CHANGE = "profile_changed_successfully"
 
+    const val IS_SENT_FOR_INFORMATION = "is_sent_for_information"
+    const val ID_FOR_INFORMATION_DESCRIPTION = "id_for_information_description"
+
     const val SUPER_USER = "super_user"
 
     const val FROM_WORK_DESCRIPTION = "from_work_description"

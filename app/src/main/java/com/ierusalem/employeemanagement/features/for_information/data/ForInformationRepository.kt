@@ -5,6 +5,6 @@ import com.ierusalem.employeemanagement.features.for_information.data.model_rece
 import retrofit2.Response
 
 interface ForInformationRepository {
-    suspend fun getSenInformation(): Response<InformationResponse>
-    suspend fun getReceivedInformation(): Response<ForInformationReceivedResponse>
+    suspend fun getSenInformation(id:String): Response<InformationResponse>
+    suspend fun getReceivedInformation(id:String): Response<ForInformationReceivedResponse>
 }

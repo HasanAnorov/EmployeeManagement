@@ -54,7 +54,7 @@ class ForInformationViewModel(
 
     fun getReceivedInformation(){
         viewModelScope.launch(handler) {
-            repository.getReceivedInformation().let {response ->
+            repository.getReceivedInformation(id = "").let {response ->
                 if (response.isSuccessful){
                     _state.update {uiState ->
                         uiState.copy(
@@ -63,7 +63,8 @@ class ForInformationViewModel(
                                     fullName = "${it.adminusername} ${it.adminlastName} ${it.patronymicName ?:""}",
                                     image = it.img,
                                     text = it.text,
-                                    position = it.adminunvoni
+                                    position = it.adminunvoni,
+                                    id = it.id
                                 )
                             }
                         )
@@ -78,9 +79,11 @@ class ForInformationViewModel(
     }
 
     fun getSenInformation(){
+        updateLoading(true)
         viewModelScope.launch(handler) {
-            repository.getSenInformation().let {response ->
+            repository.getSenInformation(id = "").let {response ->
                 if (response.isSuccessful){
+                    updateLoading(false)
                     _state.update {state ->
                         state.copy(
                             sentInformation = response.body()!!.results.map {
@@ -88,17 +91,27 @@ class ForInformationViewModel(
                                     fullName = "${it.user} ${it.userLastname}",
                                     image = it.image,
                                     text = it.text,
-                                    position = it.userUnvoni
+                                    position = it.userUnvoni,
+                                    id = it.id
                                 )
                             }
                         )
                     }
                     Log.d("ahi3646", "getSenInformation: ${response.body()!!} ")
                 }else{
+                    updateLoading(false)
                     emitNavigation(ForInformationNavigation.InvalidResponse)
                     Log.d("ahi3646", "getSenInformation: false")
                 }
             }
+        }
+    }
+
+    private fun updateLoading(isLoading: Boolean){
+        _state.update {
+            it.copy(
+                isLoading = isLoading
+            )
         }
     }
 
@@ -120,6 +133,7 @@ data class ForInformationState(
 )
 
 data class ForInformationData(
+    val id:Int ,
     val fullName: String,
     val image: String,
     val text: String,

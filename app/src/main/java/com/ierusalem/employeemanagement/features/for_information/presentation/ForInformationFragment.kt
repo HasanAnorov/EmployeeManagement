@@ -10,10 +10,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.for_information.domain.ForInformationViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +43,17 @@ class ForInformationFragment : Fragment() {
                         state = state,
                         intentReducer = {
                             viewModel.handleClickIntents(it)
+                        },
+                        onItemClick = {
+                            val bundle = Bundle()
+                            bundle.putInt(Constants.ID_FOR_INFORMATION_DESCRIPTION,it)
+                            findNavController().navigate(R.id.action_forInformationFragment_to_informationDescriptionFragment, bundle)
+                        },
+                        onItemClickSent = {
+                            val bundle = Bundle()
+                            bundle.putBoolean(Constants.IS_SENT_FOR_INFORMATION, true)
+                            bundle.putInt(Constants.ID_FOR_INFORMATION_DESCRIPTION,it)
+                            findNavController().navigate(R.id.action_forInformationFragment_to_informationDescriptionFragment, bundle)
                         }
                     )
                 }

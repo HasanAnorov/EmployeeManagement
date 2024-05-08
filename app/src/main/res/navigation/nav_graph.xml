@@ -222,10 +222,22 @@
     <fragment
         android:id="@+id/forInformationFragment"
         android:name="com.ierusalem.employeemanagement.features.for_information.presentation.ForInformationFragment"
-        android:label="ForInformationFragment" />
+        android:label="ForInformationFragment" >
+        <action
+            android:id="@+id/action_forInformationFragment_to_informationDescriptionFragment"
+            app:destination="@id/informationDescriptionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/staffForInformationFragment"
         android:name="com.ierusalem.employeemanagement.features.staff_for_information.presentation.StaffForInformationFragment"
-        android:label="StaffForInformationFragment" />
+        android:label="StaffForInformationFragment" >
+        <action
+            android:id="@+id/action_staffForInformationFragment_to_informationDescriptionFragment"
+            app:destination="@id/informationDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/informationDescriptionFragment"
+        android:name="com.ierusalem.employeemanagement.features.information_description.presentation.InformationDescriptionFragment"
+        android:label="InformationDescriptionFragment" />
 
 </navigation>

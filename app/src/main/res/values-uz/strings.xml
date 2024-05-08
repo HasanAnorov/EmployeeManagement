@@ -86,4 +86,5 @@
     <string name="submit_information">Ma\'lumotni yuborish</string>
     <string name="task">Vazifa</string>
     <string name="information">Ma `lumot</string>
+    <string name="information_description">Ma\'lumot tavsifi</string>
 </resources>
