@@ -27,7 +27,9 @@ class StaffHomeRepositoryImpl (
     override suspend fun getUserMessages(status: String): Response<ResponseMessages> {
         return RestClient(context).staffHomeService.getUserMessages(
             authToken = preferenceHelper.getToken(),
-            status = status
+            status = status,
+            page = 1,
+            perPage = 100000
         )
     }
 

@@ -20,7 +20,8 @@ class AuthRepositoryImpl(
             UserLoginRequest(
                 email = username,
                 password = password,
-                firebase_token = token
+                firebase_token = token,
+                android = "1"
             )
         )
     }

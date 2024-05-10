@@ -28,7 +28,9 @@ interface HomeService {
     @GET("get_message")
     suspend fun getCommand(
         @Header("Authorization") authToken: String,
-        @Query("status") status: String
+        @Query("status") status: String,
+        @Query("page") page: Int,
+        @Query("page_size") perPage: Int,
     ): Response<CommandsResponse>
 
     @GET("get_users")

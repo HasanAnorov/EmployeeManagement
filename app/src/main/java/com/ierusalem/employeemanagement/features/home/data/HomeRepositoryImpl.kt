@@ -43,7 +43,9 @@ class HomeRepositoryImpl(
     override suspend fun getMessage(status: String): Response<CommandsResponse> {
         return RestClient(context).homeService.getCommand(
             authToken = preferenceHelper.getToken(),
-            status = status
+            status = status,
+            page = 1,
+            perPage = 100000
         )
     }
 

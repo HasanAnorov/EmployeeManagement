@@ -15,7 +15,9 @@ interface StaffHomeService {
     @GET("get_user_message")
     suspend fun getUserMessages(
         @Header("Authorization") authToken: String,
-        @Query("status") status: String
+        @Query("status") status: String,
+        @Query("page") page: Int,
+        @Query("page_size") perPage: Int,
     ): Response<ResponseMessages>
 
     @GET("profile")

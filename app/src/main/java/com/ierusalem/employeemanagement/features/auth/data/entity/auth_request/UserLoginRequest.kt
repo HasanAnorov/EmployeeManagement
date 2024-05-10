@@ -4,4 +4,5 @@ data class UserLoginRequest(
     val email: String,
     val password: String,
     val firebase_token: String,
+    val android: String
 )
