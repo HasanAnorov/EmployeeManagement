@@ -5,10 +5,12 @@ import com.ierusalem.employeemanagement.features.home.presentation.employees.mod
 import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
 import retrofit2.Response
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
+import com.ierusalem.employeemanagement.features.home.presentation.commands.model.badge_count_response.BadgeCountResponse
 
 interface HomeRepository {
     suspend fun logoutUser():Response<Unit>
     suspend fun getMessage(status: String): Response<CommandsResponse>
+    suspend fun getDoneBadgeCount(status: String, status2:String): Response<BadgeCountResponse>
     suspend fun getEmployees(page: Int, perPage: Int, searchQuery: String): Response<EmployeesResponse>
     fun deleteToken()
     fun getUserFromLocal(): User

@@ -6,6 +6,7 @@ import com.ierusalem.employeemanagement.app.RestClient
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
 import com.ierusalem.employeemanagement.features.home.data.entity.UserLogoutRequest
 import com.ierusalem.employeemanagement.features.home.domain.HomeRepository
+import com.ierusalem.employeemanagement.features.home.presentation.commands.model.badge_count_response.BadgeCountResponse
 import com.ierusalem.employeemanagement.features.home.presentation.commands.model.commands_response.CommandsResponse
 import com.ierusalem.employeemanagement.features.home.presentation.employees.model.EmployeesResponse
 import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
@@ -44,6 +45,19 @@ class HomeRepositoryImpl(
         return RestClient(context).homeService.getCommand(
             authToken = preferenceHelper.getToken(),
             status = status,
+            page = 1,
+            perPage = 100000
+        )
+    }
+
+    override suspend fun getDoneBadgeCount(
+        status: String,
+        status2: String
+    ): Response<BadgeCountResponse> {
+        return RestClient(context).homeService.getDoneBadgeCount(
+            authToken = preferenceHelper.getToken(),
+            status = status,
+            status2 = status2,
             page = 1,
             perPage = 100000
         )

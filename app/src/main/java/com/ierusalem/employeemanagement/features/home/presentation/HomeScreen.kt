@@ -116,7 +116,7 @@ fun HomeScreen(
             countReceived = state.commandsReceived.size
         }
         var countDone by rememberSaveable {
-            mutableIntStateOf(state.commandsDone.size)
+            mutableIntStateOf(0)
         }
         LaunchedEffect(key1 = state.commandsDone.size) {
             countDone = state.commandsDone.size
@@ -154,7 +154,7 @@ fun HomeScreen(
                             val data = when (index) {
                                 0 -> countSent
                                 1 -> countReceived
-                                2 -> countDone
+                                2 -> state.doneBadgeCount
                                 3 -> countNotDone
                                 4 -> countLateDone
                                 else -> 0

@@ -1,6 +1,7 @@
 package com.ierusalem.employeemanagement.features.home.data
 
 import com.ierusalem.employeemanagement.features.home.data.entity.UserLogoutRequest
+import com.ierusalem.employeemanagement.features.home.presentation.commands.model.badge_count_response.BadgeCountResponse
 import com.ierusalem.employeemanagement.features.home.presentation.commands.model.commands_response.CommandsResponse
 import com.ierusalem.employeemanagement.features.home.presentation.employees.model.EmployeesResponse
 import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
@@ -32,6 +33,15 @@ interface HomeService {
         @Query("page") page: Int,
         @Query("page_size") perPage: Int,
     ): Response<CommandsResponse>
+
+    @GET("get_message")
+    suspend fun getDoneBadgeCount(
+        @Header("Authorization") authToken: String,
+        @Query("status") status: String,
+        @Query("status2") status2: String,
+        @Query("page") page: Int,
+        @Query("page_size") perPage: Int,
+    ): Response<BadgeCountResponse>
 
     @GET("get_users")
     suspend fun getEmployees(

@@ -54,6 +54,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
     init {
         getUserForHome()
         getCommands("yuborildi")
+        getBadgeCounts(status = "bajarildi", status2 = "kurilmagan")
         getCommands("qabulqildi")
         getCommands("bajarildi")
         getCommands("bajarilmadi")
@@ -196,6 +197,28 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
         }
     }
 
+    fun getBadgeCounts(status: String, status2:String) {
+        try {
+            viewModelScope.launch(handler) {
+                repo.getDoneBadgeCount(status, status2).let { response ->
+                    if (response.isSuccessful) {
+                        _state.update {
+                            it.copy(
+                                doneBadgeCount = response.body()!!.count
+                            )
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            _state.update {
+                it.copy(
+                    doneBadgeCount = 0
+                )
+            }
+        }
+    }
+
     fun getCommands(status: String) {
         try {
             updateLoading(true)
@@ -325,7 +348,12 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
             }
 
             is HomeScreenClickIntents.OnPullToRefreshCommands -> {
-                getCommands(intent.status)
+                if(intent.status == "bajarildi"){
+                    getBadgeCounts(intent.status, "kurilmagan")
+                    getCommands(intent.status)
+                }else{
+                    getCommands(intent.status)
+                }
             }
 
             HomeScreenClickIntents.OnPullToRefreshEmployees -> {
@@ -383,6 +411,8 @@ data class HomeScreenState(
     val imageUrl: String = "",
 
     val isSuperUser: Boolean = false,
+
+    val doneBadgeCount:Int = 0,
 
     val isLoading: Boolean = false,
     val isEmployeesLoading: Boolean = false,
