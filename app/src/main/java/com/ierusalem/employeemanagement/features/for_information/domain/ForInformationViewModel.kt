@@ -37,12 +37,15 @@ class ForInformationViewModel(
             ForInformationEvents.NavIconClick -> {
                 emitNavigation(ForInformationNavigation.ArrowBackClick)
             }
+
             ForInformationEvents.OnPullRefresh -> {
-                //refresh informations
+                //refresh information
+                getReceivedInformationBadgeCount()
                 getReceivedInformation()
                 getSenInformation()
             }
-            is ForInformationEvents.OnTabItemClick ->{
+
+            is ForInformationEvents.OnTabItemClick -> {
                 _state.update {
                     it.copy(
                         selectedTabIndex = intent.tabIndex
@@ -52,25 +55,26 @@ class ForInformationViewModel(
         }
     }
 
-    fun getReceivedInformation(){
+    fun getReceivedInformation() {
         viewModelScope.launch(handler) {
-            repository.getReceivedInformation(id = "").let {response ->
-                if (response.isSuccessful){
-                    _state.update {uiState ->
+            repository.getReceivedInformation(id = "").let { response ->
+                if (response.isSuccessful) {
+                    _state.update { uiState ->
                         uiState.copy(
                             receivedInformation = response.body()!!.results.map {
                                 ForInformationData(
-                                    fullName = "${it.adminusername} ${it.adminlastName} ${it.patronymicName ?:""}",
+                                    fullName = "${it.adminusername} ${it.adminlastName} ${it.patronymicName ?: ""}",
                                     image = it.img,
                                     text = it.text,
                                     position = it.adminunvoni,
-                                    id = it.id
+                                    id = it.id,
+                                    isSeen = it.status != "kurilmagan"
                                 )
                             }
                         )
                     }
                     Log.d("ahi3646", "getReceivedInformation: ${response.body()!!}")
-                }else{
+                } else {
                     emitNavigation(ForInformationNavigation.InvalidResponse)
                     Log.d("ahi3646", "getReceivedInformation: false")
                 }
@@ -78,13 +82,27 @@ class ForInformationViewModel(
         }
     }
 
-    fun getSenInformation(){
+    fun getReceivedInformationBadgeCount() {
+        viewModelScope.launch(handler) {
+            repository.getReceivedInformationBadgeCount("kurilmagan").let { response ->
+                if (response.isSuccessful) {
+                    _state.update {
+                        it.copy(
+                            receivedBadgeCount = response.body()!!.count
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun getSenInformation() {
         updateLoading(true)
         viewModelScope.launch(handler) {
-            repository.getSenInformation(id = "").let {response ->
-                if (response.isSuccessful){
+            repository.getSenInformation(id = "").let { response ->
+                if (response.isSuccessful) {
                     updateLoading(false)
-                    _state.update {state ->
+                    _state.update { state ->
                         state.copy(
                             sentInformation = response.body()!!.results.map {
                                 ForInformationData(
@@ -92,13 +110,14 @@ class ForInformationViewModel(
                                     image = it.image,
                                     text = it.text,
                                     position = it.userUnvoni,
-                                    id = it.id
+                                    id = it.id,
+                                    isSeen = true
                                 )
                             }
                         )
                     }
                     Log.d("ahi3646", "getSenInformation: ${response.body()!!} ")
-                }else{
+                } else {
                     updateLoading(false)
                     emitNavigation(ForInformationNavigation.InvalidResponse)
                     Log.d("ahi3646", "getSenInformation: false")
@@ -107,7 +126,7 @@ class ForInformationViewModel(
         }
     }
 
-    private fun updateLoading(isLoading: Boolean){
+    private fun updateLoading(isLoading: Boolean) {
         _state.update {
             it.copy(
                 isLoading = isLoading
@@ -122,6 +141,8 @@ class ForInformationViewModel(
 data class ForInformationState(
     val isLoading: Boolean = false,
 
+    val receivedBadgeCount: Int = 0,
+
     val sentInformation: List<ForInformationData> = listOf(),
     val receivedInformation: List<ForInformationData> = listOf(),
 
@@ -133,9 +154,10 @@ data class ForInformationState(
 )
 
 data class ForInformationData(
-    val id:Int ,
+    val id: Int,
     val fullName: String,
     val image: String,
     val text: String,
-    val position: String?
+    val position: String?,
+    val isSeen: Boolean
 )

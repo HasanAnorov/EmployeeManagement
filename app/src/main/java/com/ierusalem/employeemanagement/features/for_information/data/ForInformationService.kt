@@ -15,10 +15,21 @@ interface ForInformationService {
         @Query("id") id:String
     ): Response<ForInformationReceivedResponse>
 
+    @GET("malumotuchun")
+    suspend fun getReceivedBadgeCount(
+        @Header("Authorization") authToken: String,
+        @Query("status") status:String
+    ): Response<ForInformationReceivedResponse>
+
     @GET("get_malumotuchun")
     suspend fun getSentInformation(
         @Header("Authorization") authToken: String,
         @Query("id") id:String
     ): Response<InformationResponse>
 
+    @GET("malumot_id")
+    suspend fun getReceivedInformationDesc(
+        @Header("Authorization") authToken: String,
+        @Query("id") id:String
+    ): Response<ForInformationReceivedResponse>
 }

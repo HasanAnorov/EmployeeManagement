@@ -19,6 +19,20 @@ class ForInformationRepositoryImpl(
         )
     }
 
+    override suspend fun getReceivedInformationDesc(id: String): Response<ForInformationReceivedResponse> {
+        return RestClient(context).forInformationService.getReceivedInformationDesc(
+            authToken = preferenceHelper.getToken(),
+            id = id
+        )
+    }
+
+    override suspend fun getReceivedInformationBadgeCount(status:String): Response<ForInformationReceivedResponse> {
+        return RestClient(context).forInformationService.getReceivedBadgeCount(
+            authToken = preferenceHelper.getToken(),
+            status = status
+        )
+    }
+
     override suspend fun getSenInformation(id:String): Response<InformationResponse> {
         return RestClient(context).forInformationService.getSentInformation(
             authToken = preferenceHelper.getToken(),

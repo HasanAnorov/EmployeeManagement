@@ -104,8 +104,7 @@ fun CommandsScreen(
                                 image =  "${Constants.BASE_URL}${command.userImage}"
                             }
                             WorkItem(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp),
+                                modifier = Modifier,
                                 image = image,
                                 position = command.userUnvoni ?: stringResource(id = R.string.not_given),
                                 fullName = "${command.user} ${command.userLastName}",

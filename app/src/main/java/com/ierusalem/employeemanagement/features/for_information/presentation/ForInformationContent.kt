@@ -53,28 +53,26 @@ fun ForInformationContent(
                         .clip(RoundedCornerShape(8.dp))
                         .background(MaterialTheme.colorScheme.background)
                 ) {
-                    itemsIndexed(data) { index, command ->
+                    itemsIndexed(data.sortedBy { it.isSeen }) { index, command ->
                         var image = command.image
                         if (image.startsWith("/media")){
                             image =  "${Constants.BASE_URL}${command.image}"
                         }
                         WorkItem(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp),
+                            modifier = Modifier,
                             image = image,
                             position = command.position ?: stringResource(id = R.string.not_given),
                             fullName = "${command.fullName} ",
                             description = command.text,
                             deadline = null,
-                            onItemClick = { onItemClick(command.id) }
+                            onItemClick = { onItemClick(command.id) },
+                            isSeen = command.isSeen
                         )
                         if (index < data.size - 1) {
                             HorizontalDivider(
                                 modifier = Modifier
-                                    .padding(
-                                        horizontal = 16.dp,
-                                        vertical = 16.dp
-                                    )
+                                    .padding(horizontal = 16.dp)
+                                    .padding(vertical = 4.dp)
                                     .clip(RoundedCornerShape(1.dp))
                                     .background(MaterialTheme.colorScheme.outline)
                             )

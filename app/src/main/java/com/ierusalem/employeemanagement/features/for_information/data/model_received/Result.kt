@@ -29,6 +29,8 @@ data class Result(
     val text: String,
     @SerializedName("user")
     val user: String,
+    @SerializedName("status")
+    val status: String,
     @SerializedName("user_email")
     val userEmail: String,
     @SerializedName("user_id")

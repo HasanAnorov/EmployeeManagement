@@ -26,6 +26,7 @@ class StaffForInformationFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        viewModel.getReceivedInformationBadgeCount()
         viewModel.getReceivedInformation()
     }
 

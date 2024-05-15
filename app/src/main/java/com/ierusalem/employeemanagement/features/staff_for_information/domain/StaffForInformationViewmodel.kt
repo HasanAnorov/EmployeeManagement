@@ -36,6 +36,20 @@ class StaffForInformationViewmodel(
         }
     }
 
+    fun getReceivedInformationBadgeCount() {
+        viewModelScope.launch(handler) {
+            repository.getReceivedInformationBadgeCount("kurilmagan").let { response ->
+                if (response.isSuccessful) {
+                    _state.update {
+                        it.copy(
+                            badgeCount = response.body()!!.count
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     fun getReceivedInformation(){
         updateLoading(true)
         viewModelScope.launch(handler) {
@@ -50,7 +64,8 @@ class StaffForInformationViewmodel(
                                     image = it.img,
                                     text = it.text,
                                     position = it.adminunvoni,
-                                    id = it.id
+                                    id = it.id,
+                                    isSeen = it.status != "kurilmagan"
                                 )
                             }
                         )
@@ -72,6 +87,7 @@ class StaffForInformationViewmodel(
             }
             StaffForInformationEvents.OnPullRefresh ->{
                 getReceivedInformation()
+                getReceivedInformationBadgeCount()
             }
         }
     }
@@ -82,6 +98,7 @@ class StaffForInformationViewmodel(
 data class StaffForInformationState(
     val isLoading: Boolean = false,
     val receivedInformation: List<ForInformationData> = listOf(),
+    val badgeCount: Int = 0,
 )
 
 sealed interface StaffForInformationNavigation{

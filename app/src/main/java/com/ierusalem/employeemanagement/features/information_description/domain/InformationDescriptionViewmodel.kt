@@ -50,7 +50,7 @@ class InformationDescriptionViewmodel(
                     }
                 }
             }else{
-                informationDescriptionRepository.getReceivedInformation(id).let {
+                informationDescriptionRepository.getReceivedInformationDesc(id).let {
                     if (it.isSuccessful){
                         _state.update {state ->
                             state.copy(

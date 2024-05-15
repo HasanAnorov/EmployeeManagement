@@ -25,6 +25,7 @@ class ForInformationFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        viewModel.getReceivedInformationBadgeCount()
         viewModel.getReceivedInformation()
         viewModel.getSenInformation()
     }
