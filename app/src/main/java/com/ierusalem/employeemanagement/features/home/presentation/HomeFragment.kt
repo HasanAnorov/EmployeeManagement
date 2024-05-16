@@ -164,6 +164,12 @@ class HomeFragment : Fragment() {
                                     drawerState.close()
                                     findNavController().navigate(R.id.action_homeFragment_to_forInformationFragment)
                                 }
+                            },
+                            onPersonalStatisticsClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_homeFragment_to_personalStatisticsFragment)
+                                }
                             }
                         )
                     }

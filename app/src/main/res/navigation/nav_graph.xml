@@ -96,6 +96,13 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:destination="@id/forInformationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_personalStatisticsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:destination="@id/personalStatisticsFragment" />
 
     </fragment>
 
@@ -185,6 +192,9 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:destination="@id/staffForInformationFragment" />
+        <action
+            android:id="@+id/action_staffHomeFragment_to_personalStatisticsFragment"
+            app:destination="@id/personalStatisticsFragment" />
 
     </fragment>
 
@@ -239,5 +249,9 @@
         android:id="@+id/informationDescriptionFragment"
         android:name="com.ierusalem.employeemanagement.features.information_description.presentation.InformationDescriptionFragment"
         android:label="InformationDescriptionFragment" />
+    <fragment
+        android:id="@+id/personalStatisticsFragment"
+        android:name="com.ierusalem.employeemanagement.features.personal_statistics.presentation.PersonalStatisticsFragment"
+        android:label="PersonalStatisticsFragment" />
 
 </navigation>

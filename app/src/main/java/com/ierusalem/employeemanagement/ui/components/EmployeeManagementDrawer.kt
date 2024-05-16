@@ -18,6 +18,7 @@ fun EmployeeManagementDrawer(
     onLogoutClicked: () -> Unit,
     onPrivateJobsClicked: () -> Unit,
     onStatisticsClicked: () -> Unit,
+    onPersonalStatisticsClicked: () -> Unit,
     onForInformationClick: () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -33,7 +34,8 @@ fun EmployeeManagementDrawer(
                         onLogoutClicked = onLogoutClicked,
                         onPrivateJobClicked = onPrivateJobsClicked,
                         onStatisticsClicked = onStatisticsClicked,
-                        onForInformationClick = onForInformationClick
+                        onForInformationClick = onForInformationClick,
+                        onPersonalStatisticsClicked = onPersonalStatisticsClicked
                     )
                 }
             },

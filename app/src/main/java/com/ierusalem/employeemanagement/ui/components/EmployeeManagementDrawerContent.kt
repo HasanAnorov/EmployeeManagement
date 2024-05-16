@@ -50,6 +50,7 @@ fun EmployeeManagementDrawerContent(
     onLogoutClicked: () -> Unit,
     onPrivateJobClicked: () -> Unit,
     onStatisticsClicked: () -> Unit,
+    onPersonalStatisticsClicked: () -> Unit,
     onForInformationClick: () -> Unit,
     state: HomeScreenState
 ) {
@@ -73,6 +74,9 @@ fun EmployeeManagementDrawerContent(
         }
         StatisticsItem {
             onStatisticsClicked()
+        }
+        PersonalStatisticsItem{
+            onPersonalStatisticsClicked()
         }
         ForInformation {
             onForInformationClick()
@@ -227,6 +231,35 @@ private fun StatisticsItem(
 }
 
 @Composable
+private fun PersonalStatisticsItem(
+    onPersonalStatisticsClicked: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .height(56.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .clip(CircleShape)
+            .clickable(onClick = onPersonalStatisticsClicked),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier.padding(start = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+            painter = painterResource(id = R.drawable.statistic),
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            text = stringResource(R.string.personal_statistics),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(start = 12.dp)
+        )
+    }
+}
+
+@Composable
 private fun LogoutItem(
     onLogoutClicked: () -> Unit,
 ) {
@@ -334,7 +367,8 @@ fun DrawerPreview() {
                     onSettingsClicked = {},
                     onPrivateJobClicked = {},
                     onStatisticsClicked = {},
-                    onForInformationClick = {}
+                    onForInformationClick = {},
+                    onPersonalStatisticsClicked = {}
                 )
             }
         }
@@ -354,7 +388,8 @@ fun DrawerPreviewDark() {
                     onSettingsClicked = {},
                     onPrivateJobClicked = {},
                     onStatisticsClicked = {},
-                    onForInformationClick = {}
+                    onForInformationClick = {},
+                    onPersonalStatisticsClicked = {}
                 )
             }
         }
