@@ -9,6 +9,7 @@ import com.ierusalem.employeemanagement.features.compose.data.ComposerService
 import com.ierusalem.employeemanagement.features.edit_profile.data.EditProfileService
 import com.ierusalem.employeemanagement.features.for_information.data.ForInformationService
 import com.ierusalem.employeemanagement.features.home.data.HomeService
+import com.ierusalem.employeemanagement.features.personal_statistics.data.PersonalStatisticsService
 import com.ierusalem.employeemanagement.features.private_jobs.data.PrivateJobService
 import com.ierusalem.employeemanagement.features.profile.data.ProfileService
 import com.ierusalem.employeemanagement.features.staff_home.data.StaffHomeService
@@ -59,6 +60,10 @@ class RestClient(context: Context) {
 
     val statisticsService: StatisticsService by lazy {
         retrofit.create(StatisticsService::class.java)
+    }
+
+    val personalStatisticsService: PersonalStatisticsService by lazy {
+        retrofit.create(PersonalStatisticsService::class.java)
     }
 
     val workDescriptionService: WorkDescriptionService by lazy {

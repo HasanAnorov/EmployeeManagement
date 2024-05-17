@@ -132,11 +132,17 @@ fun PersonalStatisticsScreen(
                 ) { pageCount ->
                     when (pageCount) {
                         0 -> {
-
+                            PersonalStatisticsContentSent(
+                                state = state,
+                                intentReducer = intentReducer
+                            )
                         }
 
                         1 -> {
-
+                            PersonalStatisticsContent(
+                                state = state,
+                                intentReducer = intentReducer
+                            )
                         }
                     }
                 }

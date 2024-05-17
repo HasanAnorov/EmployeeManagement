@@ -103,6 +103,12 @@ class StaffHomeFragment : Fragment() {
                                     drawerState.close()
                                     findNavController().navigate(R.id.action_staffHomeFragment_to_staffForInformationFragment)
                                 }
+                            },
+                            onPersonalStatsClicked = {
+                                scope.launch {
+                                    drawerState.close()
+                                    findNavController().navigate(R.id.action_staffHomeFragment_to_personalStatisticsFragment)
+                                }
                             }
                         ) {
                             StaffHomeScreen(

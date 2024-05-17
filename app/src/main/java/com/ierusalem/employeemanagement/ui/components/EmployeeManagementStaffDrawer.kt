@@ -18,6 +18,7 @@ fun EmployeeManagementStaffDrawer(
     onSettingsClicked: () -> Unit,
     onForInformationClick: () -> Unit,
     onLogoutClicked: () -> Unit,
+    onPersonalStatsClicked: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     EmployeeManagementTheme {
@@ -32,7 +33,8 @@ fun EmployeeManagementStaffDrawer(
                             onProfileClicked = onProfileClicked,
                             onSettingsClicked = onSettingsClicked,
                             onLogoutClicked = onLogoutClicked,
-                            onForInformationClick = onForInformationClick
+                            onForInformationClick = onForInformationClick,
+                            onPersonalStatsClicked = onPersonalStatsClicked
                         )
                 }
 
