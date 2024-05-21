@@ -29,6 +29,8 @@ object Constants {
 
     const val COMPOSE_COMMAND = "compose_command"
 
+    const val IS_STAFF = "is_staff"
+
     const val BASE_URL = "https://hat.samduuf.uz/"
 
     const val STATISTICS_DOWNLOAD_URL = "https://hat.samduuf.uz/exel/"

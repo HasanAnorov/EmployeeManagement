@@ -1,12 +1,10 @@
 package com.ierusalem.employeemanagement.features.personal_statistics.presentation
 
-import android.R.attr.password
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Browser
-import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +32,8 @@ class PersonalStatisticsFragment : Fragment() {
         super.onAttach(context)
         viewModel.getPersonalStatisticsSent()
         viewModel.getPersonalStatisticsReceived()
+        val isStaff = arguments?.getBoolean(Constants.IS_STAFF, false) ?: false
+        viewModel.updateIsStaff(isStaff)
     }
 
     override fun onCreateView(
@@ -82,9 +82,9 @@ class PersonalStatisticsFragment : Fragment() {
                 val i = Intent(Intent.ACTION_VIEW)
                 i.setData(Uri.parse(Constants.PERSONAL_STATISTICS_DOWNLOAD_URL_RECEIVED))
 
-                val authorization: String = "xamrayev@gmail.com" + ":" + "123"
-                val authorizationBase64: String =
-                    Base64.encodeToString(authorization.toByteArray(), 0)
+//                val authorization: String = "xamrayev@gmail.com" + ":" + "123"
+//                val authorizationBase64: String =
+//                    Base64.encodeToString(authorization.toByteArray(), 0)
 
                 val bundle = Bundle()
 //                bundle.putString("Authorization", "Basic $authorizationBase64")

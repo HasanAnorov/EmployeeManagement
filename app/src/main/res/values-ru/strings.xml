@@ -87,4 +87,7 @@
     <string name="task">Задача</string>
     <string name="information">Информация</string>
     <string name="information_description">Информация Описание</string>
+    <string name="personal_sent_statistics">Статистика личных отправлений</string>
+    <string name="personal_received_statistics">Персональная полученная статистика</string>
+    <string name="dismiss">Отмена</string>
 </resources>

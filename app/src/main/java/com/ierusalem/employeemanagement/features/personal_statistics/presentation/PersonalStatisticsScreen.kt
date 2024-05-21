@@ -41,8 +41,10 @@ fun PersonalStatisticsScreen(
     intentReducer: (PersonalStatisticsEvents) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(initialPage = state.selectedTabIndex,
-        pageCount = { state.tabItems.size })
+    val pagerState = rememberPagerState(
+        initialPage = state.selectedTabIndex,
+        pageCount = { state.tabItems.size }
+    )
     LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
         if (pagerState.isScrollInProgress) {
             intentReducer(PersonalStatisticsEvents.TabItemClick(pagerState.currentPage))
@@ -73,75 +75,79 @@ fun PersonalStatisticsScreen(
             modifier = Modifier
                 .weight(1F),
             content = {
-                TabRow(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .clip(RoundedCornerShape(9.dp))
-                        .fillMaxWidth(),
-                    selectedTabIndex = state.selectedTabIndex,
-                    containerColor = MaterialTheme.colorScheme.outline.copy(0.2F),
-                    indicator = { },
-                    divider = { },
-                    tabs = {
-                        state.tabItems.forEachIndexed { index, currentTab ->
-                            Tab(
-                                modifier = Modifier
-                                    .background(
-                                        color = if (pagerState.currentPage == index)
-                                            MaterialTheme.colorScheme.primary
-                                        else Color.Transparent,
-                                        shape = RoundedCornerShape(12.dp)
-                                    ),
-                                selected = state.selectedTabIndex == index,
-                                selectedContentColor = MaterialTheme.colorScheme.onBackground,
-                                unselectedContentColor = MaterialTheme.colorScheme.onBackground.copy(
-                                    0.5F
-                                ),
-                                onClick = {
-                                    intentReducer(PersonalStatisticsEvents.TabItemClick(index))
-                                    scope.launch {
-                                        pagerState.animateScrollToPage(index)
-                                    }
-                                },
-                                content = {
-                                    Row(
-                                        modifier = Modifier.padding(
-                                            horizontal = 10.dp,
-                                            vertical = 8.dp
+                if (!state.isStaff){
+                    TabRow(
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .clip(RoundedCornerShape(9.dp))
+                            .fillMaxWidth(),
+                        selectedTabIndex = state.selectedTabIndex,
+                        containerColor = MaterialTheme.colorScheme.outline.copy(0.2F),
+                        indicator = { },
+                        divider = { },
+                        tabs = {
+                            state.tabItems.forEachIndexed { index, currentTab ->
+                                Tab(
+                                    modifier = Modifier
+                                        .background(
+                                            color = if (pagerState.currentPage == index)
+                                                MaterialTheme.colorScheme.primary
+                                            else Color.Transparent,
+                                            shape = RoundedCornerShape(12.dp)
                                         ),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            modifier = Modifier.padding(vertical = 6.dp),
-                                            text = currentTab.asString(),
-                                            fontSize = 16.sp,
-                                            color = if (pagerState.currentPage == index) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
-                                            style = MaterialTheme.typography.titleSmall
-                                        )
-                                    }
-                                },
-                            )
+                                    selected = state.selectedTabIndex == index,
+                                    selectedContentColor = MaterialTheme.colorScheme.onBackground,
+                                    unselectedContentColor = MaterialTheme.colorScheme.onBackground.copy(
+                                        0.5F
+                                    ),
+                                    onClick = {
+                                        intentReducer(PersonalStatisticsEvents.TabItemClick(index))
+                                        scope.launch {
+                                            pagerState.animateScrollToPage(index)
+                                        }
+                                    },
+                                    content = {
+                                        Row(
+                                            modifier = Modifier.padding(
+                                                horizontal = 10.dp,
+                                                vertical = 8.dp
+                                            ),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                modifier = Modifier.padding(vertical = 6.dp),
+                                                text = currentTab.asString(),
+                                                fontSize = 16.sp,
+                                                color = if (pagerState.currentPage == index) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
+                                                style = MaterialTheme.typography.titleSmall
+                                            )
+                                        }
+                                    },
+                                )
+                            }
                         }
-                    }
-                )
+                    )
+                }
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
+                    userScrollEnabled = !state.isStaff,
                     state = pagerState
                 ) { pageCount ->
-                    when (pageCount) {
+                    val page = if(state.isStaff) 1 else pageCount
+                    when (page) {
                         0 -> {
                             PersonalStatisticsContentSent(
                                 state = state,
-                                intentReducer = intentReducer
+                                //intentReducer = intentReducer
                             )
                         }
 
                         1 -> {
                             PersonalStatisticsContent(
                                 state = state,
-                                intentReducer = intentReducer
+                                //intentReducer = intentReducer
                             )
                         }
                     }

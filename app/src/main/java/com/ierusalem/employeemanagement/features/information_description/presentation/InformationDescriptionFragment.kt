@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
+import com.ierusalem.employeemanagement.features.downloader.AndroidDownloader
 import com.ierusalem.employeemanagement.features.information_description.domain.InformationDescriptionViewmodel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
@@ -43,7 +44,10 @@ class InformationDescriptionFragment : Fragment() {
                         onArrowBackClick = {
                             findNavController().popBackStack()
                         },
-                        onDownloadFile = {},
+                        onDownloadFile = {
+                            val downloader = AndroidDownloader(requireContext())
+                            downloader.downloadFile(it)
+                        },
                         state = state
                     )
                 }

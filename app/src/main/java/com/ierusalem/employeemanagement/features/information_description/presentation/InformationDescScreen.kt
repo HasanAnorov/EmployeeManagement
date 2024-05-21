@@ -1,5 +1,6 @@
 package com.ierusalem.employeemanagement.features.information_description.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -126,6 +127,7 @@ fun InformationDescScreen(
                                             modifier = Modifier.padding(top = 8.dp),
                                             file = information.file,
                                             onDownloadFile = {
+                                                Log.d("download_url", "InformationDescScreen: ${information.file} ")
                                                 onDownloadFile(information.file)
                                             }
                                         )

@@ -87,4 +87,7 @@
     <string name="task">Vazifa</string>
     <string name="information">Ma `lumot</string>
     <string name="information_description">Ma\'lumot tavsifi</string>
+    <string name="personal_sent_statistics">Shaxsiy yuborilgan statistika</string>
+    <string name="dismiss">Bekor qilish</string>
+    <string name="personal_received_statistics">Shaxsiy qabul qilingan statistika</string>
 </resources>

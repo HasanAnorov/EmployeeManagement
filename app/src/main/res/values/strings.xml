@@ -88,4 +88,5 @@
     <string name="information_description">Information Description</string>
     <string name="personal_sent_statistics">Personal Sent Statistics</string>
     <string name="personal_received_statistics">Personal Received Statistics</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

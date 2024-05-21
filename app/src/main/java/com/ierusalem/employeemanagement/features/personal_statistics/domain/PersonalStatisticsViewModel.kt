@@ -99,6 +99,14 @@ class PersonalStatisticsViewModel(
         }
     }
 
+    fun updateIsStaff(isStaff: Boolean) {
+        _state.update {
+            it.copy(
+                isStaff = isStaff
+            )
+        }
+    }
+
     fun getPersonalStatisticsReceived() {
         viewModelScope.launch(handler) {
             repository.getPersonalStatisticsReceived(pageSize = 10000000).let {
@@ -194,6 +202,9 @@ class PersonalStatisticsViewModel(
 
 @Immutable
 data class PersonalStatisticsState(
+
+    val isStaff:Boolean = false,
+
     val tabItems: List<UiText> = listOf(
         UiText.StringResource(R.string.commands_sent),
         UiText.StringResource(R.string.commands_received)

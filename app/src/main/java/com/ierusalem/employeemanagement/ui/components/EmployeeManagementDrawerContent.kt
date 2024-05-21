@@ -72,8 +72,10 @@ fun EmployeeManagementDrawerContent(
         PrivateJobsItem {
             onPrivateJobClicked()
         }
-        StatisticsItem {
-            onStatisticsClicked()
+        if (state.isSuperUser){
+            StatisticsItem {
+                onStatisticsClicked()
+            }
         }
         PersonalStatisticsItem{
             onPersonalStatisticsClicked()

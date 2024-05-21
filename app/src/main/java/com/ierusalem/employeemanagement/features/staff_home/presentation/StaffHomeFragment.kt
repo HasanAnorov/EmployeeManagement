@@ -107,7 +107,9 @@ class StaffHomeFragment : Fragment() {
                             onPersonalStatsClicked = {
                                 scope.launch {
                                     drawerState.close()
-                                    findNavController().navigate(R.id.action_staffHomeFragment_to_personalStatisticsFragment)
+                                    val bundle = Bundle()
+                                    bundle.putBoolean(Constants.IS_STAFF, true)
+                                    findNavController().navigate(R.id.action_staffHomeFragment_to_personalStatisticsFragment, bundle)
                                 }
                             }
                         ) {
