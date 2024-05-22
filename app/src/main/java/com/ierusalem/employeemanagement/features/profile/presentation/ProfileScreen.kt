@@ -234,7 +234,7 @@ private fun NameAndPosition(
 @Composable
 private fun Name(userData: ProfileResponse, modifier: Modifier = Modifier) {
     Text(
-        text = "${userData.user.username} ${userData.user.lastName}",
+        text = "${userData.user.username} ${userData.user.lastName} ${userData.user.patronymicName}",
         modifier = modifier,
         style = MaterialTheme.typography.headlineSmall
     )
@@ -363,7 +363,8 @@ fun ConvPreviewLandscapeMeDefault() {
                         xonasi = "240",
                         id = 1,
                         isStaff = true,
-                        isSuperUser = false
+                        isSuperUser = false,
+                        patronymicName = "Hasan"
                     )
                 )
             )
@@ -392,7 +393,8 @@ fun ConvPreviewPortraitMeDefault() {
                         xonasi = "240",
                         id = 1,
                         isStaff = true,
-                        isSuperUser = false
+                        isSuperUser = false,
+                        patronymicName = "Hasan"
                     )
                 )
             )

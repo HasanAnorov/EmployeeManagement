@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +38,7 @@ fun EditProfileScreen(
     onPhotoPickerClicked: () -> Unit,
     onUsernameChanged: (String) -> Unit,
     onLastnameChanged: (String) -> Unit,
+    onPatronymicChanged: (String) -> Unit,
     onEmailChanged: (String) -> Unit,
     onPositionChanged: (String) -> Unit,
     onRoomChanged: (String) -> Unit,
@@ -48,6 +50,7 @@ fun EditProfileScreen(
         modifier = Modifier
             .verticalScroll(verticalScrollState)
             .fillMaxSize()
+            .navigationBarsPadding()
             .background(color = MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
@@ -84,6 +87,16 @@ fun EditProfileScreen(
                 label = stringResource(R.string.lastname),
                 onValueChanged = {
                     onLastnameChanged(it)
+                }
+            )
+            SimpleFilledTextField(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
+                value = state.newPatronymicName,
+                label = stringResource(R.string.patronymic_name),
+                onValueChanged = {
+                    onPatronymicChanged(it)
                 }
             )
             SimpleFilledTextField(
@@ -174,7 +187,8 @@ fun EditProfileScreen_Preview_Light() {
             onPositionChanged = {},
             onEmailChanged = {},
             onSaveClicked = {},
-            onNavigationIconClicked = {}
+            onNavigationIconClicked = {},
+            onPatronymicChanged = {}
         )
     }
 }
@@ -193,7 +207,8 @@ fun EditProfileScreen_Preview_Dark() {
             onPositionChanged = {},
             onEmailChanged = {},
             onSaveClicked = {},
-            onNavigationIconClicked = {}
+            onNavigationIconClicked = {},
+            onPatronymicChanged = {}
         )
     }
 }

@@ -31,6 +31,7 @@ class EditProfileFragment : Fragment() {
 
     private lateinit var username: String
     private lateinit var lastname: String
+    private lateinit var patronymicName: String
     private lateinit var room: String
     private lateinit var position: String
     private lateinit var phoneNumber: String
@@ -40,6 +41,7 @@ class EditProfileFragment : Fragment() {
         super.onAttach(context)
         username = arguments?.getString(Constants.TO_EDIT_PROFILE_USERNAME) ?: ""
         lastname = arguments?.getString(Constants.TO_EDIT_PROFILE_LASTNAME) ?: ""
+        patronymicName = arguments?.getString(Constants.TO_EDIT_PROFILE_PATRONYMIC) ?: ""
         room = arguments?.getString(Constants.TO_EDIT_PROFILE_ROOM) ?: ""
         position = arguments?.getString(Constants.TO_EDIT_PROFILE_POSITION) ?: ""
         email = arguments?.getString(Constants.TO_EDIT_PROFILE_EMAIL) ?: ""
@@ -49,6 +51,7 @@ class EditProfileFragment : Fragment() {
         viewModel.onPositionChanged(position)
         viewModel.onPhoneNumberChanged(phoneNumber)
         viewModel.onLastnameChanged(lastname)
+        viewModel.onPatronymicNameChanged(patronymicName)
         viewModel.onUsernameChanged(username)
         viewModel.onRoomChanged(room)
     }
@@ -94,15 +97,40 @@ class EditProfileFragment : Fragment() {
                         onUsernameChanged = {
                             viewModel.onUsernameChanged(it)
                         },
+                        onPatronymicChanged = {
+                            viewModel.onPatronymicNameChanged(it)
+                        },
                         onSaveClicked = {
                             val requestBodyBuilder = MultipartBody.Builder()
                             requestBodyBuilder.setType(MultipartBody.FORM)
-                            requestBodyBuilder.addFormDataPart("email", if (email != viewModel.state.value.newEmail) viewModel.state.value.newEmail else email )
-                            requestBodyBuilder.addFormDataPart("last_name", if (lastname != viewModel.state.value.newLastname) viewModel.state.value.newLastname else lastname )
-                            requestBodyBuilder.addFormDataPart("username", if (username != viewModel.state.value.newUsername) viewModel.state.value.newUsername else username )
-                            requestBodyBuilder.addFormDataPart("phone_no", if (phoneNumber != viewModel.state.value.newPhoneNumber) viewModel.state.value.newPhoneNumber else phoneNumber )
-                            requestBodyBuilder.addFormDataPart("unvoni", if (position != viewModel.state.value.newPosition) viewModel.state.value.newPosition else position )
-                            requestBodyBuilder.addFormDataPart("xonasi", if (room != viewModel.state.value.newRoom) viewModel.state.value.newRoom else room )
+                            requestBodyBuilder.addFormDataPart(
+                                "email",
+                                if (email != viewModel.state.value.newEmail) viewModel.state.value.newEmail else email
+                            )
+                            requestBodyBuilder.addFormDataPart(
+                                "last_name",
+                                if (lastname != viewModel.state.value.newLastname) viewModel.state.value.newLastname else lastname
+                            )
+                            requestBodyBuilder.addFormDataPart(
+                                "patronymic_name",
+                                if (patronymicName != viewModel.state.value.newPatronymicName) viewModel.state.value.newPatronymicName else patronymicName
+                            )
+                            requestBodyBuilder.addFormDataPart(
+                                "username",
+                                if (username != viewModel.state.value.newUsername) viewModel.state.value.newUsername else username
+                            )
+                            requestBodyBuilder.addFormDataPart(
+                                "phone_no",
+                                if (phoneNumber != viewModel.state.value.newPhoneNumber) viewModel.state.value.newPhoneNumber else phoneNumber
+                            )
+                            requestBodyBuilder.addFormDataPart(
+                                "unvoni",
+                                if (position != viewModel.state.value.newPosition) viewModel.state.value.newPosition else position
+                            )
+                            requestBodyBuilder.addFormDataPart(
+                                "xonasi",
+                                if (room != viewModel.state.value.newRoom) viewModel.state.value.newRoom else room
+                            )
                             if (state.value.imageUri != null) {
                                 val inputStream =
                                     requireContext().contentResolver.openInputStream(state.value.imageUri!!)
@@ -153,7 +181,11 @@ class EditProfileFragment : Fragment() {
             }
 
             EditProfileNavigation.Failure -> {
-                Toast.makeText(requireContext(), resources.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             EditProfileNavigation.NavigateToMain -> {

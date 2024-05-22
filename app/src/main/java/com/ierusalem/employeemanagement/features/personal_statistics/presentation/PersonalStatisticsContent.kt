@@ -79,19 +79,9 @@ fun PersonalStatisticsContent(
                     color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.titleSmall
                 )
-                //will implement later
-//                IconButton(
-//                    onClick = { intentReducer(PersonalStatisticsEvents.DownloadPersonalStatisticsReceived) },
-//                    content = {
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.download),
-//                            contentDescription = null,
-//                            tint = MaterialTheme.colorScheme.onBackground
-//                        )
-//                    }
-//                )
             }
         )
+        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
         val soloHorizontalScrollState = rememberScrollState()
         Row(
             modifier = Modifier

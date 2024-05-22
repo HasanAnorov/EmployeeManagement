@@ -14,6 +14,8 @@ data class User(
     val isStaff: Boolean,
     @SerializedName("last_name")
     val lastName: String,
+    @SerializedName("patronymic_name")
+    val patronymicName: String,
     @SerializedName("phone_no")
     val phoneNo: String,
     @SerializedName("unvoni")
@@ -22,7 +24,6 @@ data class User(
     val username: String,
     @SerializedName("xonasi")
     val xonasi: String?,
-
     @SerializedName("superuser")
     val isSuperUser: Boolean
 )

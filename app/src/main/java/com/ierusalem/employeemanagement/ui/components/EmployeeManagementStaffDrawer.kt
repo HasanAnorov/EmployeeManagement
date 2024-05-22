@@ -34,7 +34,7 @@ fun EmployeeManagementStaffDrawer(
                             onSettingsClicked = onSettingsClicked,
                             onLogoutClicked = onLogoutClicked,
                             onForInformationClick = onForInformationClick,
-                            onPersonalStatsClicked = onPersonalStatsClicked
+                            onPersonalStatsClicked = onPersonalStatsClicked,
                         )
                 }
 

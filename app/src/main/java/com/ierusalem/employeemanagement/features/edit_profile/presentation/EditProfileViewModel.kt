@@ -56,6 +56,14 @@ class EditProfileViewModel(private val editProfileRepository: EditProfileReposit
         }
     }
 
+    fun onPatronymicNameChanged(patronymicName: String){
+        _state.update {
+            it.copy(
+                newPatronymicName = patronymicName
+            )
+        }
+    }
+
     fun onPositionChanged(position: String){
         _state.update {
             it.copy(newPosition = position)
@@ -87,6 +95,7 @@ data class EditProfileScreenState(
     val newPassword: String = "",
     val newUsername: String = "",
     val newLastname: String = "",
+    val newPatronymicName: String = "",
     val newEmail: String = "",
     val newPosition: String = "",
     val newRoom: String = "",

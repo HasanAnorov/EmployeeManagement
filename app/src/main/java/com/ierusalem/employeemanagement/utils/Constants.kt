@@ -41,6 +41,7 @@ object Constants {
 
     const val TO_EDIT_PROFILE_USERNAME = "to_edit_profile_username"
     const val TO_EDIT_PROFILE_LASTNAME = "to_edit_profile_lastname"
+    const val TO_EDIT_PROFILE_PATRONYMIC = "to_edit_profile_patronymic"
     const val TO_EDIT_PROFILE_EMAIL = "to_edit_profile_email"
     const val TO_EDIT_PROFILE_POSITION = "to_edit_profile_position"
     const val TO_EDIT_PROFILE_ROOM = "to_edit_profile_room"

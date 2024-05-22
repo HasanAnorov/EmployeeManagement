@@ -49,6 +49,10 @@ class ProfileFragment : Fragment() {
                                 Constants.TO_EDIT_PROFILE_LASTNAME,
                                 userData.user.lastName
                             )
+                            bundle.putString(
+                                Constants.TO_EDIT_PROFILE_PATRONYMIC,
+                                userData.user.patronymicName
+                            )
                             bundle.putString(Constants.TO_EDIT_PROFILE_ROOM, userData.user.xonasi)
                             bundle.putString(
                                 Constants.TO_EDIT_PROFILE_POSITION,
