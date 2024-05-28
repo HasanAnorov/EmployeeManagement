@@ -90,4 +90,5 @@
     <string name="personal_sent_statistics">Статистика личных отправлений</string>
     <string name="personal_received_statistics">Персональная полученная статистика</string>
     <string name="dismiss">Отмена</string>
+    <string name="patronymic_name">Отчество</string>
 </resources>

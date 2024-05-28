@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.core.ValidationResult
 import com.ierusalem.employeemanagement.features.auth.data.entity.auth_response.User
 import com.ierusalem.employeemanagement.features.auth.domain.AuthRepository
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
@@ -163,4 +162,9 @@ data class LoginScreenState(
     val usernameError: UiText? = null,
     val password: String = "",
     val passwordError: UiText? = null,
+)
+
+data class ValidationResult(
+    val successful: Boolean,
+    val errorMessage: UiText? = null
 )

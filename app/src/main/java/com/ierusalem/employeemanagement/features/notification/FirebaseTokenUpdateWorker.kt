@@ -25,8 +25,6 @@ class FirebaseTokenUpdateWorker(
         }else{
             Result.failure()
         }
-
     }
-
 
 }

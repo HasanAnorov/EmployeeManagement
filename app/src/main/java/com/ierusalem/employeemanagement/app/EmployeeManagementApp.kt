@@ -29,8 +29,8 @@ class EmployeeManagementApp : Application() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                "channel_id",
-                "Channel name",
+                CHANNEL_ID,
+                CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             )
             val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -57,4 +57,10 @@ class EmployeeManagementApp : Application() {
             )
         }
     }
+
+    companion object {
+        private const val CHANNEL_ID = "channel_id"
+        private const val CHANNEL_NAME = "Channel name"
+    }
+
 }
