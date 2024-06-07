@@ -26,6 +26,9 @@ import com.ierusalem.employeemanagement.features.downloader.AndroidDownloader
 import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
+import com.ierusalem.employeemanagement.utils.Constants.COMPOSE_PROFILE_ID
+import com.ierusalem.employeemanagement.utils.Constants.COMPOSE_WORK_ID
+import com.ierusalem.employeemanagement.utils.Resource
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -39,6 +42,7 @@ class WorkDescriptionFragment : Fragment() {
         super.onAttach(context)
         val workId = arguments?.getString(Constants.WORK_DESCRIPTION_KEY)
         Log.d("workId", "onAttach: WorkId - $workId ")
+
         val isFromSent =  arguments?.getBoolean(Constants.IS_FROM_SENT) ?: false
         viewModel.isFromSent(isFromSent)
         val isFromHome = arguments?.getBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME) ?: false
@@ -77,7 +81,12 @@ class WorkDescriptionFragment : Fragment() {
                             viewModel.handleEvents(it)
                         },
                         onEditWorkClicked = {
-                            findNavController().navigate(R.id.action_workDescriptionFragment_to_editFragment)
+                            val bundle = Bundle()
+                            val userId = (state.workItem as Resource.Success).data!!.results[0].userId.toString()
+                            Log.d("ahi3646", "onCreateView: userId - $userId ")
+                            bundle.putString(COMPOSE_PROFILE_ID, userId )
+                            bundle.putString(COMPOSE_WORK_ID, state.workId)
+                            findNavController().navigate(R.id.action_workDescriptionFragment_to_editFragment, bundle)
                         },
                         onDeleteWorkClicked = {
                             viewModel.deleteWorkById(workId = state.workId)

@@ -269,6 +269,16 @@
     <fragment
         android:id="@+id/editFragment"
         android:name="com.ierusalem.employeemanagement.features.edit_work.presentation.EditFragment"
-        android:label="EditFragment" />
+        android:label="EditFragment" >
+        <action
+            android:id="@+id/action_editFragment_to_homeFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

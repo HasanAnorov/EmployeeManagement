@@ -28,8 +28,11 @@ object Constants {
     const val LOCALE_THEME = "local_theme"
 
     const val COMPOSE_PROFILE_ID = "compose_profile_id"
+    const val COMPOSE_WORK_ID = "compose_work_id"
 
     const val COMPOSE_COMMAND = "compose_command"
+
+    const val EDIT_WORK_SUCCESS = "edit_work_success"
 
     const val IS_STAFF = "is_staff"
 

@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ierusalem.employeemanagement.features.compose.presentation.ComposeScreenNavigation
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
@@ -13,6 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.Calendar
 import java.util.TimeZone
@@ -30,6 +32,65 @@ class EditWorkViewModel(
         emitNavigation(EditWorkScreenNavigation.InvalidResponse)
     }
 
+    fun setUserId(userId:String){
+        _state.update {
+            it.copy(
+                userId = userId
+            )
+        }
+    }
+
+    fun setWorkId(workId:String){
+        _state.update {
+            it.copy(
+                workId = workId
+            )
+        }
+    }
+
+    fun onSaveClicked(){
+        Log.d("ahi3646", "onSaveClicked: ${state.value.userId} ")
+        val time = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
+        val requestBodyBuilder = MultipartBody.Builder()
+        requestBodyBuilder.setType(MultipartBody.FORM)
+        requestBodyBuilder.addFormDataPart("user", state.value.userId)
+        requestBodyBuilder.addFormDataPart("text", state.value.textForm)
+        requestBodyBuilder.addFormDataPart("end_time", time)
+        for (file in state.value.files) {
+            requestBodyBuilder.addFormDataPart(
+                "file",
+                file.name,
+                file.asRequestBody(
+                    "*/*".toMediaType()
+                )
+            )
+        }
+        val requestBody = requestBodyBuilder.build()
+        viewModelScope.launch {
+            editWorkRepository.saveEditedWork(requestBody, state.value.workId).let {
+                if(it.isSuccessful){
+                    Log.d("ahi3646", "onSaveClicked: success ")
+                    emitNavigation(EditWorkScreenNavigation.SuccessOnWorkEdition)
+                }else{
+                    Log.d("ahi3646", "onSaveClicked: failure ")
+                    emitNavigation(EditWorkScreenNavigation.FailureOnWorkEdition)
+                }
+            }
+        }
+    }
+
+    fun onFilesChanged(file: File) {
+        val newFiles = state.value.files.toMutableList().apply {
+            add(file)
+        }
+        _state.update {
+            it.copy(
+                files = newFiles
+            )
+        }
+    }
+
+    @Suppress("unused")
     fun deleteWorkById(workId: String) {
         viewModelScope.launch(handler) {
             editWorkRepository.deleteWorkById(workId).let {
@@ -86,6 +147,8 @@ class EditWorkViewModel(
 
 sealed interface EditWorkScreenNavigation {
     data object InvalidResponse : EditWorkScreenNavigation
+    data object SuccessOnWorkEdition : EditWorkScreenNavigation
+    data object FailureOnWorkEdition : EditWorkScreenNavigation
     data object SuccessOnWorkDeletion : EditWorkScreenNavigation
     data object FailureOnWorkDeletion : EditWorkScreenNavigation
 }
@@ -102,4 +165,9 @@ data class EditWorkUiState(
     val monthForm: String = "",
     val dayForm: String = "",
     val files: List<File> = arrayListOf(),
+
+    val userId: String = "",
+    val workId: String = "",
+
+    val isEditing: Boolean = false
 )

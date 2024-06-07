@@ -93,6 +93,10 @@ class HomeFragment : Fragment() {
             //one request is enough, backend dev said other automatically will be refreshed
             viewModel.getCommands("yuborildi")
         }
+        val isFromEditWork = arguments?.getBoolean(Constants.EDIT_WORK_SUCCESS) ?: false
+        if(isFromEditWork){
+            viewModel.getCommands("yuborildi")
+        }
 
         return ComposeView(requireContext()).apply {
             setContent {

@@ -210,7 +210,6 @@ class WorkDescriptionViewModel(
     }
 }
 
-
 @Immutable
 data class WorkDescriptionScreenState(
     val workId:String = "",

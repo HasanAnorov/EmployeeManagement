@@ -93,4 +93,5 @@
     <string name="give_permission_to_use_data">Give permission to use data!</string>
     <string name="permission_denied">Permission denied</string>
     <string name="allow">Allow</string>
+    <string name="could_not_edit_work">Could not edit work!</string>
 </resources>

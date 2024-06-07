@@ -1,6 +1,7 @@
 package com.ierusalem.employeemanagement.features.edit_work.presentation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -19,10 +20,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkScreenNavigation
 import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
+import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -61,12 +65,20 @@ class EditFragment : Fragment() {
                 val fileOutputStream = FileOutputStream(file)
                 inputStream?.copyTo(fileOutputStream)
                 fileOutputStream.close()
-                //viewModel.onFilesChanged(file)
+                viewModel.onFilesChanged(file)
             }
         }
         if (result.resultCode == Activity.RESULT_CANCELED) {
             Log.d("ahi3646", "onActivityResult: RESULT CANCELED ")
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val userId = arguments?.getString(Constants.COMPOSE_PROFILE_ID) ?: ""
+        viewModel.setUserId(userId)
+        val workId = arguments?.getString(Constants.COMPOSE_WORK_ID) ?: ""
+        viewModel.setWorkId(workId)
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -89,14 +101,12 @@ class EditFragment : Fragment() {
                                 viewModel.showAlertDialog(true)
                             }
                         },
-                        onNavIconClicked = { navigateToHomeWithRefresh() },
+                        onNavIconClicked = { findNavController().popBackStack() },
                         onTextChanged = { viewModel.onTextFormChanged(it) },
                         onYearChanged = { viewModel.onYearChanged(it) },
                         onMonthChanged = { viewModel.onMonthChanged(it) },
                         onDayChanged = { viewModel.onDayChanged(it) },
-                        onSaveClicked = {
-
-                        },
+                        onSaveClicked = { viewModel.onSaveClicked() },
                         dismissDialog = { viewModel.showAlertDialog(false) },
                         gotoStorageSetting = {
                             if (Build.VERSION.SDK_INT >= 30) {
@@ -114,9 +124,9 @@ class EditFragment : Fragment() {
     }
 
     private fun navigateToHomeWithRefresh() {
-//        val bundle = Bundle()
-//        bundle.putBoolean(Constants.COMPOSE_COMMAND, true)
-//        findNavController().navigate(R.id.action_composeFragment_to_homeFragment, bundle)
+        val bundle = Bundle()
+        bundle.putBoolean(Constants.EDIT_WORK_SUCCESS, true)
+        findNavController().navigate(R.id.action_editFragment_to_homeFragment, bundle)
     }
 
     private fun showFileChooser() {
@@ -156,9 +166,20 @@ class EditFragment : Fragment() {
                     getString(R.string.something_went_wrong), Toast.LENGTH_SHORT
                 ).show()
             }
+
+            EditWorkScreenNavigation.SuccessOnWorkEdition -> {
+                navigateToHomeWithRefresh()
+            }
+
+            EditWorkScreenNavigation.FailureOnWorkEdition -> {
+                Toast.makeText(requireContext(),
+                    getString(R.string.could_not_edit_work), Toast.LENGTH_SHORT).show()
+            }
+
             EditWorkScreenNavigation.FailureOnWorkDeletion -> {
 
             }
+
             EditWorkScreenNavigation.SuccessOnWorkDeletion -> {
 
             }
