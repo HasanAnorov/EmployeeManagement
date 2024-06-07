@@ -340,7 +340,7 @@ class HomeViewModel(private val repo: HomeRepository) : ViewModel(),
             }
 
             is HomeScreenClickIntents.OnItemClick -> {
-                emitNavigation(HomeScreenNavigation.OnItemClick(intent.workId))
+                emitNavigation(HomeScreenNavigation.OnItemClick(intent.workId, intent.isFromSent))
             }
 
             is HomeScreenClickIntents.CreateCommand -> {

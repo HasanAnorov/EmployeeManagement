@@ -21,9 +21,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -56,8 +59,10 @@ import com.ierusalem.employeemanagement.utils.Resource
 @Composable
 fun WorkDescriptionScreen(
     state: WorkDescriptionScreenState,
-    dismissDialog:() -> Unit,
+    dismissDialog: () -> Unit,
     gotoStorageSetting: () -> Unit,
+    onEditWorkClicked: () -> Unit,
+    onDeleteWorkClicked: () -> Unit,
     intentReducer: (WorkDescriptionScreenEvents) -> Unit,
 ) {
     when (state.workItem) {
@@ -65,11 +70,11 @@ fun WorkDescriptionScreen(
         is Resource.Success -> {
             val scrollState = rememberScrollState()
             val work = state.workItem.data!!.results[0]
-            if(state.showAlertDialog){
+            if (state.showAlertDialog) {
                 AlertDialogExample(
                     onDismissRequest = { dismissDialog() },
                     onConfirmation = { gotoStorageSetting() },
-                    dialogTitle = stringResource(R.string.ma_lumotlardan_foydalanish_uchun_ruxsat_bering),
+                    dialogTitle = stringResource(R.string.give_permission_to_use_data),
                     dialogText = stringResource(R.string.allow_the_app_to_use_device_data),
                 )
             }
@@ -89,6 +94,16 @@ fun WorkDescriptionScreen(
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
+                    },
+                    actions = {
+                        if(state.isFromSent){
+                            IconButton(onClick = { onEditWorkClicked() }) {
+                                Icon(imageVector = Icons.Default.EditNote, contentDescription = null)
+                            }
+                            IconButton(onClick = { onDeleteWorkClicked() }) {
+                                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                            }
+                        }
                     }
                 )
                 Column(
@@ -392,7 +407,9 @@ private fun WorkDescriptionScreenPreview() {
             state = WorkDescriptionScreenState(),
             intentReducer = {},
             dismissDialog = {},
-            gotoStorageSetting = {}
+            gotoStorageSetting = {},
+            onEditWorkClicked = {},
+            onDeleteWorkClicked = {}
         )
     }
 }
@@ -405,7 +422,9 @@ private fun WorkDescriptionScreenPreviewDark() {
             state = WorkDescriptionScreenState(),
             intentReducer = {},
             dismissDialog = {},
-            gotoStorageSetting = {}
+            gotoStorageSetting = {},
+            onEditWorkClicked = {},
+            onDeleteWorkClicked = {}
         )
     }
 }

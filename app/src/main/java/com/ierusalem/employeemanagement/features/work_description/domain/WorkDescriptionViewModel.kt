@@ -23,8 +23,7 @@ import java.io.File
 
 class WorkDescriptionViewModel(
     private val repo: WorkDescriptionRepository,
-) : ViewModel(),
-    NavigationEventDelegate<WorkDescriptionNavigation> by DefaultNavigationEventDelegate() {
+) : ViewModel(), NavigationEventDelegate<WorkDescriptionNavigation> by DefaultNavigationEventDelegate() {
 
     private val _state: MutableStateFlow<WorkDescriptionScreenState> =
         MutableStateFlow(WorkDescriptionScreenState())
@@ -63,6 +62,14 @@ class WorkDescriptionViewModel(
         _state.update {
             it.copy(
                 isFromHome = isHome
+            )
+        }
+    }
+
+    fun isFromSent(isFromSent: Boolean){
+        _state.update {
+            it.copy(
+                isFromSent = isFromSent
             )
         }
     }
@@ -131,6 +138,19 @@ class WorkDescriptionViewModel(
         }
     }
 
+    fun deleteWorkById(workId: String){
+        viewModelScope.launch(handler) {
+            repo.deleteWorkById(workId).let {
+                if(it.isSuccessful){
+                    emitNavigation(WorkDescriptionNavigation.SuccessOnWorkDeletion)
+                }else{
+                    Log.d("ahi3646", "deleteWorkById: ${it.errorBody()} ")
+                    emitNavigation(WorkDescriptionNavigation.FailureOnWorkDeletion)
+                }
+            }
+        }
+    }
+
     fun getMessageById(workId: String){
         try {
             viewModelScope.launch(handler) {
@@ -180,14 +200,24 @@ class WorkDescriptionViewModel(
             )
         }
     }
+
+    fun initWorkId(workId: String){
+        _state.update {
+            it.copy(
+                workId = workId
+            )
+        }
+    }
 }
 
 
 @Immutable
 data class WorkDescriptionScreenState(
+    val workId:String = "",
     val showAlertDialog: Boolean = false,
     val workItem: Resource<WorkItem> = Resource.Loading(),
     val isFromHome: Boolean = false,
+    val isFromSent: Boolean = false,
     val textForm: String = "",
     val files: List<File> = arrayListOf()
 )

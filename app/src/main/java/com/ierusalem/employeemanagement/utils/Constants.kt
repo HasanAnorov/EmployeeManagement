@@ -13,6 +13,8 @@ object Constants {
     const val WORK_DESCRIPTION_KEY = "work_description_key_id"
     const val WORK_DESCRIPTION_KEY_FROM_HOME = "work_description_key_id_from_home"
 
+    const val IS_FROM_SENT = "is_from_sent"
+
     const val PROFILE_CHANGE = "profile_changed_successfully"
 
     const val IS_SENT_FOR_INFORMATION = "is_sent_for_information"

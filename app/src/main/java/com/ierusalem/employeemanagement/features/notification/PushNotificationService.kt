@@ -40,10 +40,10 @@ class PushNotificationService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        showNotification(
-            title = this.resources.getString(R.string.app_name),
-            description = getString(R.string.new_message)
-        )
+//        showNotification(
+//            title = this.resources.getString(R.string.app_name),
+//            description = getString(R.string.new_message)
+//        )
     }
 
     private fun showNotification(title: String, description: String) {

@@ -14,6 +14,12 @@ class WorkDescriptionRepositoryImpl(
     private val context: Context,
     private val preferenceHelper: PreferenceHelper
 ): WorkDescriptionRepository {
+    override suspend fun deleteWorkById(workId: String): Response<Unit> {
+        return RestClient(context).workDescriptionService.deleteWorkById(
+            authToken = preferenceHelper.getToken(),
+            workId = workId
+        )
+    }
     override suspend fun getMessageById(workId: String): Response<WorkItem> {
         Log.d("ahi3646", "getMessageById: ")
         return RestClient(context).workDescriptionService.getMessageById(

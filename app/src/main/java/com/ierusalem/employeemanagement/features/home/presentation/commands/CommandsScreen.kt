@@ -111,7 +111,8 @@ fun CommandsScreen(
                                 description = command.text,
                                 deadline = command.endTime,
                                 onItemClick = {
-                                    intentReducer(HomeScreenClickIntents.OnItemClick(command.workId.toString()))
+                                    val isFromSent = status == "yuborildi"
+                                    intentReducer(HomeScreenClickIntents.OnItemClick(command.workId.toString(), isFromSent))
                                 }
                             )
                             if (index < data.size - 1) {

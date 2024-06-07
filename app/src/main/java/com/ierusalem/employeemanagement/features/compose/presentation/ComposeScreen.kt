@@ -83,7 +83,7 @@ fun ComposeScreen(
             AlertDialogExample(
                 onDismissRequest = { dismissDialog() },
                 onConfirmation = { gotoStorageSetting() },
-                dialogTitle = stringResource(R.string.ma_lumotlardan_foydalanish_uchun_ruxsat_bering),
+                dialogTitle = stringResource(R.string.give_permission_to_use_data),
                 dialogText = stringResource(R.string.allow_the_app_to_use_device_data),
             )
         }

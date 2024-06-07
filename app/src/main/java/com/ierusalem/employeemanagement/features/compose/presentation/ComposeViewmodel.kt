@@ -75,6 +75,7 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
     }
 
     fun onSubmitClicked(userId: String) {
+        Log.d("ahi3646", "userID : $userId ")
         changeSubmitState(true)
         val time = "${state.value.yearForm}-${state.value.monthForm}-${state.value.dayForm}"
         val requestBodyBuilder = MultipartBody.Builder()
@@ -97,9 +98,11 @@ class ComposeViewmodel(private val repo: ComposeRepository) : ViewModel(),
                 if(state.value.isCommand){
                     repo.postMessage(requestBody).let {
                         if (it.isSuccessful) {
+                            Log.d("ahi3646", "onSubmitClicked: success ${it.body()} ")
                             changeSubmitState(false)
                             emitNavigation(ComposeScreenNavigation.Success)
                         } else {
+                            Log.d("ahi3646", "onSubmitClicked: error ${it.errorBody()} ")
                             changeSubmitState(false)
                             emitNavigation(ComposeScreenNavigation.InvalidResponse)
                         }

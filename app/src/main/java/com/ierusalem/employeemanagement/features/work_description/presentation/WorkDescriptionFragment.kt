@@ -38,6 +38,9 @@ class WorkDescriptionFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val workId = arguments?.getString(Constants.WORK_DESCRIPTION_KEY)
+        Log.d("workId", "onAttach: WorkId - $workId ")
+        val isFromSent =  arguments?.getBoolean(Constants.IS_FROM_SENT) ?: false
+        viewModel.isFromSent(isFromSent)
         val isFromHome = arguments?.getBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME) ?: false
         if (isFromHome) {
             viewModel.isFromHome(true)
@@ -54,6 +57,8 @@ class WorkDescriptionFragment : Fragment() {
                 getString(R.string.something_went_wrong),
                 Toast.LENGTH_SHORT
             ).show()
+        } else {
+            viewModel.initWorkId(workId)
         }
     }
 
@@ -70,6 +75,12 @@ class WorkDescriptionFragment : Fragment() {
                         state = state,
                         intentReducer = {
                             viewModel.handleEvents(it)
+                        },
+                        onEditWorkClicked = {
+                            findNavController().navigate(R.id.action_workDescriptionFragment_to_editFragment)
+                        },
+                        onDeleteWorkClicked = {
+                            viewModel.deleteWorkById(workId = state.workId)
                         },
                         dismissDialog = { viewModel.showAlertDialog(false) },
                         gotoStorageSetting = {
@@ -123,6 +134,15 @@ class WorkDescriptionFragment : Fragment() {
                 } else {
                     viewModel.showAlertDialog(true)
                 }
+            }
+
+            WorkDescriptionNavigation.SuccessOnWorkDeletion -> {
+                Log.d("ahi3646", "executeNavigation: work deleted successfully ")
+                findNavController().popBackStack()
+            }
+
+            WorkDescriptionNavigation.FailureOnWorkDeletion -> {
+                Log.d("ahi3646", "executeNavigation: can not delete work")
             }
 
             WorkDescriptionNavigation.InvalidResponse -> {

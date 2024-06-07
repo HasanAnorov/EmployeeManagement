@@ -9,5 +9,5 @@ sealed interface HomeScreenNavigation {
     data object FailedToLogout: HomeScreenNavigation
     data object FailedToLoadEmployees: HomeScreenNavigation
     data object InvalidResponse: HomeScreenNavigation
-    data class OnItemClick(val workId: String): HomeScreenNavigation
+    data class OnItemClick(val workId: String, val isFromSent: Boolean): HomeScreenNavigation
 }

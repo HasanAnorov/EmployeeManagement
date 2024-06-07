@@ -1,9 +1,7 @@
-package com.ierusalem.employeemanagement.features.compose.presentation
+package com.ierusalem.employeemanagement.features.edit_work.presentation
 
 import android.app.Activity
 import android.content.Intent
-import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
-import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -21,20 +19,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.home.presentation.Users
+import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkScreenNavigation
+import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
 
-class ComposeFragment : Fragment() {
+class EditFragment : Fragment() {
 
-    private val viewModel: ComposeViewmodel by viewModel()
+    private val viewModel: EditWorkViewModel by viewModel()
 
     private val getFilesLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -65,7 +61,7 @@ class ComposeFragment : Fragment() {
                 val fileOutputStream = FileOutputStream(file)
                 inputStream?.copyTo(fileOutputStream)
                 fileOutputStream.close()
-                viewModel.onFilesChanged(file)
+                //viewModel.onFilesChanged(file)
             }
         }
         if (result.resultCode == Activity.RESULT_CANCELED) {
@@ -79,16 +75,13 @@ class ComposeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        val usersString = arguments?.getString(Constants.USERS_TO_COMMAND) ?: ""
-        val userId = arguments?.getString(Constants.COMPOSE_PROFILE_ID) ?: ""
-        val users = Gson().fromJson(usersString, Users::class.java)
-
         return ComposeView(requireContext()).apply {
             setContent {
+
                 val state by viewModel.state.collectAsStateWithLifecycle()
+
                 EmployeeManagementTheme {
-                    ComposeScreen(
+                    EditWorkScreen(
                         onAttachFileClick = {
                             if (Environment.isExternalStorageManager()) {
                                 showFileChooser()
@@ -98,16 +91,12 @@ class ComposeFragment : Fragment() {
                         },
                         onNavIconClicked = { navigateToHomeWithRefresh() },
                         onTextChanged = { viewModel.onTextFormChanged(it) },
-                        onSubmitClicked = {
-                            if (usersString.isNotEmpty()) {
-                                viewModel.onSubmitClickedForUsers(users.users)
-                            } else {
-                                viewModel.onSubmitClicked(userId)
-                            }
-                        },
                         onYearChanged = { viewModel.onYearChanged(it) },
                         onMonthChanged = { viewModel.onMonthChanged(it) },
                         onDayChanged = { viewModel.onDayChanged(it) },
+                        onSaveClicked = {
+
+                        },
                         dismissDialog = { viewModel.showAlertDialog(false) },
                         gotoStorageSetting = {
                             if (Build.VERSION.SDK_INT >= 30) {
@@ -117,12 +106,6 @@ class ComposeFragment : Fragment() {
                             }
                             viewModel.showAlertDialog(false)
                         },
-                        onTaskClick = {
-                            viewModel.changeIsCommand(true)
-                        },
-                        onInformationClick = {
-                            viewModel.changeIsCommand(false)
-                        },
                         state = state
                     )
                 }
@@ -131,9 +114,9 @@ class ComposeFragment : Fragment() {
     }
 
     private fun navigateToHomeWithRefresh() {
-        val bundle = Bundle()
-        bundle.putBoolean(Constants.COMPOSE_COMMAND, true)
-        findNavController().navigate(R.id.action_composeFragment_to_homeFragment, bundle)
+//        val bundle = Bundle()
+//        bundle.putBoolean(Constants.COMPOSE_COMMAND, true)
+//        findNavController().navigate(R.id.action_composeFragment_to_homeFragment, bundle)
     }
 
     private fun showFileChooser() {
@@ -142,9 +125,10 @@ class ComposeFragment : Fragment() {
             .setAction(Intent.ACTION_GET_CONTENT)
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
-        intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
-        intent.flags = FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_WRITE_URI_PERMISSION
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        intent.flags =
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         try {
             getFilesLauncher.launch(intent)
         } catch (e: Exception) {
@@ -164,21 +148,19 @@ class ComposeFragment : Fragment() {
         )
     }
 
-    private fun executeNavigation(navigation: ComposeScreenNavigation) {
+    private fun executeNavigation(navigation: EditWorkScreenNavigation) {
         when (navigation) {
-            ComposeScreenNavigation.InvalidResponse -> {
+            EditWorkScreenNavigation.InvalidResponse -> {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.can_not_create_a_command), Toast.LENGTH_SHORT
+                    getString(R.string.something_went_wrong), Toast.LENGTH_SHORT
                 ).show()
             }
+            EditWorkScreenNavigation.FailureOnWorkDeletion -> {
 
-            ComposeScreenNavigation.Success -> {
-                navigateToHomeWithRefresh()
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.the_command_has_been_created), Toast.LENGTH_SHORT
-                ).show()
+            }
+            EditWorkScreenNavigation.SuccessOnWorkDeletion -> {
+
             }
         }
     }

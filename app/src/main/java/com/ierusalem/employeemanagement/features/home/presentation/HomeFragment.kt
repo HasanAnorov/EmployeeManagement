@@ -23,8 +23,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.ui.MainActivity
@@ -33,6 +35,7 @@ import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.utils.Constants
 import com.ierusalem.employeemanagement.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -58,7 +61,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun requestNotificationPermission() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val hasPermission = ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -71,6 +73,11 @@ class HomeFragment : Fragment() {
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                     0
                 )
+            }else{
+                lifecycleScope.launch {
+                    val token = FirebaseMessaging.getInstance().token.await()
+                    Log.d("ahi_firebase", "requestNotificationPermission: - $token ")
+                }
             }
         }
     }
@@ -206,6 +213,7 @@ class HomeFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
                 bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME, true)
+                bundle.putBoolean(Constants.IS_FROM_SENT, navigation.isFromSent)
                 findNavController().navigate(
                     R.id.action_homeFragment_to_workDescriptionFragment,
                     bundle

@@ -77,7 +77,6 @@
     <string name="create_a_job">Create a task</string>
     <string name="private_jobs">Task sent to you</string>
     <string name="statistics">Statistics</string>
-    <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Give permission to use the data!</string>
     <string name="allow_the_app_to_use_device_data">Allow the app to use device data!</string>
     <string name="staff_statistics">Staff statistics</string>
     <string name="personal_info">Personal Info</string>
@@ -90,4 +89,8 @@
     <string name="personal_received_statistics">Personal Received Statistics</string>
     <string name="dismiss">Dismiss</string>
     <string name="patronymic_name">Patronymic name</string>
+    <string name="edit_work">Edit Work</string>
+    <string name="give_permission_to_use_data">Give permission to use data!</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="allow">Allow</string>
 </resources>

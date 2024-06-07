@@ -8,7 +8,7 @@ sealed interface HomeScreenClickIntents {
     data class CreateCommands(val users: List<String>) : HomeScreenClickIntents
     data class OnEmployeeClick(val userId: Int) : HomeScreenClickIntents
     data class CallEmployee(val phoneNumber: String) : HomeScreenClickIntents
-    data class OnItemClick(val workId: String) : HomeScreenClickIntents
+    data class OnItemClick(val workId: String, val isFromSent:Boolean) : HomeScreenClickIntents
     data class OnThemeChange(val isDarkTheme: Boolean) : HomeScreenClickIntents
     data object LogoutClick : HomeScreenClickIntents
     data class  SearchTextChanged(val text: String) : HomeScreenClickIntents

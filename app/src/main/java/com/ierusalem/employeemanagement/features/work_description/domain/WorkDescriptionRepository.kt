@@ -12,4 +12,5 @@ interface WorkDescriptionRepository {
         workId: String,
         body: RequestBody
     ): Response<MarkAsDoneResponse>
+    suspend fun deleteWorkById(workId: String):Response<Unit>
 }

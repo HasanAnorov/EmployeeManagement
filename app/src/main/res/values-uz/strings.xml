@@ -76,7 +76,6 @@
     <string name="create_a_job">Vazifa yaratish</string>
     <string name="private_jobs">Sizga yuborilgan topshiriqlar</string>
     <string name="statistics">Statistika</string>
-    <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Ma\'lumotlardan foydalanish uchun ruxsat bering!</string>
     <string name="allow_the_app_to_use_device_data">Ilovaga qurilma maʼlumotlaridan foydalanishiga ruxsat bering!</string>
     <string name="staff_statistics">Xodimlar statistikasi</string>
     <string name="personal_info">Shaxsiy ma\'lumotlar</string>
@@ -91,4 +90,8 @@
     <string name="dismiss">Bekor qilish</string>
     <string name="patronymic_name">Otasining ismi</string>
     <string name="personal_received_statistics">Shaxsiy qabul qilingan statistika</string>
+    <string name="edit_work">Ishni tahrirlash</string>
+    <string name="give_permission_to_use_data">Qurilma ma `lumotlaridan foydalanishga ruxsat bering!</string>
+    <string name="permission_denied">Ruxsat berilmagan</string>
+    <string name="allow">Ruxsat berish</string>
 </resources>

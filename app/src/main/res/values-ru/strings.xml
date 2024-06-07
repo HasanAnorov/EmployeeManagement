@@ -76,7 +76,6 @@
     <string name="create_a_job">Создать задачу</string>
     <string name="private_jobs">Вам отправлены задачи</string>
     <string name="statistics">Статистика</string>
-    <string name="ma_lumotlardan_foydalanish_uchun_ruxsat_bering">Дайте разрешение на использование данных!</string>
     <string name="allow_the_app_to_use_device_data">Разрешите приложению использовать данные устройства!</string>
     <string name="staff_statistics">Статистика персонала</string>
     <string name="personal_info">Личная информация</string>
@@ -91,4 +90,8 @@
     <string name="personal_received_statistics">Персональная полученная статистика</string>
     <string name="dismiss">Отмена</string>
     <string name="patronymic_name">Отчество</string>
+    <string name="edit_work">Редактировать работу</string>
+    <string name="give_permission_to_use_data">Дайте разрешение на использование данных!</string>
+    <string name="permission_denied">Доступ запрещен</string>
+    <string name="allow">Позволять</string>
 </resources>

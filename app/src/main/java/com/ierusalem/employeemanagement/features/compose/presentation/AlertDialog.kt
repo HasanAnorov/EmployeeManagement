@@ -32,7 +32,7 @@ fun AlertDialogExample(
                     onConfirmation()
                 }
             ) {
-                Text("stringResource(R.string.dismiss")
+                Text(stringResource(R.string.allow))
             }
         },
         dismissButton = {
@@ -47,15 +47,15 @@ fun AlertDialogExample(
     )
 }
 
-@Preview
+@Preview(locale = "uz")
 @Composable
 private fun Preview() {
     EmployeeManagementTheme {
         AlertDialogExample(
             onDismissRequest = {  },
             onConfirmation = {  },
-            dialogTitle = "Storage",
-            dialogText = "Give access to use data!",
+            dialogTitle = stringResource(R.string.permission_denied),
+            dialogText = stringResource(id = R.string.give_permission_to_use_data),
         )
     }
 }
