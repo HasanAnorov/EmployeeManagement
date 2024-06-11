@@ -94,4 +94,5 @@
     <string name="give_permission_to_use_data">Qurilma ma `lumotlaridan foydalanishga ruxsat bering!</string>
     <string name="permission_denied">Ruxsat berilmagan</string>
     <string name="allow">Ruxsat berish</string>
+    <string name="could_not_edit_work">Ishni tahrirlab bo‘lmadi!</string>
 </resources>

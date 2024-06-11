@@ -94,4 +94,5 @@
     <string name="give_permission_to_use_data">Дайте разрешение на использование данных!</string>
     <string name="permission_denied">Доступ запрещен</string>
     <string name="allow">Позволять</string>
+    <string name="could_not_edit_work">Не удалось отредактировать работу!</string>
 </resources>

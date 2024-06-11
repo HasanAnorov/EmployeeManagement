@@ -13,7 +13,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +42,8 @@ fun InformationDescScreen(
     onArrowBackClick: () -> Unit,
     onDownloadFile: (String) -> Unit,
     state: InformationDescState,
+    onEditInformationClicked: () -> Unit,
+    onDeleteInformationClicked: () -> Unit
 ) {
     if (isSent) {
         when (state.description) {
@@ -62,6 +68,17 @@ fun InformationDescScreen(
                                 style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                             )
+                        },
+                        actions = {
+                            IconButton(onClick = { onEditInformationClicked() }) {
+                                Icon(
+                                    imageVector = Icons.Default.EditNote,
+                                    contentDescription = null
+                                )
+                            }
+                            IconButton(onClick = { onDeleteInformationClicked() }) {
+                                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                            }
                         }
                     )
                     Column(
@@ -127,7 +144,10 @@ fun InformationDescScreen(
                                             modifier = Modifier.padding(top = 8.dp),
                                             file = information.file,
                                             onDownloadFile = {
-                                                Log.d("download_url", "InformationDescScreen: ${information.file} ")
+                                                Log.d(
+                                                    "download_url",
+                                                    "InformationDescScreen: ${information.file} "
+                                                )
                                                 onDownloadFile(information.file)
                                             }
                                         )

@@ -48,7 +48,13 @@ class InformationDescriptionFragment : Fragment() {
                             val downloader = AndroidDownloader(requireContext())
                             downloader.downloadFile(it)
                         },
-                        state = state
+                        state = state,
+                        onDeleteInformationClicked = {
+
+                        },
+                        onEditInformationClicked = {
+
+                        }
                     )
                 }
             }
