@@ -26,8 +26,8 @@ import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkScreenNavigation
 import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
-import com.ierusalem.employeemanagement.utils.executeWithLifecycle
+import com.ierusalem.employeemanagement.core.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream

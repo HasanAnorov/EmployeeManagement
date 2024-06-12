@@ -20,7 +20,7 @@ import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.for_information.domain.ForInformationData
 import com.ierusalem.employeemanagement.ui.components.EmptyScreen
 import com.ierusalem.employeemanagement.ui.components.WorkItem
-import com.ierusalem.employeemanagement.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.Constants
 
 @Composable
 fun ForInformationContent(

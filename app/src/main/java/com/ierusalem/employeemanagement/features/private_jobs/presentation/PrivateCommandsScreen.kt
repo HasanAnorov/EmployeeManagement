@@ -23,7 +23,7 @@ import com.ierusalem.employeemanagement.features.private_jobs.domain.PrivateJobs
 import com.ierusalem.employeemanagement.ui.components.EmptyScreen
 import com.ierusalem.employeemanagement.ui.components.WorkItem
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.Constants
 
 @Composable
 fun PrivateCommandsScreen(

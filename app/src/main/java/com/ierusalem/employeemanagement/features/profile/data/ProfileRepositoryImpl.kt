@@ -1,11 +1,11 @@
 package com.ierusalem.employeemanagement.features.profile.data
 
 import android.content.Context
-import com.ierusalem.employeemanagement.app.RestClient
+import com.ierusalem.employeemanagement.core.app.RestClient
 import com.ierusalem.employeemanagement.features.profile.data.model.ProfileResponse
 import com.ierusalem.employeemanagement.features.profile.data.password_response.PasswordResponse
 import com.ierusalem.employeemanagement.features.profile.domain.ProfileRepository
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import retrofit2.Response
 
 //Built by Khasan Anorov 1.04.2024

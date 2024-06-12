@@ -1,10 +1,10 @@
 package com.ierusalem.employeemanagement.features.for_information.data
 
 import android.content.Context
-import com.ierusalem.employeemanagement.app.RestClient
+import com.ierusalem.employeemanagement.core.app.RestClient
 import com.ierusalem.employeemanagement.features.for_information.data.model.InformationResponse
 import com.ierusalem.employeemanagement.features.for_information.data.model_received.ForInformationReceivedResponse
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import retrofit2.Response
 
 class ForInformationRepositoryImpl(

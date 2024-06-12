@@ -1,10 +1,10 @@
 package com.ierusalem.employeemanagement.features.statistics.data
 
 import android.content.Context
-import com.ierusalem.employeemanagement.app.RestClient
+import com.ierusalem.employeemanagement.core.app.RestClient
 import com.ierusalem.employeemanagement.features.statistics.data.model.solo_statistics_response_model.SoloStatisticsResponse
 import com.ierusalem.employeemanagement.features.statistics.data.model.statistics_reponse_model.StatisticsResponse
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import retrofit2.Response
 
 class StatisticsRepositoryImpl(

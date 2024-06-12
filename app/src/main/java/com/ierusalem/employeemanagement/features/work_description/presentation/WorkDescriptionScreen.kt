@@ -45,15 +45,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.compose.presentation.AlertDialogExample
-import com.ierusalem.employeemanagement.features.compose.presentation.FileItem
+import com.ierusalem.employeemanagement.features.create_work.presentation.AlertDialogExample
+import com.ierusalem.employeemanagement.features.create_work.presentation.FileItem
 import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionScreenState
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.components.ErrorScreen
 import com.ierusalem.employeemanagement.ui.components.FileItemUrl
 import com.ierusalem.employeemanagement.ui.components.LoadingScreen
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Resource
+import com.ierusalem.employeemanagement.core.utils.Resource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

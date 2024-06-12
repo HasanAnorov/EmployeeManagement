@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import java.util.Locale
 
 class SettingsFragment : Fragment() {
@@ -38,6 +38,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun setAppLocale(language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)

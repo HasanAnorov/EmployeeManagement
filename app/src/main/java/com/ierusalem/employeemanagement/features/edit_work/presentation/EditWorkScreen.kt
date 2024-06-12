@@ -36,8 +36,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ierusalem.employeemanagement.R
-import com.ierusalem.employeemanagement.features.compose.presentation.AlertDialogExample
-import com.ierusalem.employeemanagement.features.compose.presentation.FileItem
+import com.ierusalem.employeemanagement.features.create_work.presentation.AlertDialogExample
+import com.ierusalem.employeemanagement.features.create_work.presentation.FileItem
 import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkUiState
 import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme

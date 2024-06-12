@@ -16,8 +16,8 @@ import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.staff_for_information.domain.StaffForInformationNavigation
 import com.ierusalem.employeemanagement.features.staff_for_information.domain.StaffForInformationViewmodel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
-import com.ierusalem.employeemanagement.utils.executeWithLifecycle
+import com.ierusalem.employeemanagement.core.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StaffForInformationFragment : Fragment() {

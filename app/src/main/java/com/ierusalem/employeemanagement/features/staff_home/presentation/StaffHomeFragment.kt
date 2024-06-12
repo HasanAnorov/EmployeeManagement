@@ -21,8 +21,8 @@ import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.staff_home.domain.StaffHomeViewModel
 import com.ierusalem.employeemanagement.ui.components.EmployeeManagementStaffDrawer
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
-import com.ierusalem.employeemanagement.utils.executeWithLifecycle
+import com.ierusalem.employeemanagement.core.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.executeWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

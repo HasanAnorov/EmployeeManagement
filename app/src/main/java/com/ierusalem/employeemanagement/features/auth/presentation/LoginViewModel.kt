@@ -10,7 +10,7 @@ import com.ierusalem.employeemanagement.features.auth.domain.AuthRepository
 import com.ierusalem.employeemanagement.ui.navigation.DefaultNavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.NavigationEventDelegate
 import com.ierusalem.employeemanagement.ui.navigation.emitNavigation
-import com.ierusalem.employeemanagement.utils.UiText
+import com.ierusalem.employeemanagement.core.utils.UiText
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

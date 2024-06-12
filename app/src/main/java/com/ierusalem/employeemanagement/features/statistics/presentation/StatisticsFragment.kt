@@ -17,8 +17,8 @@ import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.features.statistics.domain.StatisticsScreenNavigation
 import com.ierusalem.employeemanagement.features.statistics.domain.StatisticsViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
-import com.ierusalem.employeemanagement.utils.executeWithLifecycle
+import com.ierusalem.employeemanagement.core.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.executeWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

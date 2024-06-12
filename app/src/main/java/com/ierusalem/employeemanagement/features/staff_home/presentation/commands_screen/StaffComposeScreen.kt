@@ -26,8 +26,8 @@ import com.ierusalem.employeemanagement.ui.components.ErrorScreen
 import com.ierusalem.employeemanagement.ui.components.LoadingScreen
 import com.ierusalem.employeemanagement.ui.components.WorkItem
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
-import com.ierusalem.employeemanagement.utils.Resource
+import com.ierusalem.employeemanagement.core.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.Resource
 
 @Composable
 fun StaffComposeScreen(

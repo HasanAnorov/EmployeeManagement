@@ -3,7 +3,7 @@ package com.ierusalem.employeemanagement.features.edit_profile.di
 import com.ierusalem.employeemanagement.features.edit_profile.data.EditProfileRepositoryImpl
 import com.ierusalem.employeemanagement.features.edit_profile.domain.EditProfileRepository
 import com.ierusalem.employeemanagement.features.edit_profile.presentation.EditProfileViewModel
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

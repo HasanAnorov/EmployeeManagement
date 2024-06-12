@@ -20,7 +20,7 @@
 
 
     <application
-        android:name=".app.EmployeeManagementApp"
+        android:name=".core.app.EmployeeManagementApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -43,7 +43,7 @@
         </activity>
 
         <service
-            android:name=".features.notification.PushNotificationService"
+            android:name=".core.notification.PushNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -51,7 +51,7 @@
         </service>
 
         <receiver
-            android:name=".features.downloader.DownloadCompletedReceiver"
+            android:name=".core.downloader.DownloadCompletedReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />

@@ -3,7 +3,7 @@ package com.ierusalem.employeemanagement.features.statistics.di
 import com.ierusalem.employeemanagement.features.statistics.data.StatisticsRepository
 import com.ierusalem.employeemanagement.features.statistics.data.StatisticsRepositoryImpl
 import com.ierusalem.employeemanagement.features.statistics.domain.StatisticsViewModel
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

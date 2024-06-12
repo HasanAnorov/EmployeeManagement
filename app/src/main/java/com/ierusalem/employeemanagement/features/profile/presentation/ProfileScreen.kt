@@ -65,7 +65,7 @@ import com.ierusalem.employeemanagement.ui.components.LoadingScreen
 import com.ierusalem.employeemanagement.ui.components.SimpleFilledTextField
 import com.ierusalem.employeemanagement.ui.components.baselineHeight
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.Constants
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 

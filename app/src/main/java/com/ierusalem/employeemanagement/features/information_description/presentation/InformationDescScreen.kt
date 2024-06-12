@@ -33,7 +33,7 @@ import com.ierusalem.employeemanagement.ui.components.CommonTopBar
 import com.ierusalem.employeemanagement.ui.components.ErrorScreen
 import com.ierusalem.employeemanagement.ui.components.FileItemUrl
 import com.ierusalem.employeemanagement.ui.components.LoadingScreen
-import com.ierusalem.employeemanagement.utils.Resource
+import com.ierusalem.employeemanagement.core.utils.Resource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

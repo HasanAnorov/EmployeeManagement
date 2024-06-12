@@ -10,10 +10,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
-import com.ierusalem.employeemanagement.features.downloader.AndroidDownloader
+import com.ierusalem.employeemanagement.core.downloader.AndroidDownloader
 import com.ierusalem.employeemanagement.features.information_description.domain.InformationDescriptionViewmodel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
-import com.ierusalem.employeemanagement.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.Constants
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.properties.Delegates
 

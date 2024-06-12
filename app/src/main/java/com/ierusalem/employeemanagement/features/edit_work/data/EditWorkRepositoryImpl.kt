@@ -1,10 +1,10 @@
 package com.ierusalem.employeemanagement.features.edit_work.data
 
 import android.content.Context
-import com.ierusalem.employeemanagement.app.RestClient
+import com.ierusalem.employeemanagement.core.app.RestClient
 import com.ierusalem.employeemanagement.features.edit_work.data.response_model.EditWorkResponseModel
 import com.ierusalem.employeemanagement.features.edit_work.domain.EditWorkRepository
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import okhttp3.RequestBody
 import retrofit2.Response
 

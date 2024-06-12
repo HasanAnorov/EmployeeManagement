@@ -16,7 +16,7 @@ import com.ierusalem.employeemanagement.core.endless_service.EndlessService
 import com.ierusalem.employeemanagement.core.endless_service.ServiceState
 import com.ierusalem.employeemanagement.core.endless_service.getServiceState
 import com.ierusalem.employeemanagement.databinding.ActivityMainBinding
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import java.util.Locale
 
 @Suppress("DEPRECATION")

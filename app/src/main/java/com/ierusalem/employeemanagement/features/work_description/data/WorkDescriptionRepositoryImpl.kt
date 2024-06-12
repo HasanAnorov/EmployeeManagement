@@ -2,11 +2,11 @@ package com.ierusalem.employeemanagement.features.work_description.data
 
 import android.content.Context
 import android.util.Log
-import com.ierusalem.employeemanagement.app.RestClient
+import com.ierusalem.employeemanagement.core.app.RestClient
 import com.ierusalem.employeemanagement.features.work_description.data.model.response.MarkAsDoneResponse
 import com.ierusalem.employeemanagement.features.work_description.data.model.work.WorkItem
 import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionRepository
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import okhttp3.RequestBody
 import retrofit2.Response
 

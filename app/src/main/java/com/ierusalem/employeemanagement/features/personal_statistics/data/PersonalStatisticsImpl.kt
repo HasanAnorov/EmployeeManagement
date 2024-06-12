@@ -1,9 +1,9 @@
 package com.ierusalem.employeemanagement.features.personal_statistics.data
 
 import android.content.Context
-import com.ierusalem.employeemanagement.app.RestClient
+import com.ierusalem.employeemanagement.core.app.RestClient
 import com.ierusalem.employeemanagement.features.personal_statistics.data.models.sent.PersonalStatisticsSent
-import com.ierusalem.employeemanagement.utils.PreferenceHelper
+import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import retrofit2.Response
 
 class PersonalStatisticsImpl(
