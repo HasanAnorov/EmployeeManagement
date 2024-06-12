@@ -3,6 +3,7 @@ package com.ierusalem.employeemanagement.ui
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,10 @@ import androidx.core.view.ViewCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.core.endless_service.Actions
+import com.ierusalem.employeemanagement.core.endless_service.EndlessService
+import com.ierusalem.employeemanagement.core.endless_service.ServiceState
+import com.ierusalem.employeemanagement.core.endless_service.getServiceState
 import com.ierusalem.employeemanagement.databinding.ActivityMainBinding
 import com.ierusalem.employeemanagement.utils.PreferenceHelper
 import java.util.Locale
@@ -53,6 +58,27 @@ class MainActivity : AppCompatActivity() {
             setStartDestination(destination)
         }
 
+        actionOnService(Actions.START)
+
+    }
+
+    @Suppress("SameParameterValue")
+    private fun actionOnService(action: Actions) {
+        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        Intent(this, EndlessService::class.java).also {
+            it.action = action.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                log("Starting the service in >=26 Mode")
+                startForegroundService(it)
+                return
+            }
+            log("Starting the service in < 26 Mode")
+            startService(it)
+        }
+    }
+
+    companion object{
+        fun log(msg: String) = Log.d("ahi3646", msg)
     }
 
     override fun onNewIntent(intent: Intent) {

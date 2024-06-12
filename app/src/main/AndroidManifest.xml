@@ -10,6 +10,15 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- For endless service-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+
+    <!-- For trigger service on low battery time-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"  tools:node="replace" />
+
+
     <application
         android:name=".app.EmployeeManagementApp"
         android:allowBackup="true"
@@ -21,6 +30,7 @@
         android:theme="@style/Theme.EmployeeManagement"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -31,6 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".features.notification.PushNotificationService"
             android:exported="false">
@@ -38,6 +49,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".features.downloader.DownloadCompletedReceiver"
             android:exported="true">
@@ -45,6 +57,23 @@
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".core.endless_service.EndlessService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:stopWithTask="false" />
+
+        <receiver
+            android:name=".core.endless_service.StartReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
