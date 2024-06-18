@@ -147,7 +147,9 @@ class WorkDescriptionFragment : Fragment() {
 
             WorkDescriptionNavigation.SuccessOnWorkDeletion -> {
                 Log.d("ahi3646", "executeNavigation: work deleted successfully ")
-                findNavController().popBackStack()
+                val bundle = Bundle()
+                bundle.putBoolean(Constants.EDIT_WORK_SUCCESS, true)
+                findNavController().navigate(R.id.action_workDescriptionFragment_to_homeFragment, bundle)
             }
 
             WorkDescriptionNavigation.FailureOnWorkDeletion -> {

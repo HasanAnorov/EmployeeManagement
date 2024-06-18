@@ -22,11 +22,9 @@
     <string name="username_should_be_than_3_words">Username should be more than 3 characters!</string>
     <string name="password_cannot_be_blank">Password can\'t be blank</string>
     <string name="password_cannot_be_less">Password should be more than 3 characters!</string>
-    <string name="please_choose_a_file_under_20_mb">Please choose a file under 20 MB</string>
     <string name="please_install_a_file_manager">Please install a file manager</string>
     <string name="can_not_create_a_command">Can not create a command</string>
     <string name="the_command_has_been_created">The Command has been created</string>
-    <string name="submit">Submit</string>
     <string name="submit_task">Submit Task</string>
     <string name="submit_information">Submit Information</string>
     <string name="attach_a_file">Attach a file</string>
@@ -48,16 +46,12 @@
     <string name="commands_not_done">Not Done</string>
     <string name="password_has_changed">Password has changed!</string>
     <string name="password_didn_t_change">Password didn\'t change!</string>
-    <string name="position_not_given">Position is not available</string>
-    <string name="room_is_not_available">Room is not available</string>
     <string name="enter_at_leas_3_characters">Enter at leas 3 characters</string>
     <string name="change_password">Change Password</string>
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>
-    <string name="app_theme">App Theme</string>
     <string name="language">Language</string>
     <string name="work_description">Description:</string>
-    <string name="from">From: </string>
     <string name="year">Year</string>
     <string name="month">Month</string>
     <string name="day">Day</string>
@@ -67,13 +61,11 @@
     <string name="work_marked_as_done">Work marked as done!</string>
     <string name="can_t_mark_this_work_as_done">Can\'t mark this work as done!</string>
     <string name="mark_work_as_done">Mark work as done!</string>
-    <string name="to">To: </string>
     <string name="additional_information">Additional Information</string>
     <string name="no_files_provided">No files provided</string>
     <string name="not_given">Not given</string>
     <string name="submitting">Submitting …</string>
     <string name="additional_files">Additional Files:</string>
-    <string name="new_message">New message</string>
     <string name="create_a_job">Create a task</string>
     <string name="private_jobs">Task sent to you</string>
     <string name="statistics">Statistics</string>
@@ -94,4 +86,6 @@
     <string name="permission_denied">Permission denied</string>
     <string name="allow">Allow</string>
     <string name="could_not_edit_work">Could not edit work!</string>
+    <string name="edit_information">Edit Information</string>
+    <string name="submit_edit">Submit Edit</string>
 </resources>

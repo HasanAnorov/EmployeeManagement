@@ -23,11 +23,9 @@
     <string name="username_should_be_than_3_words">Имя пользователя должно состоять более чем из 3 слов!</string>
     <string name="password_cannot_be_blank">Пароль не может быть пустым</string>
     <string name="password_cannot_be_less">Пароль должен состоять более чем из 3-х слов!</string>
-    <string name="please_choose_a_file_under_20_mb">Пожалуйста, выберите файл размером менее 20МБ.</string>
     <string name="please_install_a_file_manager">Пожалуйста, установите файловый менеджер</string>
     <string name="can_not_create_a_command">Не могу создать команду</string>
     <string name="the_command_has_been_created">Работа создана!</string>
-    <string name="submit">Отправка</string>
     <string name="attach_a_file">Прикрепить файл</string>
     <string name="type_here">Введите здесь…</string>
     <string name="command_description">Описание Работы</string>
@@ -46,16 +44,12 @@
     <string name="commands_not_done">Не выполнено</string>
     <string name="password_has_changed">Пароль изменился!</string>
     <string name="password_didn_t_change">Пароль не менялся!</string>
-    <string name="position_not_given">Позиция недоступна</string>
-    <string name="room_is_not_available">Комната недоступна</string>
     <string name="enter_at_leas_3_characters">Введите не менее 3 символов</string>
     <string name="change_password">Изменить пароль</string>
     <string name="old_password">Старый пароль</string>
     <string name="new_password">Новый пароль</string>
-    <string name="app_theme">Тема приложения</string>
     <string name="language">Язык</string>
     <string name="work_description">Описание:</string>
-    <string name="from">От: </string>
     <string name="year">Год</string>
     <string name="month">Месяц</string>
     <string name="day">День</string>
@@ -65,14 +59,12 @@
     <string name="work_marked_as_done">Работа отмечена как выполненная!</string>
     <string name="can_t_mark_this_work_as_done">Невозможно отметить эту работу как выполненную!</string>
     <string name="mark_work_as_done">Отметьте работу как выполненную!</string>
-    <string name="to">Кому: </string>
     <string name="additional_information">Дополнительная информация</string>
     <string name="late_done">Поздно сделано</string>
     <string name="no_files_provided">Файлы не предоставлены</string>
     <string name="not_given">Не дано</string>
     <string name="submitting">Отправка…</string>
     <string name="additional_files">Дополнительные файлы:</string>
-    <string name="new_message">Новое сообщение</string>
     <string name="create_a_job">Создать задачу</string>
     <string name="private_jobs">Вам отправлены задачи</string>
     <string name="statistics">Статистика</string>
@@ -95,4 +87,6 @@
     <string name="permission_denied">Доступ запрещен</string>
     <string name="allow">Позволять</string>
     <string name="could_not_edit_work">Не удалось отредактировать работу!</string>
+    <string name="edit_information">Редактировать информацию</string>
+    <string name="submit_edit">Отправить Редактировать</string>
 </resources>

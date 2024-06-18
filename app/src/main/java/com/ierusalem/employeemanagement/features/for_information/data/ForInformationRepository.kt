@@ -6,6 +6,7 @@ import retrofit2.Response
 
 interface ForInformationRepository {
     suspend fun getSenInformation(id:String): Response<InformationResponse>
+    suspend fun deleteInformation(id:String): Response<Unit>
     suspend fun getReceivedInformation(id:String): Response<ForInformationReceivedResponse>
     suspend fun getReceivedInformationDesc(id:String): Response<ForInformationReceivedResponse>
     suspend fun getReceivedInformationBadgeCount(status:String): Response<ForInformationReceivedResponse>

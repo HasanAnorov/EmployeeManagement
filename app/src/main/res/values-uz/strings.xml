@@ -24,10 +24,8 @@
     <string name="password_cannot_be_blank">Parol bo\'sh bo\'lishi mumkin emas</string>
     <string name="password_cannot_be_less">Parol 3 ta harfdan oshmasligi kerak!</string>
     <string name="please_install_a_file_manager">Iltimos File Manager o\'rnating</string>
-    <string name="please_choose_a_file_under_20_mb">Iltimos 20 MB dan kichik fayl tanlang</string>
     <string name="can_not_create_a_command">Buyruq yaratilmadi</string>
     <string name="the_command_has_been_created">Buyruq yaratildi</string>
-    <string name="submit">Yuborish</string>
     <string name="attach_a_file">Fayl biriktirish</string>
     <string name="type_here">Shu yerga yozing …</string>
     <string name="command_description">Buyruq mazmuni</string>
@@ -46,16 +44,12 @@
     <string name="commands_not_done">Bajarilmagan</string>
     <string name="password_has_changed">Parol o\'zgardi!</string>
     <string name="password_didn_t_change">Parol o\'zgarmadi!</string>
-    <string name="position_not_given">Lavozimi mavjud emas</string>
-    <string name="room_is_not_available">Xona mavjud emas</string>
     <string name="enter_at_leas_3_characters">Kamida 3 ta harf kiritng</string>
     <string name="change_password">Parolni o\'zgartirish</string>
     <string name="old_password">Eski parol</string>
     <string name="new_password">Yangi parol</string>
-    <string name="app_theme">Ilova mavzusi</string>
     <string name="language">Til</string>
     <string name="work_description">Mazmuni:</string>
-    <string name="from">Kimdan: </string>
     <string name="year">Yil</string>
     <string name="month">Oy</string>
     <string name="day">Kun</string>
@@ -65,14 +59,12 @@
     <string name="work_marked_as_done">Ish bajarildi holatiga o\'tdi</string>
     <string name="can_t_mark_this_work_as_done">Ishni bajarildi holatiga o\'tkazib bo\'lmadi</string>
     <string name="mark_work_as_done">Ishni bajarilgan deb belgilang!</string>
-    <string name="to">Kimga: </string>
     <string name="additional_information">Qo\'shimcha ma\'lumot</string>
     <string name="late_done">Kechikib bajarilgan</string>
     <string name="no_files_provided">Fayllar taqdim qilinmagan</string>
     <string name="not_given">Kiritilmagan</string>
     <string name="submitting">Yuborilmoqda…</string>
     <string name="additional_files">Qo\'shimcha fayllar:</string>
-    <string name="new_message">Yangi xabar</string>
     <string name="create_a_job">Vazifa yaratish</string>
     <string name="private_jobs">Sizga yuborilgan topshiriqlar</string>
     <string name="statistics">Statistika</string>
@@ -95,4 +87,6 @@
     <string name="permission_denied">Ruxsat berilmagan</string>
     <string name="allow">Ruxsat berish</string>
     <string name="could_not_edit_work">Ishni tahrirlab bo‘lmadi!</string>
+    <string name="edit_information">Ma\'lumotni tahrirlash</string>
+    <string name="submit_edit">Tahrirlashni yuborish</string>
 </resources>

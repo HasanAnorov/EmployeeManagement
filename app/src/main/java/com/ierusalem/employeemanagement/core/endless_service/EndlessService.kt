@@ -15,8 +15,15 @@ import android.os.PowerManager
 import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.core.notification.FirebaseTokenUpdateWorker
+import com.ierusalem.employeemanagement.core.utils.Constants
 import com.ierusalem.employeemanagement.features.edit_profile.data.EditProfileRepositoryImpl
 import com.ierusalem.employeemanagement.core.utils.PreferenceHelper
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -145,6 +152,18 @@ class EndlessService : Service() {
                 log("success update firebase token  service- token - $token")
             }else{
                 log("failure on update firebase token service - token - $token - error - ${it.errorBody()}")
+                val workManager = WorkManager.getInstance(this)
+                val request = OneTimeWorkRequestBuilder<FirebaseTokenUpdateWorker>()
+                    .setInputData(
+                        workDataOf(
+                            Constants.TOKEN_KEY_FOR_WORK_MANAGER to token
+                        )
+                    )
+                    .setConstraints(
+                        Constraints(requiredNetworkType = NetworkType.CONNECTED)
+                    )
+                    .build()
+                workManager.enqueue(request)
             }
         }
     }

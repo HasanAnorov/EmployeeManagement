@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
+import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.core.downloader.AndroidDownloader
 import com.ierusalem.employeemanagement.features.information_description.domain.InformationDescriptionViewmodel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
@@ -41,6 +42,7 @@ class InformationDescriptionFragment : Fragment() {
                 EmployeeManagementTheme {
                     InformationDescScreen(
                         isSent = isSent,
+                        state = state,
                         onArrowBackClick = {
                             findNavController().popBackStack()
                         },
@@ -48,12 +50,11 @@ class InformationDescriptionFragment : Fragment() {
                             val downloader = AndroidDownloader(requireContext())
                             downloader.downloadFile(it)
                         },
-                        state = state,
                         onDeleteInformationClicked = {
 
                         },
                         onEditInformationClicked = {
-
+                            findNavController().navigate(R.id.action_informationDescriptionFragment_to_forInformationEditFragment)
                         }
                     )
                 }

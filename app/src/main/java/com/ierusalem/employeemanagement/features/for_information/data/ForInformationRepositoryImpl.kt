@@ -12,6 +12,13 @@ class ForInformationRepositoryImpl(
     val context: Context
 ): ForInformationRepository {
 
+    override suspend fun deleteInformation(id: String): Response<Unit> {
+        return RestClient(context).forInformationService.deleteWorkById(
+            authToken = preferenceHelper.getToken(),
+            id = id
+        )
+    }
+
     override suspend fun getReceivedInformation(id:String): Response<ForInformationReceivedResponse> {
         return RestClient(context).forInformationService.getReceivedInformation(
             authToken = preferenceHelper.getToken(),

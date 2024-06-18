@@ -20,13 +20,13 @@
 
         <action
             android:id="@+id/action_loginFragment_to_staffHomeFragment"
+            app:destination="@id/staffHomeFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/staffHomeFragment" />
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -44,11 +44,11 @@
 
         <action
             android:id="@+id/action_homeFragment_to_composeFragment"
+            app:destination="@id/composeFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/composeFragment" />
+            app:popExitAnim="@anim/slide_out" />
 
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
@@ -58,50 +58,50 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/settingsFragment" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_homeFragment_to_workDescriptionFragment"
+            app:destination="@id/workDescriptionFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/workDescriptionFragment" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_homeFragment_to_privateJobsFragment"
+            app:destination="@id/privateJobsFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/privateJobsFragment" />
+            app:popExitAnim="@anim/slide_out" />
 
         <action
             android:id="@+id/action_homeFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/statisticsFragment" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_homeFragment_to_forInformationFragment"
+            app:destination="@id/forInformationFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/forInformationFragment" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_homeFragment_to_personalStatisticsFragment"
+            app:destination="@id/personalStatisticsFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/personalStatisticsFragment" />
+            app:popExitAnim="@anim/slide_out" />
 
     </fragment>
 
@@ -132,13 +132,13 @@
     <fragment
         android:id="@+id/composeFragment"
         android:name="com.ierusalem.employeemanagement.features.create_work.presentation.ComposeFragment"
-        android:label="ComposeFragment" >
+        android:label="ComposeFragment">
 
         <action
             android:id="@+id/action_composeFragment_to_homeFragment"
-            app:popUpToInclusive="true"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
-            app:destination="@id/homeFragment" />
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -150,47 +150,47 @@
     <fragment
         android:id="@+id/staffHomeFragment"
         android:name="com.ierusalem.employeemanagement.features.staff_home.presentation.StaffHomeFragment"
-        android:label="StaffHomeFragment" >
+        android:label="StaffHomeFragment">
 
         <action
             android:id="@+id/action_staffHomeFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/profileFragment" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_staffHomeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/settingsFragment" />
+            app:popExitAnim="@anim/slide_out" />
 
         <action
             android:id="@+id/action_staffHomeFragment_to_workDescriptionFragment"
+            app:destination="@id/workDescriptionFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/workDescriptionFragment" />
+            app:popExitAnim="@anim/slide_out" />
 
         <action
             android:id="@+id/action_staffHomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/staffHomeFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/loginFragment" />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_staffHomeFragment_to_staffForInformationFragment"
+            app:destination="@id/staffForInformationFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/staffForInformationFragment" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_staffHomeFragment_to_personalStatisticsFragment"
             app:destination="@id/personalStatisticsFragment" />
@@ -200,36 +200,45 @@
     <fragment
         android:id="@+id/workDescriptionFragment"
         android:name="com.ierusalem.employeemanagement.features.work_description.presentation.WorkDescriptionFragment"
-        android:label="WorkDescriptionFragment" >
+        android:label="WorkDescriptionFragment">
         <action
             android:id="@+id/action_workDescriptionFragment_to_staffHomeFragment"
+            app:destination="@id/staffHomeFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/workDescriptionFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/staffHomeFragment" />
+            app:popUpToInclusive="true" />
         <action
+            android:id="@+id/action_workDescriptionFragment_to_editFragment"
+            app:destination="@id/editFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            android:id="@+id/action_workDescriptionFragment_to_editFragment"
-            app:destination="@id/editFragment" />
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_workDescriptionFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
 
     <fragment
         android:id="@+id/privateJobsFragment"
         android:name="com.ierusalem.employeemanagement.features.private_jobs.presentation.PrivateJobsFragment"
-        android:label="PrivateJobsFragment" >
+        android:label="PrivateJobsFragment">
         <action
             android:id="@+id/action_privateJobsFragment_to_workDescriptionFragment"
+            app:destination="@id/workDescriptionFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            app:destination="@id/workDescriptionFragment" />
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
 
     <fragment
@@ -240,16 +249,17 @@
     <fragment
         android:id="@+id/forInformationFragment"
         android:name="com.ierusalem.employeemanagement.features.for_information.presentation.ForInformationFragment"
-        android:label="ForInformationFragment" >
+        android:label="ForInformationFragment">
         <action
             android:id="@+id/action_forInformationFragment_to_informationDescriptionFragment"
             app:destination="@id/informationDescriptionFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/staffForInformationFragment"
         android:name="com.ierusalem.employeemanagement.features.staff_for_information.presentation.StaffForInformationFragment"
-        android:label="StaffForInformationFragment" >
+        android:label="StaffForInformationFragment">
         <action
             android:id="@+id/action_staffForInformationFragment_to_informationDescriptionFragment"
             app:destination="@id/informationDescriptionFragment" />
@@ -258,7 +268,11 @@
     <fragment
         android:id="@+id/informationDescriptionFragment"
         android:name="com.ierusalem.employeemanagement.features.information_description.presentation.InformationDescriptionFragment"
-        android:label="InformationDescriptionFragment" />
+        android:label="InformationDescriptionFragment" >
+        <action
+            android:id="@+id/action_informationDescriptionFragment_to_forInformationEditFragment"
+            app:destination="@id/forInformationEditFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/personalStatisticsFragment"
@@ -268,16 +282,21 @@
     <fragment
         android:id="@+id/editFragment"
         android:name="com.ierusalem.employeemanagement.features.edit_work.presentation.EditFragment"
-        android:label="EditFragment" >
+        android:label="EditFragment">
         <action
             android:id="@+id/action_editFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/homeFragment" />
+            app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/forInformationEditFragment"
+        android:name="com.ierusalem.employeemanagement.features.for_information_edit.presentation.ForInformationEditFragment"
+        android:label="ForInformationEditFragment" />
 
 </navigation>
