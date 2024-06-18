@@ -88,4 +88,5 @@
     <string name="could_not_edit_work">Could not edit work!</string>
     <string name="edit_information">Edit Information</string>
     <string name="submit_edit">Submit Edit</string>
+    <string name="information_deleted_successfully">Information deleted successfully!</string>
 </resources>

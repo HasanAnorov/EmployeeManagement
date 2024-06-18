@@ -28,6 +28,11 @@ class ForInformationFragment : Fragment() {
         viewModel.getReceivedInformationBadgeCount()
         viewModel.getReceivedInformation()
         viewModel.getSenInformation()
+
+        val shouldRefresh = arguments?.getBoolean(Constants.INFORMATION_SHOULD_REFRESH) ?: false
+        if (shouldRefresh){
+            viewModel.getSenInformation()
+        }
     }
 
     override fun onCreateView(

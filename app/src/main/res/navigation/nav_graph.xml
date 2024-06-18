@@ -269,9 +269,16 @@
         android:id="@+id/informationDescriptionFragment"
         android:name="com.ierusalem.employeemanagement.features.information_description.presentation.InformationDescriptionFragment"
         android:label="InformationDescriptionFragment" >
+
         <action
             android:id="@+id/action_informationDescriptionFragment_to_forInformationEditFragment"
             app:destination="@id/forInformationEditFragment" />
+
+        <action
+            android:id="@+id/action_informationDescriptionFragment_to_forInformationFragment"
+            app:popUpTo="@id/forInformationFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/forInformationFragment" />
     </fragment>
 
     <fragment

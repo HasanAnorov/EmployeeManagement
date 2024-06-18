@@ -69,6 +69,18 @@ class InformationDescriptionViewmodel(
         }
     }
 
+    fun deleteInformation(id:String){
+        viewModelScope.launch {
+            informationDescriptionRepository.deleteInformation(id).let {
+                if (it.isSuccessful){
+                    emitNavigation(InformationDescriptionNavigation.SuccessOnInformationDeletion)
+                }else{
+                    emitNavigation(InformationDescriptionNavigation.Failure)
+                }
+            }
+        }
+    }
+
 }
 
 @Immutable

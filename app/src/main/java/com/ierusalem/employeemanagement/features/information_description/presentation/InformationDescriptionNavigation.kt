@@ -2,4 +2,5 @@ package com.ierusalem.employeemanagement.features.information_description.presen
 
 sealed interface InformationDescriptionNavigation {
     data object Failure : InformationDescriptionNavigation
+    data object SuccessOnInformationDeletion : InformationDescriptionNavigation
 }

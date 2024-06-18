@@ -20,6 +20,8 @@ object Constants {
     const val IS_SENT_FOR_INFORMATION = "is_sent_for_information"
     const val ID_FOR_INFORMATION_DESCRIPTION = "id_for_information_description"
 
+    const val INFORMATION_SHOULD_REFRESH = "information_should_be_refresh"
+
     const val SUPER_USER = "super_user"
 
     const val FROM_WORK_DESCRIPTION = "from_work_description"

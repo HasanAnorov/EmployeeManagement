@@ -43,7 +43,7 @@ fun InformationDescScreen(
     onDownloadFile: (String) -> Unit,
     state: InformationDescState,
     onEditInformationClicked: () -> Unit,
-    onDeleteInformationClicked: () -> Unit
+    onDeleteInformationClicked: (Int) -> Unit
 ) {
     if (isSent) {
         when (state.description) {
@@ -76,7 +76,7 @@ fun InformationDescScreen(
                                     contentDescription = null
                                 )
                             }
-                            IconButton(onClick = { onDeleteInformationClicked() }) {
+                            IconButton(onClick = { onDeleteInformationClicked(information.id) }) {
                                 Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                             }
                         }
