@@ -21,8 +21,11 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.core.utils.Constants
+import com.ierusalem.employeemanagement.core.utils.executeWithLifecycle
+import com.ierusalem.employeemanagement.features.for_information_edit.domain.ForInformationEditNavigation
 import com.ierusalem.employeemanagement.features.for_information_edit.domain.ForInformationEditViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -137,6 +140,29 @@ class ForInformationEditFragment : Fragment() {
         }
         if (result.resultCode == Activity.RESULT_CANCELED) {
             Log.d("ahi3646", "onActivityResult: RESULT CANCELED ")
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.screenNavigation.executeWithLifecycle(
+            lifecycle = viewLifecycleOwner.lifecycle,
+            action = ::executeNavigation
+        )
+    }
+
+    private fun executeNavigation(event: ForInformationEditNavigation) {
+        when (event) {
+            ForInformationEditNavigation.Failure -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.something_went_wrong),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            ForInformationEditNavigation.EditedSuccessfully -> {
+                findNavController().navigate(R.id.action_forInformationEditFragment_to_forInformationFragment)
+            }
         }
     }
 

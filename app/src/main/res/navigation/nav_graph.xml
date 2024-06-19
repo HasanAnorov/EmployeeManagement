@@ -304,6 +304,18 @@
     <fragment
         android:id="@+id/forInformationEditFragment"
         android:name="com.ierusalem.employeemanagement.features.for_information_edit.presentation.ForInformationEditFragment"
-        android:label="ForInformationEditFragment" />
+        android:label="ForInformationEditFragment" >
+
+        <action
+            android:id="@+id/action_forInformationEditFragment_to_forInformationFragment"
+            app:popUpTo="@id/forInformationFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            app:popUpToInclusive="true"
+            app:destination="@id/forInformationFragment" />
+
+    </fragment>
 
 </navigation>
