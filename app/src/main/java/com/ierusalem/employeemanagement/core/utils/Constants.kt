@@ -40,6 +40,9 @@ object Constants {
 
     const val BASE_URL = "https://hat.samduuf.uz/"
 
+    const val INFORMATION_USER_ID = "information_user_id"
+    const val INFORMATION_ID = "information_id"
+
     const val STATISTICS_DOWNLOAD_URL = "https://hat.samduuf.uz/exel/"
     const val PERSONAL_STATISTICS_DOWNLOAD_URL = "https://hat.samduuf.uz/solo_exel/"
 

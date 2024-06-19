@@ -58,8 +58,11 @@ class InformationDescriptionFragment : Fragment() {
                         onDeleteInformationClicked = {id ->
                             viewModel.deleteInformation(id.toString())
                         },
-                        onEditInformationClicked = {
-                            findNavController().navigate(R.id.action_informationDescriptionFragment_to_forInformationEditFragment)
+                        onEditInformationClicked = {informationId, userId ->
+                            val bundle = Bundle()
+                            bundle.putString(Constants.INFORMATION_ID, informationId.toString())
+                            bundle.putString(Constants.INFORMATION_USER_ID, userId.toString())
+                            findNavController().navigate(R.id.action_informationDescriptionFragment_to_forInformationEditFragment, bundle)
                         }
                     )
                 }

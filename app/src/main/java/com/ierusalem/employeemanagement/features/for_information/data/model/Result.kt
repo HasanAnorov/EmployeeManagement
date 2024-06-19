@@ -36,5 +36,8 @@ data class Result(
     @SerializedName("user_unvoni")
     val userUnvoni: String?,
     @SerializedName("user_xonasi")
-    val userXonasi: String
+    val userXonasi: String,
+    @SerializedName("status")
+    val status: String
+
 )

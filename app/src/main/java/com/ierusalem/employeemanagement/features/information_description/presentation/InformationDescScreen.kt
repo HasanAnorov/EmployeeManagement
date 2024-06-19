@@ -42,7 +42,7 @@ fun InformationDescScreen(
     onArrowBackClick: () -> Unit,
     onDownloadFile: (String) -> Unit,
     state: InformationDescState,
-    onEditInformationClicked: () -> Unit,
+    onEditInformationClicked: (Int, Int) -> Unit,
     onDeleteInformationClicked: (Int) -> Unit
 ) {
     if (isSent) {
@@ -70,14 +70,16 @@ fun InformationDescScreen(
                             )
                         },
                         actions = {
-                            IconButton(onClick = { onEditInformationClicked() }) {
-                                Icon(
-                                    imageVector = Icons.Default.EditNote,
-                                    contentDescription = null
-                                )
-                            }
-                            IconButton(onClick = { onDeleteInformationClicked(information.id) }) {
-                                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                            if(information.status != "kurildi"){
+                                IconButton(onClick = { onEditInformationClicked(information.id, information.userId) }) {
+                                    Icon(
+                                        imageVector = Icons.Default.EditNote,
+                                        contentDescription = null
+                                    )
+                                }
+                                IconButton(onClick = { onDeleteInformationClicked(information.id) }) {
+                                    Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                                }
                             }
                         }
                     )

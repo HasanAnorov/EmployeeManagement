@@ -30,7 +30,7 @@ class ForInformationFragment : Fragment() {
         viewModel.getSenInformation()
 
         val shouldRefresh = arguments?.getBoolean(Constants.INFORMATION_SHOULD_REFRESH) ?: false
-        if (shouldRefresh){
+        if (shouldRefresh) {
             viewModel.getSenInformation()
         }
     }
@@ -52,14 +52,20 @@ class ForInformationFragment : Fragment() {
                         },
                         onItemClick = {
                             val bundle = Bundle()
-                            bundle.putInt(Constants.ID_FOR_INFORMATION_DESCRIPTION,it)
-                            findNavController().navigate(R.id.action_forInformationFragment_to_informationDescriptionFragment, bundle)
+                            bundle.putInt(Constants.ID_FOR_INFORMATION_DESCRIPTION, it)
+                            findNavController().navigate(
+                                R.id.action_forInformationFragment_to_informationDescriptionFragment,
+                                bundle
+                            )
                         },
                         onItemClickSent = {
                             val bundle = Bundle()
                             bundle.putBoolean(Constants.IS_SENT_FOR_INFORMATION, true)
-                            bundle.putInt(Constants.ID_FOR_INFORMATION_DESCRIPTION,it)
-                            findNavController().navigate(R.id.action_forInformationFragment_to_informationDescriptionFragment, bundle)
+                            bundle.putInt(Constants.ID_FOR_INFORMATION_DESCRIPTION, it)
+                            findNavController().navigate(
+                                R.id.action_forInformationFragment_to_informationDescriptionFragment,
+                                bundle
+                            )
                         }
                     )
                 }
@@ -75,8 +81,8 @@ class ForInformationFragment : Fragment() {
         )
     }
 
-    private fun executeNavigation(event: ForInformationNavigation){
-        when(event){
+    private fun executeNavigation(event: ForInformationNavigation) {
+        when (event) {
             ForInformationNavigation.ArrowBackClick -> {
                 findNavController().popBackStack()
             }

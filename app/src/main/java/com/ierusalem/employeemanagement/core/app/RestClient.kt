@@ -17,6 +17,7 @@ import com.ierusalem.employeemanagement.features.staff_home.data.StaffHomeServic
 import com.ierusalem.employeemanagement.features.statistics.data.StatisticsService
 import com.ierusalem.employeemanagement.features.work_description.data.WorkDescriptionService
 import com.ierusalem.employeemanagement.core.utils.Constants
+import com.ierusalem.employeemanagement.features.for_information_edit.data.EditInformationService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -89,6 +90,10 @@ class RestClient(context: Context) {
 
     val editWorkService: EditWorkService by lazy {
         retrofit.create(EditWorkService::class.java)
+    }
+
+    val editInformationService:EditInformationService by lazy {
+        retrofit.create(EditInformationService::class.java)
     }
 
     val forInformationService: ForInformationService by lazy {

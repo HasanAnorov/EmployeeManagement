@@ -1,6 +1,7 @@
 package com.ierusalem.employeemanagement.features.for_information_edit.presentation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
 import com.ierusalem.employeemanagement.R
+import com.ierusalem.employeemanagement.core.utils.Constants
 import com.ierusalem.employeemanagement.features.for_information_edit.domain.ForInformationEditViewModel
 import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,6 +30,15 @@ import java.io.File
 import java.io.FileOutputStream
 
 class ForInformationEditFragment : Fragment() {
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val userId = arguments?.getString(Constants.INFORMATION_USER_ID) ?: ""
+        val informationId = arguments?.getString(Constants.INFORMATION_ID) ?: ""
+        viewModel.updateInformationId(informationId)
+        viewModel.updateUserId(userId)
+        Log.d("ai3646", "onAttach: $informationId $userId ")
+    }
 
     private val viewModel: ForInformationEditViewModel by viewModel()
     @RequiresApi(Build.VERSION_CODES.R)
@@ -60,7 +71,11 @@ class ForInformationEditFragment : Fragment() {
                             }
                         },
                         onNavIconClicked = { findNavController().popBackStack() },
-                        onSubmitClicked = {  },
+                        onSubmitClicked = {
+                            if (state.textForm.isNotEmpty()){
+                                viewModel.submitEditedInformation()
+                            }
+                        },
                         onTextChanged = { viewModel.onTextFormChanged(it) }
                     )
                 }
