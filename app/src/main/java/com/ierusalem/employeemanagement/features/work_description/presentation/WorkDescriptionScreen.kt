@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -63,6 +64,7 @@ fun WorkDescriptionScreen(
     gotoStorageSetting: () -> Unit,
     onEditWorkClicked: () -> Unit,
     onDeleteWorkClicked: () -> Unit,
+    onLetEditClicked: () -> Unit,
     intentReducer: (WorkDescriptionScreenEvents) -> Unit,
 ) {
     when (state.workItem) {
@@ -96,12 +98,34 @@ fun WorkDescriptionScreen(
                         )
                     },
                     actions = {
-                        if(state.isFromSent){
+                        if (state.status == "yuborildi" && state.isFromHome) {
                             IconButton(onClick = { onEditWorkClicked() }) {
-                                Icon(imageVector = Icons.Default.EditNote, contentDescription = null)
+                                Icon(
+                                    imageVector = Icons.Default.EditNote,
+                                    contentDescription = null
+                                )
                             }
                             IconButton(onClick = { onDeleteWorkClicked() }) {
                                 Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                            }
+                        }
+                        if (state.status == "qabulqildi" && state.isFromHome && work.status3 == "1") {
+                            IconButton(onClick = { onEditWorkClicked() }) {
+                                Icon(
+                                    imageVector = Icons.Default.EditNote,
+                                    contentDescription = null
+                                )
+                            }
+                            IconButton(onClick = { onDeleteWorkClicked() }) {
+                                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                            }
+                        }
+                        if (work.status3 == "0" && state.isFromPrivate && state.status == "qabulqildi") {
+                            IconButton(onClick = { onLetEditClicked() }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.edit_folder_1),
+                                    contentDescription = null
+                                )
                             }
                         }
                     }
@@ -409,7 +433,8 @@ private fun WorkDescriptionScreenPreview() {
             dismissDialog = {},
             gotoStorageSetting = {},
             onEditWorkClicked = {},
-            onDeleteWorkClicked = {}
+            onDeleteWorkClicked = {},
+            onLetEditClicked = {}
         )
     }
 }
@@ -424,7 +449,8 @@ private fun WorkDescriptionScreenPreviewDark() {
             dismissDialog = {},
             gotoStorageSetting = {},
             onEditWorkClicked = {},
-            onDeleteWorkClicked = {}
+            onDeleteWorkClicked = {},
+            onLetEditClicked = {}
         )
     }
 }

@@ -53,7 +53,7 @@ class PrivateJobsViewModel(private val repo: PrivateJobRepository): ViewModel(),
                 getCommands(event.status)
             }
             is PrivateJobsEvents.OnItemClick -> {
-                emitNavigation(PrivateJobsNavigation.OnItemClick(event.workId))
+                emitNavigation(PrivateJobsNavigation.OnItemClick(event.workId, event.status))
             }
         }
     }

@@ -63,9 +63,9 @@ class PrivateJobsFragment : Fragment() {
             }
             is PrivateJobsNavigation.OnItemClick -> {
                 val bundle = Bundle()
+                bundle.putString(Constants.MESSAGE_TYPE, navigation.status)
+                bundle.putBoolean(Constants.IS_FROM_PRIVATE_JOB, true)
                 bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
-                // to enter work description as staff
-//                bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME, false)
                 findNavController().navigate(
                     R.id.action_privateJobsFragment_to_workDescriptionFragment,
                     bundle

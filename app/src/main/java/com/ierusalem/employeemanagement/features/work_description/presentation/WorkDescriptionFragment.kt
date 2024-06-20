@@ -23,13 +23,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.ierusalem.employeemanagement.R
 import com.ierusalem.employeemanagement.core.downloader.AndroidDownloader
-import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionViewModel
-import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import com.ierusalem.employeemanagement.core.utils.Constants
 import com.ierusalem.employeemanagement.core.utils.Constants.COMPOSE_PROFILE_ID
 import com.ierusalem.employeemanagement.core.utils.Constants.COMPOSE_WORK_ID
 import com.ierusalem.employeemanagement.core.utils.Resource
 import com.ierusalem.employeemanagement.core.utils.executeWithLifecycle
+import com.ierusalem.employeemanagement.features.work_description.domain.WorkDescriptionViewModel
+import com.ierusalem.employeemanagement.ui.theme.EmployeeManagementTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -42,9 +42,14 @@ class WorkDescriptionFragment : Fragment() {
         super.onAttach(context)
         val workId = arguments?.getString(Constants.WORK_DESCRIPTION_KEY)
         Log.d("workId", "onAttach: WorkId - $workId ")
-
-        val isFromSent =  arguments?.getBoolean(Constants.IS_FROM_SENT) ?: false
+        val isFromPrivateJob = arguments?.getBoolean(Constants.IS_FROM_PRIVATE_JOB) ?: false
+        viewModel.initIsFromPrivate(isFromPrivateJob)
+        Log.d("ahi3646", "onAttach: isFromPrivateJob - $isFromPrivateJob ")
+        val isFromSent = arguments?.getBoolean(Constants.IS_FROM_SENT) ?: false
         viewModel.isFromSent(isFromSent)
+        val status = arguments?.getString(Constants.MESSAGE_TYPE)
+        viewModel.setStatus(status ?: "")
+        Log.d("ahi3646", "onAttach: status - $status ")
         val isFromHome = arguments?.getBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME) ?: false
         if (isFromHome) {
             viewModel.isFromHome(true)
@@ -82,11 +87,15 @@ class WorkDescriptionFragment : Fragment() {
                         },
                         onEditWorkClicked = {
                             val bundle = Bundle()
-                            val userId = (state.workItem as Resource.Success).data!!.results[0].userId.toString()
+                            val userId =
+                                (state.workItem as Resource.Success).data!!.results[0].userId.toString()
                             Log.d("ahi3646", "onCreateView: userId - $userId ")
-                            bundle.putString(COMPOSE_PROFILE_ID, userId )
+                            bundle.putString(COMPOSE_PROFILE_ID, userId)
                             bundle.putString(COMPOSE_WORK_ID, state.workId)
-                            findNavController().navigate(R.id.action_workDescriptionFragment_to_editFragment, bundle)
+                            findNavController().navigate(
+                                R.id.action_workDescriptionFragment_to_editFragment,
+                                bundle
+                            )
                         },
                         onDeleteWorkClicked = {
                             viewModel.deleteWorkById(workId = state.workId)
@@ -100,6 +109,9 @@ class WorkDescriptionFragment : Fragment() {
                             }
                             viewModel.showAlertDialog(false)
                         },
+                        onLetEditClicked = {
+                            viewModel.onLetEditClicked(workId = state.workId)
+                        }
                     )
                 }
             }
@@ -149,7 +161,10 @@ class WorkDescriptionFragment : Fragment() {
                 Log.d("ahi3646", "executeNavigation: work deleted successfully ")
                 val bundle = Bundle()
                 bundle.putBoolean(Constants.EDIT_WORK_SUCCESS, true)
-                findNavController().navigate(R.id.action_workDescriptionFragment_to_homeFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_workDescriptionFragment_to_homeFragment,
+                    bundle
+                )
             }
 
             WorkDescriptionNavigation.FailureOnWorkDeletion -> {
@@ -187,6 +202,14 @@ class WorkDescriptionFragment : Fragment() {
 
             WorkDescriptionNavigation.NavIconClick -> {
                 findNavController().popBackStack()
+            }
+
+            WorkDescriptionNavigation.FailureOnLettingEdit -> {
+                Log.d("ahi3646", "executeNavigation: can not let edit ")
+            }
+
+            WorkDescriptionNavigation.SuccessOnLettingEdit -> {
+                Log.d("ahi3646", "executeNavigation: let edit successfully ")
             }
         }
     }

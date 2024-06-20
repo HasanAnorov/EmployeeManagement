@@ -113,7 +113,7 @@ fun PrivateCommandsScreen(
                                 description = command.text,
                                 deadline = command.endTime,
                                 onItemClick = {
-                                    intentReducer(PrivateJobsEvents.OnItemClick(command.workId.toString()))
+                                    intentReducer(PrivateJobsEvents.OnItemClick(command.workId.toString(), status))
                                 }
                             )
                             if (index < data.size - 1) {

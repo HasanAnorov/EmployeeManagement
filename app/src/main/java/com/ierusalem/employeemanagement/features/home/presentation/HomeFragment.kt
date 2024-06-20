@@ -218,6 +218,7 @@ class HomeFragment : Fragment() {
                 bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
                 bundle.putBoolean(Constants.WORK_DESCRIPTION_KEY_FROM_HOME, true)
                 bundle.putBoolean(Constants.IS_FROM_SENT, navigation.isFromSent)
+                bundle.putString(Constants.MESSAGE_TYPE, navigation.status )
                 findNavController().navigate(
                     R.id.action_homeFragment_to_workDescriptionFragment,
                     bundle

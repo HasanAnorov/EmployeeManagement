@@ -66,6 +66,14 @@ class WorkDescriptionViewModel(
         }
     }
 
+    fun setStatus(status: String){
+        _state.update {
+            it.copy(
+                status = status
+            )
+        }
+    }
+
     fun isFromSent(isFromSent: Boolean){
         _state.update {
             it.copy(
@@ -151,6 +159,19 @@ class WorkDescriptionViewModel(
         }
     }
 
+    fun onLetEditClicked(workId: String){
+        viewModelScope.launch(handler) {
+            repo.letEditWorkById(workId).let {
+                if(it.isSuccessful){
+                    emitNavigation(WorkDescriptionNavigation.SuccessOnLettingEdit)
+                }else{
+                    Log.d("ahi3646", "deleteWorkById: ${it.errorBody()} ")
+                    emitNavigation(WorkDescriptionNavigation.FailureOnLettingEdit)
+                }
+            }
+        }
+    }
+
     fun getMessageById(workId: String){
         try {
             viewModelScope.launch(handler) {
@@ -208,10 +229,19 @@ class WorkDescriptionViewModel(
             )
         }
     }
+    fun initIsFromPrivate(isFromPrivate: Boolean){
+        _state.update {
+            it.copy(
+                isFromPrivate = isFromPrivate
+            )
+        }
+    }
 }
 
 @Immutable
 data class WorkDescriptionScreenState(
+    val isFromPrivate:Boolean = false,
+    val status:String = "",
     val workId:String = "",
     val showAlertDialog: Boolean = false,
     val workItem: Resource<WorkItem> = Resource.Loading(),

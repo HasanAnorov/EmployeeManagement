@@ -15,6 +15,10 @@ object Constants {
 
     const val IS_FROM_SENT = "is_from_sent"
 
+    const val MESSAGE_TYPE = "message_type"
+
+    const val IS_FROM_PRIVATE_JOB = "is_from_private_job"
+
     const val PROFILE_CHANGE = "profile_changed_successfully"
 
     const val IS_SENT_FOR_INFORMATION = "is_sent_for_information"

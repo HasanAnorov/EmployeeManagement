@@ -13,4 +13,5 @@ interface WorkDescriptionRepository {
         body: RequestBody
     ): Response<MarkAsDoneResponse>
     suspend fun deleteWorkById(workId: String):Response<Unit>
+    suspend fun letEditWorkById(workId: String):Response<Unit>
 }
