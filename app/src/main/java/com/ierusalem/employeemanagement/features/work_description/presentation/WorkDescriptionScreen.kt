@@ -109,7 +109,10 @@ fun WorkDescriptionScreen(
                                 Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                             }
                         }
-                        if (state.status == "qabulqildi" && state.isFromHome && work.status3 == "1") {
+                        if (
+                            state.status == "qabulqildi"
+                            && state.isFromHome
+                            && work.status3 == "1") {
                             IconButton(onClick = { onEditWorkClicked() }) {
                                 Icon(
                                     imageVector = Icons.Default.EditNote,
@@ -120,7 +123,8 @@ fun WorkDescriptionScreen(
                                 Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                             }
                         }
-                        if (work.status3 == "0" && state.isFromPrivate && state.status == "qabulqildi") {
+                        Log.d("ahi3646", "WorkDescriptionScreen: ${state.isFromStaff} ${state.status} ${work.status3} ")
+                        if (work.status3 == "0" && state.isFromPrivate && state.status == "qabulqildi" || (work.status3 == "0" && state.isFromStaff && state.status == "qabulqildi")) {
                             IconButton(onClick = { onLetEditClicked() }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.edit_folder_1),

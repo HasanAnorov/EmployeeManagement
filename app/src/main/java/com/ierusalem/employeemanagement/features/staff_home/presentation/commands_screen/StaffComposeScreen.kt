@@ -92,7 +92,6 @@ fun StaffComposeScreen(
                                     }
                                     WorkItem(
                                         modifier = Modifier
-                                            .padding(horizontal = 16.dp)
                                             .padding(top = 8.dp),
                                         fullName = "${command.adminUsername} ${command.adminLastname}",
                                         image = image,
@@ -100,7 +99,7 @@ fun StaffComposeScreen(
                                         description = command.text,
                                         deadline = command.endTime,
                                         onItemClick = {
-                                            intentReducer(StaffHomeScreenEvents.OnItemClick(command.workId.toString()))
+                                            intentReducer(StaffHomeScreenEvents.OnItemClick(command.workId.toString(), status))
                                         }
                                     )
                                     if (index < data.data.size - 1) {

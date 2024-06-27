@@ -203,6 +203,14 @@ class WorkDescriptionViewModel(
         }
     }
 
+    fun isFromStaff(isFromStaff: Boolean){
+        _state.update {
+            it.copy(
+                isFromStaff = isFromStaff
+            )
+        }
+    }
+
     fun onFilesChanged(file: File) {
         val newFiles = state.value.files.toMutableList().apply {
             add(file)
@@ -241,6 +249,7 @@ class WorkDescriptionViewModel(
 @Immutable
 data class WorkDescriptionScreenState(
     val isFromPrivate:Boolean = false,
+    val isFromStaff:Boolean = false,
     val status:String = "",
     val workId:String = "",
     val showAlertDialog: Boolean = false,

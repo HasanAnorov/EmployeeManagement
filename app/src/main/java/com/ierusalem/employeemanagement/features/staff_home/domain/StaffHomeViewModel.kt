@@ -285,7 +285,7 @@ class StaffHomeViewModel(private val repo: StaffHomeRepository) : ViewModel(),
             }
 
             is StaffHomeScreenEvents.OnItemClick -> {
-                emitNavigation(StaffHomeScreenNavigation.OnItemClick(event.workId))
+                emitNavigation(StaffHomeScreenNavigation.OnItemClick(event.workId, event.status))
             }
 
             is StaffHomeScreenEvents.OnPullToRefreshCommands -> getUserMessages(event.status)

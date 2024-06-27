@@ -104,8 +104,7 @@ fun PrivateCommandsScreen(
                                 image = "${Constants.BASE_URL}${command.adminImage}"
                             }
                             WorkItem(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp),
+                                modifier = Modifier,
                                 image = image,
                                 position = command.adminPosition
                                     ?: stringResource(id = R.string.not_given),

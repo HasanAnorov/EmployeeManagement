@@ -89,4 +89,6 @@
     <string name="edit_information">Edit Information</string>
     <string name="submit_edit">Submit Edit</string>
     <string name="information_deleted_successfully">Information deleted successfully!</string>
+    <string name="can_not_let_edit">An error occurred while granting permission!</string>
+    <string name="permission_grated_for_editing">Permission grated for editing!</string>
 </resources>

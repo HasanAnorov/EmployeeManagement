@@ -89,4 +89,7 @@
     <string name="could_not_edit_work">Не удалось отредактировать работу!</string>
     <string name="edit_information">Редактировать информацию</string>
     <string name="submit_edit">Отправить Редактировать</string>
+    <string name="information_deleted_successfully">Информация успешно удалена!</string>
+    <string name="can_not_let_edit">Произошла ошибка при предоставлении разрешения!</string>
+    <string name="permission_grated_for_editing">Разрешение на редактирование получено!</string>
 </resources>

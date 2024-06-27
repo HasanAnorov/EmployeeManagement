@@ -47,6 +47,8 @@ class WorkDescriptionFragment : Fragment() {
         Log.d("ahi3646", "onAttach: isFromPrivateJob - $isFromPrivateJob ")
         val isFromSent = arguments?.getBoolean(Constants.IS_FROM_SENT) ?: false
         viewModel.isFromSent(isFromSent)
+        val isFromStaff = arguments?.getBoolean(Constants.IS_FROM_STAFF) ?: false
+        viewModel.isFromStaff(isFromStaff)
         val status = arguments?.getString(Constants.MESSAGE_TYPE)
         viewModel.setStatus(status ?: "")
         Log.d("ahi3646", "onAttach: status - $status ")
@@ -206,9 +208,13 @@ class WorkDescriptionFragment : Fragment() {
 
             WorkDescriptionNavigation.FailureOnLettingEdit -> {
                 Log.d("ahi3646", "executeNavigation: can not let edit ")
+                Toast.makeText(requireContext(),
+                    getString(R.string.can_not_let_edit), Toast.LENGTH_SHORT).show()
             }
 
             WorkDescriptionNavigation.SuccessOnLettingEdit -> {
+                Toast.makeText(requireContext(),
+                    getString(R.string.permission_grated_for_editing), Toast.LENGTH_SHORT).show()
                 Log.d("ahi3646", "executeNavigation: let edit successfully ")
             }
         }

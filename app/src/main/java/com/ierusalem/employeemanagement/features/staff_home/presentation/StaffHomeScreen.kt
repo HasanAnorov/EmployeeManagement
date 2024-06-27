@@ -155,8 +155,8 @@ fun StaffHomeScreen(
                                 0 -> countSent
                                 1 -> countReceived
                                 2 -> countDone
-                                3 -> countNotDone
-                                4 -> countLateDone
+                                3 -> countLateDone
+                                4 -> countNotDone
                                 else -> 0
                             }
                             Tab(
@@ -227,33 +227,6 @@ fun StaffHomeScreen(
                                     }
                                 },
                             )
-//                            Tab(
-//                                modifier = Modifier.background(
-//                                    color = if (pagerState.currentPage == index)
-//                                        MaterialTheme.colorScheme.primary
-//                                    else Color.Transparent,
-//                                    shape = RoundedCornerShape(12.dp)
-//                                ),
-//                                selected = state.selectedTabIndex == index,
-//                                selectedContentColor = MaterialTheme.colorScheme.onBackground,
-//                                unselectedContentColor = MaterialTheme.colorScheme.onBackground.copy(
-//                                    0.5F
-//                                ),
-//                                onClick = {
-//                                    intentReducer(StaffHomeScreenEvents.TabItemClick(index))
-//                                    scope.launch {
-//                                        pagerState.animateScrollToPage(index)
-//                                    }
-//                                },
-//                                text = {
-//                                    Text(
-//                                        text = currentTab.asString(context),
-//                                        fontSize = 16.sp,
-//                                        color = if (pagerState.currentPage == index) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.onBackground,
-//                                        style = MaterialTheme.typography.titleSmall
-//                                    )
-//                                },
-//                            )
                         }
                     }
                 )

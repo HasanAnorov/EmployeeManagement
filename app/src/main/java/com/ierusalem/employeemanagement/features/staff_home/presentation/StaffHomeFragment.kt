@@ -161,6 +161,8 @@ class StaffHomeFragment : Fragment() {
             is StaffHomeScreenNavigation.OnItemClick -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.WORK_DESCRIPTION_KEY, navigation.workId)
+                bundle.putBoolean(Constants.IS_FROM_STAFF, true)
+                bundle.putString(Constants.MESSAGE_TYPE,navigation.status )
                 findNavController().navigate(
                     R.id.action_staffHomeFragment_to_workDescriptionFragment,
                     bundle

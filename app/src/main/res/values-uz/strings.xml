@@ -89,4 +89,7 @@
     <string name="could_not_edit_work">Ishni tahrirlab bo‘lmadi!</string>
     <string name="edit_information">Ma\'lumotni tahrirlash</string>
     <string name="submit_edit">Tahrirlashni yuborish</string>
+    <string name="information_deleted_successfully">Ma\'lumot muvaffaqiyatli o\'chirildi!</string>
+    <string name="can_not_let_edit">Ruxsat berishda xatolik sodir bo\'ldi!</string>
+    <string name="permission_grated_for_editing">Tahrirlash uchun ruxsat berildi!</string>
 </resources>

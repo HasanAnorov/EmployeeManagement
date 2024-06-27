@@ -41,6 +41,7 @@ object Constants {
     const val EDIT_WORK_SUCCESS = "edit_work_success"
 
     const val IS_STAFF = "is_staff"
+    const val IS_FROM_STAFF = "is_from_staff"
 
     const val BASE_URL = "https://hat.samduuf.uz/"
 
